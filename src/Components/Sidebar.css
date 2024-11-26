@@ -7,22 +7,35 @@
 .sidebar-content {
     height: 80%;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: start;
+    padding: 6vh 0;
+    gap: 5vw;
 }
 
 .logo {
-    gap: 0.5vw;
+    gap: 0.4vw;
+    margin-bottom: 1vw;
+}
+
+.logo img {
+    width: 5vw;
+}
+
+.icon img {
+    width: 3vw;
+    min-width: 50px;
 }
 
 .logo p {
     margin: 0;
-    font-size: 1.5vw;
-    line-height: 1.5vw;
+    font-size: 1.8vw;
+    line-height: 1.4vw;
+    min-width: 50px;
 }
 
 .icon p {
     margin: 0;
-    font-size: 1.2vw;
-    line-height: 1.5vw;
+    font-size: 1.4vw;
+    line-height: 1.75vw;
+    min-width: 50px;
 }
-

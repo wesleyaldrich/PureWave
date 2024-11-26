@@ -6,14 +6,16 @@ import Community from './Pages/Community'
 function App() {
     return (<>
         <Router>
-            <div className="app-container">
+            <div className="app-container flex-row">
                 <Sidebar />
-                <Routes>
-                    <Route path="/" element={<Community />} />
-                    {/* <Route path="/projects" element={<Projects />} />
-                    <Route path="/about-me" element={<AboutMe />} />
-                    <Route path="/music" element={<Music />} /> */}
-                </Routes>
+                <div className="content-container">
+                    <Routes>
+                        <Route path="/" element={<Community />} />
+                        {/* <Route path="/projects" element={<Projects />} />
+                        <Route path="/about-me" element={<AboutMe />} />
+                        <Route path="/music" element={<Music />} /> */}
+                    </Routes>
+                </div>
             </div>
 		</Router>
     </>)

@@ -11,6 +11,7 @@
     --black: #000000;
     --button: #133E87;
     --edit-text: #77ACF1;
+    --posts: #2661AA0F;
 }
 
 html, body {
@@ -21,6 +22,7 @@ html, body {
     box-sizing: border-box;
     font-weight: 400;
     font-style: normal;
+    overflow: hidden;
 }
 
 .flex-row {
@@ -42,4 +44,17 @@ html, body {
 
 .gurajada {
     font-family: "Gurajada", sans-serif;
+}
+
+.firacode {
+    font-family: "Fira Code", serif;
+    font-optical-sizing: auto;
+}
+
+p {
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
 }

@@ -1,3 +1,8 @@
 .app-container {
     height: 100vh;
 }
+
+.content-container {
+    padding: 2vw;
+    flex: 1;
+}

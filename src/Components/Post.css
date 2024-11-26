@@ -1,0 +1,11 @@
+.post {
+    padding: 1% 2%;
+}
+
+.post h2 {
+    text-align: start;
+}
+
+.post p {
+    text-align: justify;
+}
