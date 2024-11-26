@@ -5,6 +5,7 @@ function Post({ author, content }){
         <div className="post flex-col">
             <h2>{ author }</h2>
             <p>{ content }</p>
+            <hr/>
         </div>
     </>)
 }

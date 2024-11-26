@@ -27,4 +27,5 @@
 .posts {
     flex: 1;
     background-color: var(--posts);
+    overflow-y: scroll;
 }

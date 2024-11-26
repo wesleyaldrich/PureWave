@@ -4,8 +4,16 @@
 
 .post h2 {
     text-align: start;
+    font-size: 1.6vw;
+    color: var(--post-title);
 }
 
 .post p {
     text-align: justify;
+    font-size: 1.2vw;
+}
+
+.post hr {
+    height: 1.5px;
+    background-color: var(--white);
 }
