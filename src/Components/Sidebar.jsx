@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import './Sidebar.css'
 import logo from '../assets/logo.png'
 import icon_community from '../assets/icon-community.png'
@@ -12,18 +13,19 @@ function Sidebar(){
                     <img src={logo} alt="PureWave Logo" />
                     <p>PUREWAVE</p>
                 </div>
-                <div className="icon center-content">
+
+                <NavLink to="/" className="icon center-content" activeClassName="active" end>
                     <img src={icon_community} alt="PureWave Logo" />
                     <p>COMMUNITY</p>
-                </div>
-                <div className="icon center-content">
+                </NavLink>
+                <NavLink to="/lab" className="icon center-content" activeClassName="active">
                     <img src={icon_lab} alt="PureWave Logo" />
                     <p>LABORATORY</p>
-                </div>
-                <div className="icon center-content">
+                </NavLink>
+                <NavLink to="/history" className="icon center-content" activeClassName="active">
                     <img src={icon_history} alt="PureWave Logo" />
                     <p>HISTORY</p>
-                </div>
+                </NavLink>
             </div>
         </div>
     </>)

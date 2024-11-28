@@ -21,6 +21,12 @@
     width: 5vw;
 }
 
+.icon {
+    text-decoration: none;
+    color: var(--sub-title);
+    aspect-ratio: 1/1;
+}
+
 .icon img {
     width: 3vw;
     min-width: 50px;
@@ -38,4 +44,14 @@
     font-size: 1.4vw;
     line-height: 1.75vw;
     min-width: 50px;
+}
+
+.icon.active {
+    background-color: var(--button);
+    border-radius: 50%;
+}
+
+.icon:hover {
+    background-color: var(--hover);
+    border-radius: 50%;
 }
