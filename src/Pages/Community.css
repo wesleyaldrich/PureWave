@@ -1,0 +1,31 @@
+.community-page {
+    height: 100%;
+}
+
+.title {
+    font-size: 5vw;
+    font-weight: 700;
+    color: var(--title);
+    margin-bottom: 1vw;
+}
+
+.buttons {
+    height: 4vw;
+    gap: 1.5vw;
+    margin-bottom: 2vw;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2vw;
+    height: 100%;
+    background-color: var(--sidebar-gradient);
+}
+
+.posts {
+    flex: 1;
+    background-color: var(--posts);
+    overflow-y: scroll;
+}
