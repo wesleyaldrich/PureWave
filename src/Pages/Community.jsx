@@ -1,7 +1,21 @@
 import './Community.css'
 import Post from '../Components/Post'
+import axios from 'axios';
 
 function Community(){
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+    const [posts, setPosts] = useState([]);
+
+    const getPosts = async () => {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/data/posts`);
+            setPosts(response.data);
+        } catch (error) {
+            console.error('There was an error fetching the posts:', error);
+        }
+    };
+
     return (<>
         <div className="community-page container-fluid flex-col">
             <h1 className="title firacode">PUREWAVE</h1>
