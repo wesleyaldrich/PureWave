@@ -4,9 +4,10 @@ import Post from '../Components/Post'
 function Community(){
     return (<>
         <div className="community-page container-fluid flex-col">
-            <h1 className="title firacode">PUREWAVE</h1>
+            <h1 className="title firacode">COMMUNITY</h1>
             <div className="buttons container-fluid row gurajada">
                 <div className="button col-4">
+                    <span className="iconHistory">+</span>
                     <a>ENHANCE YOUR AUDIO</a>
                 </div>
                 <div className="button col">
