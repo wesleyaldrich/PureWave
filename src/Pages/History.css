@@ -1,0 +1,19 @@
+.history-page {
+    background-color: var(--background);
+    color: var(--sub-title);
+    padding: 20px;
+}
+
+.title {
+    font-family: 'Fira Code', serif;
+    text-align: left;
+    font-size: 90px;
+    font-optical-sizing: auto;
+    margin-bottom: 2px;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
