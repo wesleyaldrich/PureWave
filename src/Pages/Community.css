@@ -2,29 +2,24 @@
     height: 100%;
 }
 
-.title {
-    font-size: 5vw;
-    font-weight: 700;
-    color: var(--title);
-    margin-bottom: 1vw;
-}
-
-.buttons {
+.community-page .buttons {
     height: 4vw;
     gap: 1.5vw;
     margin-bottom: 2vw;
 }
 
-.button {
+.community-page .button {
     display: flex;
+    border-radius: 40px;
     align-items: center;
     justify-content: center;
     font-size: 2vw;
     height: 100%;
+    color: var(--history-menu);
     background-color: var(--sidebar-gradient);
 }
 
-.iconHistory {
+.community-page .iconHistory {
     background-color: transparent;
     color: var(--sub-title);
     border-radius: 50%;
@@ -38,7 +33,7 @@
     font-size: 25px; 
 }
 
-.posts {
+.community-page .posts {
     flex: 1;
     background-color: var(--posts);
     overflow-y: scroll;

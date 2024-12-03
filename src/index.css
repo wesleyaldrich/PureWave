@@ -47,9 +47,17 @@ html, body {
     flex-direction: column;
 }
 
+.title {
+    font-size: 5vw;
+    font-weight: 700;
+    color: var(--title);
+    margin-bottom: 1vw;
+}
+
 .gurajada {
     font-family: "Gurajada", sans-serif;
 }
+
 
 .firacode {
     font-family: "Fira Code", serif;

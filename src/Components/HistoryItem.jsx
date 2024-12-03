@@ -21,16 +21,17 @@ function HistoryItem({ name, date, size, duration }) {
       </div>
       <div className="item-right">
         <div className="item-button-container flex-row">
-          <button className="item-button">
-            <img src={rename} alt="Rename" className="button-icon" /> Rename
+          <button className="item-button gurajada">
+            <img src={rename} alt="Rename" className="button-icon" />
+            <p>Rename</p>
           </button>
-          <button className="item-button">
+          <button className="item-button gurajada">
             <img src={duplicate} alt="Duplicate" className="button-icon" /> Duplicate
           </button>
-          <button className="item-button">
+          <button className="item-button gurajada">
             <img src={share} alt="Share" className="button-icon" /> Share
           </button>
-          <button className="item-button">
+          <button className="item-button gurajada">
             <img src={deleteIcon} alt="Delete" className="button-icon" /> Delete
           </button>
         </div>

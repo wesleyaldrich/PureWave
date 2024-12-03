@@ -14,21 +14,20 @@
 }
 
 .buttons {
-    height: 56.91px;
-    margin-bottom: 20px;
     display: flex;
-    margin-bottom:35px;
     justify-content: left;
     transition: background-color 0.3s ease;
+    height: 4vw;
+    gap: 1.5vw;
+    margin-bottom: 2vw;
 }
 
-.button {
+.history-page .button {
     display: flex;
-    width: 360px;
-    border-radius: 50px;
+    border-radius: 40px;
     align-items: center;
     justify-content: center;
-    font-size: 2.5vw;
+    font-size: 2vw;
     height: 100%;
     color: var(--history-menu);
     background-color: var(--sidebar-gradient);
@@ -112,15 +111,19 @@
     display: flex;
     align-items: center;
     gap: 5px;
-    padding: 2px 10px;
-    margin-bottom: 0.5vw;
+    padding: 0.1vw 0.3vw;
     background: none;
     border: none;
     color: var(--edit-text);
-    font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
     border-radius: 50px;
+    font-size: 1.5vw;
+}
+
+.item-button p {
+    margin: 0;
+    line-height: 1.5vw;
 }
 
 .item-button:hover {
