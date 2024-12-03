@@ -24,6 +24,20 @@
     background-color: var(--sidebar-gradient);
 }
 
+.iconHistory {
+    background-color: transparent;
+    color: var(--sub-title);
+    border-radius: 50%;
+    border:2px solid var(--border-plus-enhance);
+    width: 25px; 
+    height: 25px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px; 
+    font-size: 25px; 
+}
+
 .posts {
     flex: 1;
     background-color: var(--posts);
