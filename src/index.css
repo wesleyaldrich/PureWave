@@ -13,6 +13,10 @@
     --edit-text: #77ACF1;
     --posts: #2661AA0F;
     --hover: #77acf167;
+    --history-menu: #CBDCEB;
+    --hover-history-menu: #9299B5;
+    --border-plus-enhance: #2e5eb2;
+    --hover-plus-enhance: #2D5EB1;
 }
 
 html, body {
@@ -53,9 +57,9 @@ html, body {
 }
 
 p {
-    text-align: center;
+    text-align: left;
 }
 
 h1 {
-    margin: 0;
+    text-align: left;
 }

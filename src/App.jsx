@@ -3,6 +3,7 @@ import './App.css'
 import Sidebar from './Components/Sidebar'
 import Community from './Pages/Community'
 import Lab from './Pages/Lab'
+import History from './Pages/History';
 
 function App() {
     return (<>
@@ -13,8 +14,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Community />} />
                         <Route path="/lab" element={<Lab />} />
-                        {/* <Route path="/about-me" element={<AboutMe />} />
-                        <Route path="/music" element={<Music />} /> */}
+                        <Route path="/history" element={<History />} />
                     </Routes>
                 </div>
             </div>
