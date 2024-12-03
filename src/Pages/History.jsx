@@ -11,15 +11,15 @@ function History() {
   ];
 
   return (
-    <div className="history-page">
-      <h1 className="title">HISTORY</h1>
+    <div className="history-page container-fluid">
+      <h1 className="title firacode">HISTORY</h1>
       <div className="buttons container-fluid row gurajada">
           <div className="button col-4">
               <span className="iconHistory">+</span>
               <a>ENHANCE YOUR AUDIO</a>
           </div>
       </div>
-      <div className="history-list">
+      <div className="history-list container-fluid">
         {data.map((item, index) => (
           <HistoryItem
             key={index}

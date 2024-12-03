@@ -39,13 +39,13 @@
     color: var(--sub-title);
     border-radius: 50%;
     border:2px solid var(--border-plus-enhance);
-    width: 20px; 
-    height: 20px; 
+    width: 25px; 
+    height: 25px; 
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-right: 5px; 
-    font-size: 20px; 
+    margin-right: 10px; 
+    font-size: 25px; 
 }
 
 .button:hover {
@@ -124,11 +124,8 @@
 }
 
 .item-button:hover {
-    background-color: var(--hover-history-menu);
     background-color: rgba(0, 0, 0, 0.2);
     border-radius: 50px;
-    /* BLOM SELESAI */
-
 }
 
 .button-icon {
