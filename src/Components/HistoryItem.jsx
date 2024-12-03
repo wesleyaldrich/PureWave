@@ -1,10 +1,10 @@
 import "./HistoryItem.css";
 import React from "react";
-import profile from "../assets/Profile.png";
-import rename from "../assets/rename.png";
-import duplicate from "../assets/duplicate.png";
-import share from "../assets/share.png";
-import deleteIcon from "../assets/delete.png"; 
+import profile from "../assets/icon-profile.png";
+import rename from "../assets/icon-rename.png";
+import duplicate from "../assets/icon-duplicate.png";
+import share from "../assets/icon-share.png";
+import deleteIcon from "../assets/icon-delete.png"; 
 
 function HistoryItem({ name, date, size, duration }) {
   return (
