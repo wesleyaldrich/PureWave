@@ -42,11 +42,6 @@ function Community(){
                                 picture={post.picture}
                                 author={post.name}
                                 content={post.content} />
-                            // <div key={post.id} className="post">
-                            //     <h3>{post.name}</h3>
-                            //     <p>{post.content}</p>
-                            //     <img src={post.picture} alt={`${post.name}'s profile`} />
-                            // </div>
                         )
                     )
                 ) : (<p>No posts available</p>)
