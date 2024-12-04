@@ -84,17 +84,6 @@ function Community(){
                 </NavLink>
             </div>
             <div className="posts container-fluid">
-                {/* {posts.length > 0 ? (
-                    posts.map(
-                        (post) => (
-                            <Post
-                                picture={post.picture}
-                                author={post.name}
-                                content={post.content} />
-                        )
-                    )
-                ) : (<p>No posts available</p>)
-                } */}
                 {posts.length > 0 ? (
                     posts.map(
                         (post) => (
