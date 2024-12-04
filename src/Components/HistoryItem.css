@@ -49,6 +49,7 @@
 
 .button:hover {
     background-color: var(--hover-plus-enhance);
+    cursor: pointer;
 }
 
 .iconHistory:hover {
