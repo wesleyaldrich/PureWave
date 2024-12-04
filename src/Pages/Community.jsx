@@ -2,6 +2,7 @@ import './Community.css'
 import Post from '../Components/Post'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { NavLink } from "react-router-dom";
 
 function Community(){
     const [posts, setPosts] = useState([]);
@@ -25,19 +26,22 @@ function Community(){
         <div className="community-page container-fluid flex-col">
             <h1 className="title firacode">COMMUNITY</h1>
             <div className="buttons container-fluid row gurajada">
-                <div className="button col-4">
+                <NavLink to="/lab" className="button col-4" end>
                     <span className="iconHistory">+</span>
-                    <a>ENHANCE YOUR AUDIO</a>
-                </div>
-                <div className="button col">
-                    <a>CREATE POST</a>
-                </div>
+                    <a>ENHANCE YOUR AUDIO</a> 
+                </NavLink>
+                <NavLink to="/create" className="button col" end>
+                    <a>CREATE POST</a> 
+                </NavLink>
             </div>
             <div className="posts container-fluid">
                 {posts.length > 0 ? (
                     posts.map(
                         (post) => (
-                            <Post content={post.content}/>
+                            <Post
+                                picture={post.picture}
+                                author={post.name}
+                                content={post.content} />
                             // <div key={post.id} className="post">
                             //     <h3>{post.name}</h3>
                             //     <p>{post.content}</p>
