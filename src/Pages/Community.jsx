@@ -3,6 +3,7 @@ import Post from '../Components/Post'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { NavLink } from "react-router-dom";
+import addEnhance from "../assets/icon-addEnhance.png";
 
 function Community(){
     const [posts, setPosts] = useState([]);
@@ -76,7 +77,7 @@ function Community(){
             <h1 className="title firacode">COMMUNITY</h1>
             <div className="buttons container-fluid row gurajada">
                 <NavLink to="/lab" className="button col-4" end>
-                    <span className="iconHistory">+</span>
+                    <img src={addEnhance} alt="Icon Add Enhance" className="ebutton-icon"/>
                     <a>ENHANCE YOUR AUDIO</a> 
                 </NavLink>
                 <NavLink to="/create" className="button col" end>

@@ -8,3 +8,7 @@
     flex-direction: column;
     gap: 10px;
 }
+
+#history:hover{
+    background-color: var(--button);
+}

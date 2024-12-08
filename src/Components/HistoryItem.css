@@ -2,6 +2,10 @@
     color: var(--sub-title);
 }
 
+.history-page h1{
+    font-size: 130px;
+}
+
 .item-button-container {
     padding: 0 2.5vw;
 }
@@ -27,7 +31,7 @@
     border-radius: 40px;
     align-items: center;
     justify-content: center;
-    font-size: 2vw;
+    font-size: 2.5vw;
     height: 100%;
     color: var(--history-menu);
     background-color: var(--sidebar-gradient);
@@ -47,8 +51,14 @@
     font-size: 25px; 
 }
 
+.history-page .ebutton-icon{
+    width: 2vw;
+    margin-right: 18px;
+}
+
+
 .button:hover {
-    background-color: var(--hover-plus-enhance);
+    background-color: var(--hover-add-enhance);
     cursor: pointer;
 }
 

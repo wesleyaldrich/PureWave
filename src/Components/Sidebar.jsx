@@ -14,15 +14,15 @@ function Sidebar(){
                     <p>PUREWAVE</p>
                 </div>
 
-                <NavLink to="/" className="icon center-content" activeClassName="active" end>
+                <NavLink to="/"  id="community" className="icon center-content" activeClassName="active" end>
                     <img src={icon_community} alt="PureWave Logo" />
                     <p>COMMUNITY</p>
                 </NavLink>
-                <NavLink to="/lab" className="icon center-content" activeClassName="active">
+                <NavLink to="/lab" id="lab" className="icon center-content" activeClassName="active">
                     <img src={icon_lab} alt="PureWave Logo" />
                     <p>LABORATORY</p>
                 </NavLink>
-                <NavLink to="/history" className="icon center-content" activeClassName="active">
+                <NavLink to="/history" id="history" className="icon center-content" activeClassName="active">
                     <img src={icon_history} alt="PureWave Logo" />
                     <p>HISTORY</p>
                 </NavLink>

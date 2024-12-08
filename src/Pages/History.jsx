@@ -1,5 +1,6 @@
 import './History.css'
 import HistoryItem from '../Components/HistoryItem'
+import addEnhance from "../assets/icon-addEnhance.png";
 
 function History() {
   const data = [
@@ -15,8 +16,8 @@ function History() {
       <h1 className="title firacode">HISTORY</h1>
       <div className="buttons container-fluid row gurajada">
           <div className="button col-4">
-              <span className="iconHistory">+</span>
-              <a>ENHANCE YOUR AUDIO</a>
+            <img src={addEnhance} alt="Icon Add Enhance" className="ebutton-icon"/>
+            <a>ENHANCE YOUR AUDIO</a> 
           </div>
       </div>
       <div className="history-list container-fluid">
