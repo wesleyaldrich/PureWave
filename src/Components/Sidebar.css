@@ -2,19 +2,21 @@
     background-image: linear-gradient(to bottom, var(--sidebar-gradient), var(--background));
     width: 10vw;
     height: 100%;
+    justify-content: space-between;
 }
 
 .sidebar-content {
-    height: 80%;
+    height: 100%;
     align-items: center;
     justify-content: start;
-    padding: 6vh 0;
-    gap: 5vw;
+    gap: 25px;
 }
 
 .logo {
+    padding: 55px 0px;
+    width: 100%;
     gap: 0.4vw;
-    margin-bottom: 1vw;
+    border-bottom: 2px solid var(--sub-title);
 }
 
 .logo img {
@@ -22,10 +24,8 @@
 }
 
 .icon {
-    height: 5vw;
-    width: 5vw;
-    min-height: 100px;
-    min-width: 100px;
+    height: 5.5vw;
+    width: 5.5vw;
     color: var(--sub-title);
     border-radius: 15%;
 }
@@ -38,7 +38,6 @@
     margin: 0;
     font-size: 1.5vw;
     line-height: 1.4vw;
-    min-width: 50px;
     color: var(--history-menu);
 }
 
@@ -47,7 +46,6 @@
     font-size: 1vw;
     margin-top: 0.75vw;
     line-height: 0;
-    min-width: 50px;
 }
 
 .icon.active {
@@ -58,4 +56,14 @@
 #lab:hover, #history:hover, #community:hover  {
     background-color: var(--hover);
     border-radius: 15%;
+}
+
+.help {
+    width: 100%;
+    margin-top: auto;
+}
+
+.help img{
+    margin-bottom: 25px;
+    width: 3.75vw;
 }
