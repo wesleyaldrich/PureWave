@@ -75,7 +75,7 @@ function Community(){
     return (<>
         <div className="community-page container-fluid flex-col">
             <h1 className="title firacode">COMMUNITY</h1>
-            <div className="buttons container-fluid row gurajada">
+            <div className="buttons flex-row justify-content-between gurajada ">
                 <NavLink to="/lab" className="button col-4" end>
                     <img src={addEnhance} alt="Icon Add Enhance" className="ebutton-icon"/>
                     <a>ENHANCE YOUR AUDIO</a> 
@@ -84,19 +84,25 @@ function Community(){
                     <a>CREATE POST</a> 
                 </NavLink>
             </div>
+
+            
             <div className="posts container-fluid">
-                {posts.length > 0 ? (
-                    posts.map(
-                        (post) => (
-                            <Post
-                                picture={post.picture}
-                                author={post.name}
-                                content={post.content} />
+                <div className="wrapper">
+                    {posts.length > 0 ? (
+                        posts.map(
+                            (post) => (
+                                <Post
+                                    picture={post.picture}
+                                    author={post.name}
+                                    content={post.content} />
+                            )
                         )
-                    )
-                ) : (<p>No posts available</p>)
-                }
+                    ) : (<p>No posts available</p>)
+                    }
+                </div>
             </div>
+
+            <p className='copyright center-content cambria'>copyrights©2024 Reserved by PureWave</p>
         </div>
     </>)
 }

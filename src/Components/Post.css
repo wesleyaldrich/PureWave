@@ -1,32 +1,58 @@
 .post {
-    padding: 1% 2%;
-    gap: 2vw;
+    padding-top: 5px;
+    gap: 1.5vw;
 }
 
-.post .pic-container {
-    height: 100%;
-    aspect-ratio: 1/1;
-}
 
 .post .pic-container img {
-    height: 100%;
-    padding: 2px;
-    aspect-ratio: 1/1;
+    border: 3px solid var(--history-menu);
     border-radius: 50%;
+    width: 50px;
 }
 
 .post h2 {
     text-align: start;
     font-size: 1.6vw;
-    color: var(--post-title);
+    color: var(--history-menu);
+    margin-bottom: 5px;
 }
 
 .post p {
+    margin-top: 0;
     text-align: justify;
     font-size: 1.2vw;
+    margin-bottom: 10px;
 }
 
 .post hr {
+    border: none;
     height: 1.5px;
-    background-color: var(--white);
+    width: 100%;
+    background-color: var(--hover-history-menu);
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+.data{ 
+    width: 100%;
+}
+
+.reply{
+    padding-bottom: 0;
+    margin-bottom: 0;
+    color: var(--edit-text);
+    gap: 0.5vw;
+    cursor: pointer;
+    width: 4.3vw;
+}
+
+.reply img{
+    height: 1vw;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.reply p{
+    font-size: 1.5vw;
+    line-height: 14.75px;
 }

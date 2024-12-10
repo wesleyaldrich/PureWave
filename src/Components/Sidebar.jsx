@@ -27,8 +27,7 @@ function Sidebar(){
                     <img src={icon_history} alt="Icon History" />
                     <p>HISTORY</p>
                 </NavLink>
-
-                <NavLink to="/" className="help center-content">
+                <NavLink to="/gethelp" className="help center-content">
                     <img src={icon_help} alt="Icon Help" />
                 </NavLink>
             </div>

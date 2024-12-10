@@ -3,7 +3,10 @@
 }
 
 .history-page h1{
-    font-size: 130px;
+    margin-top: 30px;
+    margin-bottom: 25px;
+    font-size: 5vw;
+    line-height: 50px;
 }
 
 .item-button-container {
@@ -21,9 +24,9 @@
     display: flex;
     justify-content: left;
     transition: background-color 0.3s ease;
-    height: 4vw;
+    height: 3.5vw;
     gap: 1.5vw;
-    margin-bottom: 2vw;
+    margin-bottom: 27px;
 }
 
 .history-page .button {

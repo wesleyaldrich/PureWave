@@ -14,13 +14,13 @@ function History() {
   return (
     <div className="history-page container-fluid">
       <h1 className="title firacode">HISTORY</h1>
-      <div className="buttons container-fluid row gurajada">
+      <div className="buttons flex-row justify-content-between gurajada">
           <div className="button col-4">
             <img src={addEnhance} alt="Icon Add Enhance" className="ebutton-icon"/>
             <a>ENHANCE YOUR AUDIO</a> 
           </div>
       </div>
-      <div className="history-list container-fluid">
+      <div className="history-list">
         {data.map((item, index) => (
           <HistoryItem
             key={index}

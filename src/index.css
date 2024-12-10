@@ -65,6 +65,11 @@ html, body {
     font-optical-sizing: auto;
 }
 
+.cambria{
+    font-family: "Cambria";
+}
+
+
 p {
     text-align: left;
 }

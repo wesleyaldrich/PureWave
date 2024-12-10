@@ -6,7 +6,8 @@
 .history-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
+    border: 1px solid red;
 }
 
 #history:hover{
