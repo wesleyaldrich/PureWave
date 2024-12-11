@@ -1,0 +1,14 @@
+.get-help-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow-y: auto;
+    background-color: var(--background-color);
+    color: var(--sub-title);
+  }
+
+  .faq-section {
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+  

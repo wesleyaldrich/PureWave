@@ -4,6 +4,7 @@ import Sidebar from './Components/Sidebar'
 import Community from './Pages/Community'
 import Lab from './Pages/Lab'
 import History from './Pages/History';
+import GetHelp from './Pages/GetHelp';
 
 function App() {
     return (<>
@@ -15,6 +16,7 @@ function App() {
                         <Route path="/" element={<Community />} />
                         <Route path="/lab" element={<Lab />} />
                         <Route path="/history" element={<History />} />
+                        <Route path="/gethelp" element={<GetHelp />} />
                     </Routes>
                 </div>
             </div>

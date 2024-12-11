@@ -4,6 +4,7 @@ import logo from '../assets/logo.png'
 import icon_community from '../assets/icon-community.png'
 import icon_lab from '../assets/icon-lab.png'
 import icon_history from '../assets/icon-history.png'
+import icon_faq from '../assets/icon-faq.png'
 
 function Sidebar(){
     return (<>
@@ -25,6 +26,10 @@ function Sidebar(){
                 <NavLink to="/history" className="icon center-content" activeClassName="active">
                     <img src={icon_history} alt="PureWave Logo" />
                     <p>HISTORY</p>
+                </NavLink>
+                <NavLink to="/gethelp" className="icon center-content" activeClassName="active">
+                    <img src={icon_faq} alt="PureWave Logo" />
+                    <p>HELP</p>
                 </NavLink>
             </div>
         </div>

@@ -44,6 +44,7 @@
     font-size: 1.4vw;
     line-height: 1.75vw;
     min-width: 50px;
+    text-align: center;
 }
 
 .icon.active {
