@@ -1,11 +1,16 @@
 import './Post.css'
 
-function Post({ author, content }){
+function Post({ picture, author, content }){
     return (<>
-        <div className="post flex-col">
-            <h2>{ author }</h2>
-            <p>{ content }</p>
-            <hr/>
+        <div className="post flex-row">
+            <div className="pic-container center-content">
+                <img src={picture} alt={`${author}'s profile`} />
+            </div>
+            <div className="flex-col">
+                <h2>{ author }</h2>
+                <p>{ content }</p>
+                <hr/>
+            </div>
         </div>
     </>)
 }

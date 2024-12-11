@@ -1,5 +1,18 @@
 .post {
     padding: 1% 2%;
+    gap: 2vw;
+}
+
+.post .pic-container {
+    height: 100%;
+    aspect-ratio: 1/1;
+}
+
+.post .pic-container img {
+    height: 100%;
+    padding: 2px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
 }
 
 .post h2 {
