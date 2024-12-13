@@ -1,9 +1,9 @@
-import "./Post.css";
+import "./ReplyList.css";
 import icon_reply from "../assets/icon-reply.png";
 
-function Post({ picture, author, content, onReply }) {
+function ReplyList({ picture, author, content, onReply }) {
     return (
-        <div className="post flex-row">
+        <div className="replyList flex-row">
             <div className="pic-container">
                 <img src={picture} alt={`${author}'s profile`} />
             </div>
@@ -15,10 +15,9 @@ function Post({ picture, author, content, onReply }) {
                     <img src={icon_reply} alt="icon reply" />
                     <p className="gurajada">Reply</p>
                 </div>
-                <hr />
             </div>
         </div>
     );
 }
 
-export default Post;
+export default ReplyList;

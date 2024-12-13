@@ -9,6 +9,9 @@ function History() {
     { name: "Deydey LopLop Project", date: "11/10/2024 18:00", size: "100MB", duration: "50:30" },
     { name: "Deydey LopLop Project", date: "11/10/2024 18:00", size: "100MB", duration: "50:30" },
     { name: "Deydey LopLop Project", date: "11/10/2024 18:00", size: "100MB", duration: "50:30" },
+    { name: "Deydey LopLop Project", date: "11/10/2024 18:00", size: "100MB", duration: "50:30" },
+    { name: "Deydey LopLop Project", date: "11/10/2024 18:00", size: "100MB", duration: "50:30" },
+    { name: "Deydey LopLop Project", date: "11/10/2024 18:00", size: "100MB", duration: "50:30" },
   ];
 
   return (
@@ -20,7 +23,8 @@ function History() {
             <a>ENHANCE YOUR AUDIO</a> 
           </div>
       </div>
-      <div className="history-list">
+
+      <div className="history-list container-fluid">
         {data.map((item, index) => (
           <HistoryItem
             key={index}
@@ -31,6 +35,7 @@ function History() {
           />
         ))}
       </div>
+      <p className='copyright center-content cambria'>copyrights©2024 Reserved by PureWave</p>
     </div>
   );
 }

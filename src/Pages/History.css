@@ -4,12 +4,20 @@
 }
 
 .history-list {
+    height: 32.5vw;
     display: flex;
     flex-direction: column;
     gap: 20px;
-    border: 1px solid red;
+    overflow-y: scroll;
+    padding: 0;
 }
 
 #history:hover{
     background-color: var(--button);
+}
+
+.history-page .copyright{
+    color: var(--sub-title);
+    margin-top: 20px;
+    margin-bottom: 0;
 }
