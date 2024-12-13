@@ -2,7 +2,6 @@ import './Community.css'
 import Post from '../Components/Post'
 import Reply from '../Components/Reply'
 import ReplyList from '../Components/ReplyList'
-import logo from '../assets/logo.png'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { NavLink } from "react-router-dom";
@@ -289,13 +288,13 @@ function Community(){
 
         {notificationSuccess && (
             <div className="notificationSuccess">
-                {}{notificationSuccess}
+                {notificationSuccess}
             </div>
         )}
 
         {notificationFailed && (
             <div className="notificationFailed">
-                {}{notificationFailed}
+                {notificationFailed}
             </div>
         )}
     </>)
