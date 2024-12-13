@@ -35,7 +35,7 @@ function History() {
           />
         ))}
       </div>
-      <p className='copyright center-content cambria'>copyrights©2024 Reserved by PureWave</p>
+      <p className='copyright cambria'>copyrights©2024 Reserved by PureWave</p>
     </div>
   );
 }
