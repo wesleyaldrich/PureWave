@@ -146,12 +146,10 @@
 }
 
 .item-button:hover {
-    background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 50px;
+    filter: brightness(0) saturate(100%) invert(67%) sepia(6%) saturate(1077%) hue-rotate(191deg) brightness(91%) contrast(86%);
 }
 
 .button-icon {
-    width: 16px; 
     height: 16px;
     vertical-align: middle;
 }

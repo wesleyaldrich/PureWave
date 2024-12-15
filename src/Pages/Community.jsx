@@ -129,7 +129,7 @@ function Community(){
         };
     
         setPosts(sampleData) // For static demonstration purposes only
-        setReply(sampleReply)
+            setReply(sampleReply)
         setReplyList(sampleData)
         // fetchPosts();
     }, []);
