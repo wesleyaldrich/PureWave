@@ -1,3 +1,10 @@
+.get-help-page h1 {
+  margin-top: 30px;
+  margin-bottom: 25px;
+  font-size: 5vw;
+  line-height: 50px;
+}
+
 .faq-item {
   position: relative;
   margin-bottom: 15px;
@@ -74,24 +81,24 @@
   border-radius: 40px;
   align-items: center;
   justify-content: center;
-  font-size: 2vw;
+  font-size: 2.5vw;
   height: 100%;
   color: var(--history-menu);
   background-color: var(--sidebar-gradient);
 }
 
-.get-help-page .iconHistory {
-    background-color: transparent;
-    color: var(--sub-title);
-    border-radius: 50%;
-    border:2px solid var(--border-plus-enhance);
-    width: 25px; 
-    height: 25px; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 10px; 
-    font-size: 25px; 
+.iconHistory {
+  background-color: transparent;
+  color: var(--sub-title);
+  border-radius: 50%;
+  border:2px solid var(--border-plus-enhance);
+  width: 25px; 
+  height: 25px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px; 
+  font-size: 25px; 
 }
 
 .button:hover {
