@@ -83,13 +83,13 @@ div::-webkit-scrollbar {
 
 .create-post{
     position: fixed;
-    top: 9.4vw;
+    top: 9vw;
     left: 16vw;
     padding: 35px 40px;
     background-color: rgba(8, 17, 50, 0.9); 
     box-shadow: 0px 0px 20px rgba(45, 94, 177, 1);
     width: 78%;
-    height: 71%;
+    height: 71.7%;
     border-radius: 20px;
     z-index: 1000; 
 }
@@ -103,6 +103,10 @@ div::-webkit-scrollbar {
     width: 20px;
     margin-top: 0;
     cursor: pointer;
+}
+
+.close img:hover{
+    filter: brightness(0) saturate(100%) invert(61%) sepia(63%) saturate(623%) hue-rotate(187deg) brightness(102%) contrast(89%);
 }
 
 .posting{
@@ -126,6 +130,7 @@ div::-webkit-scrollbar {
 .attachment, .send {
     display: flex;
     align-items: center;
+    cursor: pointer;
     padding: 0;
     margin: 0;
 }
@@ -153,6 +158,11 @@ textarea {
     width: 20px;
     display: flex;
     align-items: center;
+    cursor: pointer;
+}
+
+.attachment:hover, .send:hover{
+    filter: brightness(0) saturate(100%) invert(27%) sepia(87%) saturate(785%) hue-rotate(187deg) brightness(102%) contrast(91%);
 }
 
 button {    
@@ -166,13 +176,13 @@ button {
 
 .create-reply{
     position: fixed;
-    top: 9.4vw;
+    top: 9vw;
     left: 16vw;
     padding: 35px 40px;
     background-color: rgba(8, 17, 50, 0.9); 
     box-shadow: 0px 0px 20px rgba(45, 94, 177, 1);
     width: 78%;
-    height: 71%;
+    height: 71.7%;
     border-radius: 20px;
     z-index: 1000; 
 }
@@ -219,6 +229,24 @@ button {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     animation: fadeInOut 2.5s ease-in-out; /* Durasi lebih cepat: 2.5 detik */
+}
+
+.information{
+    margin: 0 1.25vw;
+
+}
+
+.uploadedFile{
+    margin-bottom: 0.5vw;
+}
+
+.cancelUploadFile img{
+    width: 10px;
+    cursor: pointer;
+}
+
+.cancelUploadFile img:hover{
+    filter: brightness(0) saturate(100%) invert(61%) sepia(63%) saturate(623%) hue-rotate(187deg) brightness(102%) contrast(89%);
 }
 
 @keyframes fadeInOut {

@@ -2,7 +2,7 @@ import './Community.css'
 import Post from '../Components/Post'
 import Reply from '../Components/Reply'
 import ReplyList from '../Components/ReplyList'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { NavLink } from "react-router-dom";
 import addEnhance from "../assets/icon-addEnhance.png";
@@ -21,6 +21,24 @@ function Community(){
     const [replyingToPostId, setReplyingToPostId] = useState(null);  // Menyimpan ID postingan yang dibalas
     const [notificationSuccess, setNotificationSuccess] = useState(null);
     const [notificationFailed, setNotificationFailed] = useState(null);
+    const [file, setFile] = useState(null); // State untuk file yang diunggah
+    const fileInputRef = useRef(null); // Referensi untuk elemen input file
+
+    // Fungsi untuk menangani file upload
+    const handleFileChange = (event) => {
+        const uploadedFile = event.target.files[0];
+        setFile(uploadedFile); // Simpan file ke state
+        console.log("Uploaded file:", uploadedFile);
+    };
+
+    // Fungsi untuk membuka dialog file upload
+    const handleAttachmentClick = () => {
+        fileInputRef.current.click(); // Trigger klik pada input file
+    };
+
+    const handleCancelUploadFile = () => {
+        setFile(null); // Reset file ke null
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -179,11 +197,28 @@ function Community(){
                 </div>
 
                 <div className="posting cambria">
+                    {file && 
+                        <div className="information d-flex justify-content-between">
+                            <p className='uploadedFile cambria'>File uploaded: {file.name}</p>
+                            <div className="cancelUploadFile" onClick={handleCancelUploadFile}  >
+                                <img src={cancelIcon} alt="cancel icon" />
+                            </div>
+                        </div>
+                    }
+
                     <form onSubmit={handleSubmit}>
                         <div className="formAtt d-flex justify-content-between">
-                            <div className="attachment">
-                                <img src= {iconAttachment} alt="attachment icon" className='icon-form'/>
-                            </div>
+                        <div className="attachment" onClick={handleAttachmentClick}>
+                            <img src={iconAttachment} alt="attachment icon" className="icon-form" />
+                            {/* Hidden Input */}
+                            <input
+                                    type="file"
+                                    ref={fileInputRef}
+                                    style={{ display: 'none' }}
+                                    onChange={handleFileChange} // Handle file selection
+                                    key={file ? 'file-uploaded' : 'file-reset'} // Memaksa render ulang ketika file dibatalkan
+                            />
+                        </div>
 
                             <textarea
                                 id="content"
@@ -249,14 +284,31 @@ function Community(){
                         )
                     ) : (<p>No posts available</p>)
                     }
-                </div>            
+                </div>         
 
                 <div className="replyArea cambria">
+                    {file && 
+                        <div className="information d-flex justify-content-between">
+                            <p className='uploadedFile cambria'>File uploaded: {file.name}</p>
+                            <div className="cancelUploadFile" onClick={handleCancelUploadFile}  >
+                                <img src={cancelIcon} alt="cancel icon" />
+                            </div>
+                        </div>
+                    }
+
                     <form onSubmit={handleReplySubmit}>
                         <div className="formAtt d-flex justify-content-between">
-                            <div className="attachment">
-                                <img src={iconAttachment} alt="attachment icon" className="icon-form" />
-                            </div>
+                        <div className="attachment" onClick={handleAttachmentClick}>
+                            <img src={iconAttachment} alt="attachment icon" className="icon-form" />
+                            {/* Hidden Input */}
+                            <input
+                                    type="file"
+                                    ref={fileInputRef}
+                                    style={{ display: 'none' }}
+                                    onChange={handleFileChange} // Handle file selection
+                                    key={file ? 'file-uploaded' : 'file-reset'} // Memaksa render ulang ketika file dibatalkan
+                            />
+                        </div>
 
                             <div className="PostyangDireply">
 
