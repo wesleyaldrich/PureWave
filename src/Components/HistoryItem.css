@@ -4,6 +4,8 @@
 
 .item-button-container {
     padding: 0 2.5vw;
+    display: flex;
+    gap: 10px;
 }
 
 .profile-img {
@@ -18,6 +20,7 @@
     justify-content: left;
     transition: background-color 0.3s ease;
     height: 4vw;
+    min-height: 4vw;
     gap: 1.5vw;
     margin-bottom: 2vw;
 }
@@ -101,11 +104,6 @@
     gap: 10px;
     align-items: flex-end;
     height: 100%;
-}
-
-.item-button-container {
-    display: flex;
-    gap: 10px;
 }
 
 .item-button {

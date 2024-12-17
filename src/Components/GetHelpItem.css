@@ -29,12 +29,8 @@
   overflow: hidden;
 }
 
-.faq-item.expanded {
-  max-height: 300px;
-}
-
 .faq-section {
-  margin-bottom: 3vw;
+  margin-bottom: 4vw;
 }
 
 .get-help-page .faq-section::-webkit-scrollbar {
@@ -70,6 +66,7 @@
 
 .faq-answer p {
   margin: 0;
+  white-space: pre-wrap;
 }
 
 .get-help-page .button {

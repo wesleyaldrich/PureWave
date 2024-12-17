@@ -1,7 +1,10 @@
 import './GetHelp.css';
 import GetHelpItem from '../Components/GetHelpItem';
+import React, { useState } from 'react';
 
 function GetHelp() {
+  const [openIndex, setOpenIndex] = useState(null);
+
   const faqItems = [
     {
         question: 'Bagaimana cara melakukan Enhance Audio PureWave?',
@@ -10,13 +13,21 @@ function GetHelp() {
           '2. Upload audio yang ingin di-enhance.',
           '3. Klik tombol “ENHANCE” (Opsional: jika Anda ingin menyesuaikan audio quality & audio file size, klik “Advanced Settings”).',
           '4. a. Jika ingin mengunduh audio (audio original maupun enhanced), silahkan klik icon “DOWNLOAD” di sebelah audio yang ingin diunduh.',
-          'b. Jika ingin mengunduh enhanced audio dengan output extract tertentu, pilih option-nya pada bagian “EXTRACT OUTPUT OPTION”, kemudian klik tombol “EXTRACT”.',
-          'c. Jika tidak ingin mengunduh audionya, Anda dapat menyimpannya dengan klik tombol “SAVE”, kemudian audio tersebut dapat diakses kembali pada halaman “HISTORY”.'
+          '    b. Jika ingin mengunduh enhanced audio dengan output extract tertentu, pilih option-nya pada bagian “EXTRACT OUTPUT OPTION”, kemudian klik tombol', 
+          '        “EXTRACT”.',
+          '    c. Jika tidak ingin mengunduh audionya, Anda dapat menyimpannya dengan klik tombol “SAVE”, kemudian audio tersebut dapat diakses kembali pada',
+          '        halaman “HISTORY”.'
         ]    
     },
     {
         question: 'Saya mengalami masalah saat login dengan Google, apa yang harus saya lakukan?',
-        answer: ['Pastikan Anda telah menghubungkan akun Google dengan benar atau coba ulangi proses login.']
+        answer: [
+          'Jika Anda mengalami masalah, pastikan:',
+          '- Akun Google Anda aktif dan tidak terkunci.',
+          '- Koneksi internet Anda stabil.',
+          '- Izin autentikasi Google diberikan saat diminta.',
+          '- Jika masalah berlanjut, silakan hubungi tim dukungan kami.'
+        ]
     },
     {
         question: 'Format file apa yang didukung oleh Audio Enhance?',
@@ -40,7 +51,11 @@ function GetHelp() {
     }
   ];
 
-  return (
+  const handleToggle = (index) => {
+    setOpenIndex(openIndex === index ? null : index); // Tutup item jika diklik ulang
+  };
+
+return (
     <div className="get-help-page container-fluid flex-col">
       <h1 className="title firacode">HELP CENTER</h1>
       <div className="buttons container-fluid row gurajada">
@@ -51,11 +66,18 @@ function GetHelp() {
       </div>
       <div className="faq-section">
         {faqItems.map((item, index) => (
-          <GetHelpItem key={index} question={item.question} answer={item.answer} />
+          <GetHelpItem
+            key={index}
+            question={item.question}
+            answer={item.answer}
+            isOpen={openIndex === index}
+            onToggle={() => handleToggle(index)}
+          />
         ))}
       </div>
     </div>
   );
 }
+
 
 export default GetHelp;

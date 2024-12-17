@@ -1,6 +1,6 @@
 import "./HistoryItem.css";
 import React from "react";
-import profile from "../assets/icon-profile.png";
+import profile from "../assets/icon-profileHistory.png";
 import rename from "../assets/icon-rename.png";
 import duplicate from "../assets/icon-duplicate.png";
 import share from "../assets/icon-share.png";
