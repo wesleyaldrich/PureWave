@@ -1,11 +1,11 @@
-import "./Post.css";
+import "./ReplyList.css";
 import React, { useState } from "react";
 import icon_reply from "../assets/icon-reply.png";
 import icon_delete from "../assets/icon-delete-2.png"
 import icon_edit from "../assets/icon-edit.png"
 
 
-function Post({ picture, author, content, onReply }) {
+function ReplyList({ picture, author, content, onReply }) {
     const [isButtonVisible, setIsButtonVisible] = useState(false);
     
     // Fungsi untuk toggle visibilitas tombol
@@ -14,7 +14,7 @@ function Post({ picture, author, content, onReply }) {
     };
 
     return (
-        <div className="post flex-row">
+        <div className="replyList flex-row">
             <div className="pic-container">
                 <img src={picture} alt={`${author}'s profile`} />
             </div>
@@ -26,9 +26,8 @@ function Post({ picture, author, content, onReply }) {
                     <img src={icon_reply} alt="icon reply" />
                     <p className="gurajada">Reply</p>
                 </div>
-                <hr />
             </div>
-
+            
             <div className="dropdown">
                 {/* Tombol titik tiga horizontal */}
                 <div className="dot-menu flex-row" onClick={toggleButtonVisibility}>
@@ -52,10 +51,10 @@ function Post({ picture, author, content, onReply }) {
                     </div>
 
                 )}
-            </div>      
+            </div>  
 
         </div>
     );
 }
 
-export default Post;
+export default ReplyList;

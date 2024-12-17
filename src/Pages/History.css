@@ -1,10 +1,29 @@
 .history-page {
     background-color: var(--background);
     color: var(--sub-title);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .history-list {
+    flex-grow: 1;
+    height: 50vw;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
+    overflow-y: scroll;
+    padding: 0;
+}
+
+#history:hover{
+    background-color: var(--button);
+}
+
+.history-page .copyright{
+    text-align: center;
+    color: var(--sub-title);
+    margin-top: 20px;
+    margin-bottom: 0;
 }

@@ -1,42 +1,33 @@
-.post {
-    padding-top: 5px;
+.replyList {
     gap: 1.5vw;
 }
 
 
-.post .pic-container img {
+.replyList .pic-container img {
     border: 3px solid var(--history-menu);
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 42px;
+    height: 42px;
     aspect-ratio: 1/1;
 }
 
-.post h2 {
+.replyList h2 {
     text-align: start;
-    font-size: 1.6vw;
+    font-size: 1.4vw;
     color: var(--history-menu);
     margin-bottom: 5px;
 }
 
-.post p {
+.replyList p {
     margin-top: 0;
     text-align: justify;
-    font-size: 1.2vw;
+    font-size: 1.1vw;
     margin-bottom: 10px;
 }
 
-.post hr {
-    border: none;
-    height: 1.5px;
+.replyList .data{ 
     width: 100%;
-    background-color: var(--hover-history-menu);
-    margin-top: 0px;
-    margin-bottom: 20px;
-}
-
-.data{ 
-    width: 100%;
+    padding-bottom: 15px;
 }
 
 .reply{
@@ -64,7 +55,7 @@
 }
 
 /* CSS untuk ikon titik tiga horizontal */
-.dot-menu {
+.replyList .dot-menu {
     cursor: pointer;
     gap: 5px;
     margin-right: 8px;
@@ -85,9 +76,9 @@
     position: relative;
 }
 
-.option {
+.replyList .option {
     position: absolute;
-    left: -107.5px; /* Menjaga posisi kiri di bawah tombol titik tiga */
+    left: -104px; /* Menjaga posisi kiri di bawah tombol titik tiga */
     margin-top: 7px;
     background-color: var(--button);
     color: var(--hover-history-menu);
@@ -110,7 +101,7 @@
     padding: 0;
 }
 
-.post .option .iconDropDown{
+.option .iconDropDown{
     height: 20px;
 }
 
