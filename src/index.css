@@ -17,6 +17,7 @@
     --hover-history-menu: #9299B5;
     --border-plus-enhance: #2e5eb2;
     --hover-plus-enhance: #2D5EB1;
+    --hover-add-enhance: #15214B;
 }
 
 html, body {
@@ -63,6 +64,11 @@ html, body {
     font-family: "Fira Code", serif;
     font-optical-sizing: auto;
 }
+
+.cambria{
+    font-family: "Cambria";
+}
+
 
 p {
     text-align: left;
