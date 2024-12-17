@@ -152,6 +152,7 @@ textarea {
     background: none;
     border-bottom: 2px solid var(--title);
     align-items: start;
+    resize: none;
 }
 
 .icon-form{
