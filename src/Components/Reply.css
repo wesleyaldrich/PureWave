@@ -1,0 +1,31 @@
+.replyView {
+    padding-top: 5px;
+    gap: 1.5vw;
+}
+
+
+.replyView .pic-container img {
+    border: 3px solid var(--history-menu);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    aspect-ratio: 1/1;
+}
+
+.replyView h2 {
+    text-align: start;
+    font-size: 1.6vw;
+    color: var(--history-menu);
+    margin-bottom: 5px;
+}
+
+.replyView p {
+    margin-top: 0;
+    text-align: justify;
+    font-size: 1.2vw;
+    margin-bottom: 10px;
+}
+
+.data{ 
+    width: 100%;
+}

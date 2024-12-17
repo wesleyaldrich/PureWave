@@ -1,8 +1,12 @@
 import './History.css'
 import HistoryItem from '../Components/HistoryItem'
+import addEnhance from "../assets/icon-addEnhance.png";
 
 function History() {
   const data = [
+    { name: "Deydey LopLop Project", date: "11/10/2024 18:00", size: "100MB", duration: "50:30" },
+    { name: "Deydey LopLop Project", date: "11/10/2024 18:00", size: "100MB", duration: "50:30" },
+    { name: "Deydey LopLop Project", date: "11/10/2024 18:00", size: "100MB", duration: "50:30" },
     { name: "Deydey LopLop Project", date: "11/10/2024 18:00", size: "100MB", duration: "50:30" },
     { name: "Deydey LopLop Project", date: "11/10/2024 18:00", size: "100MB", duration: "50:30" },
     { name: "Deydey LopLop Project", date: "11/10/2024 18:00", size: "100MB", duration: "50:30" },
@@ -13,12 +17,13 @@ function History() {
   return (
     <div className="history-page container-fluid">
       <h1 className="title firacode">HISTORY</h1>
-      <div className="buttons container-fluid row gurajada">
+      <div className="buttons flex-row justify-content-between gurajada">
           <div className="button col-4">
-              <span className="iconHistory">+</span>
-              <a>ENHANCE YOUR AUDIO</a>
+            <img src={addEnhance} alt="Icon Add Enhance" className="ebutton-icon"/>
+            <a>ENHANCE YOUR AUDIO</a> 
           </div>
       </div>
+
       <div className="history-list container-fluid">
         {data.map((item, index) => (
           <HistoryItem
@@ -30,6 +35,7 @@ function History() {
           />
         ))}
       </div>
+      <p className='copyright cambria'>copyrights©2024 Reserved by PureWave</p>
     </div>
   );
 }

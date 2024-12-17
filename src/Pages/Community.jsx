@@ -1,14 +1,80 @@
 import './Community.css'
 import Post from '../Components/Post'
-import { useState, useEffect } from 'react';
+import Reply from '../Components/Reply'
+import ReplyList from '../Components/ReplyList'
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { NavLink } from "react-router-dom";
+import addEnhance from "../assets/icon-addEnhance.png";
+import cancelIcon from "../assets/icon-cancel.png"
+import iconAttachment from "../assets/icon-attachment.png"
+import iconSend from "../assets/icon-send.png"
 
 function Community(){
     const [posts, setPosts] = useState([]);
+    const [replys, setReply] = useState([]);
+    const [replyLists, setReplyList] = useState([]);
+    const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
+    const [content, setContent] = useState("");
+    const [isReplyOpen, setIsReplyOpen] = useState(false);
+    const [replyContent, setReplyContent] = useState("");
+    const [replyingToPostId, setReplyingToPostId] = useState(null);  // Menyimpan ID postingan yang dibalas
+    const [notificationSuccess, setNotificationSuccess] = useState(null);
+    const [notificationFailed, setNotificationFailed] = useState(null);
+    const [file, setFile] = useState(null); // State untuk file yang diunggah
+    const fileInputRef = useRef(null); // Referensi untuk elemen input file
+
+    // Fungsi untuk menangani file upload
+    const handleFileChange = (event) => {
+        const uploadedFile = event.target.files[0];
+        setFile(uploadedFile); // Simpan file ke state
+        console.log("Uploaded file:", uploadedFile);
+    };
+
+    // Fungsi untuk membuka dialog file upload
+    const handleAttachmentClick = () => {
+        fileInputRef.current.click(); // Trigger klik pada input file
+    };
+
+    const handleCancelUploadFile = () => {
+        setFile(null); // Reset file ke null
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await axios.post("http://localhost:8080/data/posts", { content, });
+            setContent(""); // Reset input form
+            setIsCreatePostOpen(false); // Tutup modal
+            setNotificationSuccess("Post berhasil dibuat!"); // Tampilkan notifikasi
+            setTimeout(() => setNotificationSuccess(null), 2500); // Sembunyikan notifikasi setelah 2.5 detik
+        } catch (error) {
+            console.error("Error creating post:", error);
+            setNotificationFailed("Gagal membuat post. Silakan coba lagi.");
+            setTimeout(() => setNotificationFailed(null), 2500);
+        }
+    };
+    
+    const handleReplySubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await axios.post("http://localhost:8080/data/replies", {
+                content: replyContent,
+                postId: replyingToPostId,
+            });
+            setReplyContent(""); // Reset input form
+            setNotificationSuccess("Reply berhasil dibuat!"); // Tampilkan notifikasi
+            setTimeout(() => setNotificationSuccess(null), 2500); // Sembunyikan notifikasi setelah 2.5 detik
+        } catch (error) {
+            console.error("Error creating reply:", error);
+            setNotificationFailed("Gagal membuat reply. Silakan coba lagi."); // Tampilkan pesan error
+            setTimeout(() => setNotificationFailed(null), 2500); // Sembunyikan notifikasi setelah 2.5 detik
+        }
+    };
 
     const API_BASE_URL = 'http://localhost:8080'
-
 
     /*
         Sample data test for UI development.
@@ -56,6 +122,19 @@ function Community(){
         }
     ]
 
+    let sampleReply = [
+        {
+            "_id": {
+            "$oid": "674febe45c455866a168cc95"
+            },
+            "userId": "wesleylim08@gmail.com",
+            "name": "Wesley",
+            "picture": "https://lh3.googleusercontent.com/a/ACg8ocJKgQG1OgrKcoR29TaaHrIZ2tlxMC6sffIES4kZI71BAivd2btv=s96-c",
+            "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet aliquam ad consequuntur provident labore, quo ex? Nobis excepturi dolor ad adipisci reprehenderit quis expedita explicabo quod, perspiciatis voluptas ab mollitia vero voluptates. Perferendis magni ab officia ad optio quam fugiat dolore ullam esse officiis consectetur quidem omnis recusandae, odit deleniti.",
+            "_class": "com.purewave.model.Post"
+        }
+    ]
+
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -68,35 +147,208 @@ function Community(){
         };
     
         setPosts(sampleData) // For static demonstration purposes only
+            setReply(sampleReply)
+        setReplyList(sampleData)
         // fetchPosts();
     }, []);
 
     return (<>
         <div className="community-page container-fluid flex-col">
             <h1 className="title firacode">COMMUNITY</h1>
-            <div className="buttons container-fluid row gurajada">
+            <div className="buttons flex-row justify-content-between gurajada ">
                 <NavLink to="/lab" className="button col-4" end>
-                    <span className="iconHistory">+</span>
+                    <img src={addEnhance} alt="Icon Add Enhance" className="ebutton-icon"/>
                     <a>ENHANCE YOUR AUDIO</a> 
                 </NavLink>
-                <NavLink to="/create" className="button col" end>
+                <div className="button col" onClick={() => setIsCreatePostOpen(true)}>
                     <a>CREATE POST</a> 
-                </NavLink>
+                </div>
             </div>
+
+            
             <div className="posts container-fluid">
-                {posts.length > 0 ? (
-                    posts.map(
-                        (post) => (
-                            <Post
-                                picture={post.picture}
-                                author={post.name}
-                                content={post.content} />
+                <div className="wrapper">
+                    {posts.length > 0 ? (
+                        posts.map(
+                            (post) => (
+                                <Post
+                                    picture={post.picture}
+                                    author={post.name}
+                                    content={post.content} 
+                                    onReply={() => {
+                                        setIsReplyOpen(true);
+                                        setReplyingToPostId(post._id.$oid);  // Set ID postingan yang dibalas
+                                    }}
+                                    />
+                            )
                         )
-                    )
-                ) : (<p>No posts available</p>)
-                }
+                    ) : (<p>No posts available</p>)
+                    }
+                </div>
             </div>
+
+            <p className='copyright center-content cambria'>copyrights©2024 Reserved by PureWave</p>
         </div>
+
+        {isCreatePostOpen && (
+            <div className="create-post flex-col">
+                <div className="close" onClick={() => setIsCreatePostOpen(false)}>
+                    <img src={cancelIcon} alt="cancel icon" />
+                </div>
+
+                <div className="posting cambria">
+                    {file && 
+                        <div className="information d-flex justify-content-between">
+                            <p className='uploadedFile cambria'>File uploaded: {file.name}</p>
+                            <div className="cancelUploadFile" onClick={handleCancelUploadFile}  >
+                                <img src={cancelIcon} alt="cancel icon" />
+                            </div>
+                        </div>
+                    }
+
+                    <form onSubmit={handleSubmit}>
+                        <div className="formAtt d-flex justify-content-between">
+                        <div className="attachment" onClick={handleAttachmentClick}>
+                            <img src={iconAttachment} alt="attachment icon" className="icon-form" />
+                            {/* Hidden Input */}
+                            <input
+                                    type="file"
+                                    ref={fileInputRef}
+                                    style={{ display: 'none' }}
+                                    onChange={handleFileChange} // Handle file selection
+                                    key={file ? 'file-uploaded' : 'file-reset'} // Memaksa render ulang ketika file dibatalkan
+                            />
+                        </div>
+
+                            <textarea
+                                id="content"
+                                name="content"
+                                value={content}
+                                className="input"
+                                onChange={(e) => setContent(e.target.value)}
+                                placeholder="Buat Postingan Baru Disini"
+                            />
+                            <br />
+                            <br />
+
+                                <div className="send">
+                                    <button type="submit" className="icon-form-btn">
+                                        <img src={iconSend} alt="send icon" className="icon-form" />
+                                    </button>
+                                </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        )}
+
+        {isReplyOpen && (
+            <div className="create-reply flex-col">
+                <div className="close" onClick={() => setIsReplyOpen(false)}>
+                    <img src={cancelIcon} alt="cancel icon" />
+                </div>
+
+                <div className="RepliedReply">
+                    {replys.length > 0 ? (
+                            replys.map(
+                                (reply) => (
+                                    <Reply
+                                        picture={reply.picture}
+                                        author={reply.name}
+                                        content={reply.content} 
+                                        onReply={() => {
+                                            setIsReplyOpen(true);
+                                            setReplyingToPostId(reply._id.$oid);  // Set ID postingan yang dibalas
+                                        }}
+                                        />
+                                )
+                            )
+                        ) : (<p>No posts available</p>)
+                    }  
+                </div>
+
+                <div className="ListReply">
+                    {replyLists.length > 0 ? (
+                        replyLists.map(
+                            (replylist) => (
+                                <ReplyList
+                                    picture={replylist.picture}
+                                    author={replylist.name}
+                                    content={replylist.content} 
+                                    onReply={() => {
+                                        setIsReplyOpen(true);
+                                        setReplyingToPostId(post._id.$oid);  // Set ID postingan yang dibalas
+                                    }}
+                                />
+                            )
+                        )
+                    ) : (<p>No posts available</p>)
+                    }
+                </div>         
+
+                <div className="replyArea cambria">
+                    {file && 
+                        <div className="information d-flex justify-content-between">
+                            <p className='uploadedFile cambria'>File uploaded: {file.name}</p>
+                            <div className="cancelUploadFile" onClick={handleCancelUploadFile}  >
+                                <img src={cancelIcon} alt="cancel icon" />
+                            </div>
+                        </div>
+                    }
+
+                    <form onSubmit={handleReplySubmit}>
+                        <div className="formAtt d-flex justify-content-between">
+                        <div className="attachment" onClick={handleAttachmentClick}>
+                            <img src={iconAttachment} alt="attachment icon" className="icon-form" />
+                            {/* Hidden Input */}
+                            <input
+                                    type="file"
+                                    ref={fileInputRef}
+                                    style={{ display: 'none' }}
+                                    onChange={handleFileChange} // Handle file selection
+                                    key={file ? 'file-uploaded' : 'file-reset'} // Memaksa render ulang ketika file dibatalkan
+                            />
+                        </div>
+
+                            <div className="PostyangDireply">
+
+                            </div>
+                            <hr />
+                            <div className="ListRepydariPostyangDireply"></div>
+
+                            <textarea
+                                id="content"
+                                name="content"
+                                value={replyContent}
+                                className="input"
+                                onChange={(e) => setReplyContent(e.target.value)}
+                                placeholder="Buat Reply Baru Disini"
+                            />
+                            <br />
+                            <br />
+
+                            <div className="send">
+                                <button type="submit" className="icon-form-btn">
+                                    <img src={iconSend} alt="send icon" className="icon-form" />
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        )}
+
+        {notificationSuccess && (
+            <div className="notificationSuccess">
+                {notificationSuccess}
+            </div>
+        )}
+
+        {notificationFailed && (
+            <div className="notificationFailed">
+                {notificationFailed}
+            </div>
+        )}
     </>)
 }
 
