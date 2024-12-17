@@ -1,8 +1,7 @@
 
 function Lab(){
-    return (<>
-        <h1>Halo gais</h1>
-    </>)
+  return (<>
+  </>)
 }
 
-export default Lab
+export default Lab;
