@@ -43,16 +43,9 @@
 
 .icon p {
     margin: 0;
-<<<<<<< HEAD
-    font-size: 1.4vw;
-    line-height: 1.75vw;
-    min-width: 50px;
-    text-align: center;
-=======
     font-size: 1vw;
     margin-top: 0.75vw;
     line-height: 0;
->>>>>>> c2a9fccca2375b2f223863e0b65b1f01f8df4057
 }
 
 .icon.active {
