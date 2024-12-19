@@ -1,6 +1,7 @@
 import './History.css'
 import HistoryItem from '../Components/HistoryItem'
 import addEnhance from "../assets/icon-addEnhance.png";
+import { NavLink } from 'react-router-dom';
 
 function History() {
   const data = [
@@ -18,10 +19,10 @@ function History() {
     <div className="history-page container-fluid">
       <h1 className="title firacode">HISTORY</h1>
       <div className="buttons flex-row justify-content-between gurajada">
-          <div className="button col-4">
-            <img src={addEnhance} alt="Icon Add Enhance" className="ebutton-icon"/>
-            <a>ENHANCE YOUR AUDIO</a> 
-          </div>
+          <NavLink to="/lab" className="button col-4" end>
+            <img src={addEnhance} alt="Icon Add Enhance" className="ebutton-icon" />
+            <a>ENHANCE YOUR AUDIO</a>
+          </NavLink>
       </div>
 
       <div className="history-list container-fluid">

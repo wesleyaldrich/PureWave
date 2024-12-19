@@ -51,7 +51,6 @@
     border: none;
     border-radius: 10px;
     padding: 0.5vw 1vw;
-    cursor: pointer;
     margin-top: 4px;
     transition: background-color 0.3s ease;
 }
@@ -127,6 +126,44 @@
     color: #133e87
 }
 
+.notificationSuccess {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #28a745; /* Warna hijau untuk sukses */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    animation: fadeInOut 2.5s ease-in-out; /* Durasi lebih cepat: 2.5 detik */
+}
+
+.notificationFailed {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color:  #dc3545; /* Warna Merah untuk Gagal */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    animation: fadeInOut 2.5s ease-in-out; /* Durasi lebih cepat: 2.5 detik */
+}
+
+@keyframes fadeInOut {
+    0%, 100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-10px); /* Efek muncul dari atas */
+    }
+    15%, 85% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0); /* Stabil di tengah */
+    }
+}
 
 
 /**/

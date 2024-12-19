@@ -1,6 +1,8 @@
 import './GetHelp.css';
 import GetHelpItem from '../Components/GetHelpItem';
+import addEnhance from "../assets/icon-addEnhance.png";
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 function GetHelp() {
   const [openIndex, setOpenIndex] = useState(null);
@@ -55,16 +57,17 @@ function GetHelp() {
     setOpenIndex(openIndex === index ? null : index); // Tutup item jika diklik ulang
   };
 
-return (
-    <div className="get-help-page container-fluid flex-col">
-      <h1 className="title firacode">HELP CENTER</h1>
-      <div className="buttons container-fluid row gurajada">
-          <div className="button col-4">
-              <span className="iconHistory">+</span>
-              <a>ENHANCE YOUR AUDIO</a>
-          </div>
+  return (
+    <div className="get-help-page container-fluid">
+      <h1 className="title firacode">HELP-CENTER</h1>
+      <div className="buttons flex-row justify-content-between gurajada">
+          <NavLink to="/lab" className="button col-4" end>
+            <img src={addEnhance} alt="Icon Add Enhance" className="ebutton-icon" />
+            <span>ENHANCE YOUR AUDIO</span>
+          </NavLink>
       </div>
-      <div className="faq-section">
+      
+      <div className="faq-section container-fluid">
         {faqItems.map((item, index) => (
           <GetHelpItem
             key={index}
@@ -79,6 +82,5 @@ return (
     </div>
   );
 }
-
 
 export default GetHelp;
