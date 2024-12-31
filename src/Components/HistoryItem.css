@@ -39,13 +39,11 @@
     margin-left: 8px;
 }
 
-.buttons {
-    display: flex;
-    justify-content: left;
-    transition: background-color 0.3s ease;
+.history-page .buttons {
+    width: 100%;
     height: 3.5vw;
-    gap: 1.5vw;
     margin-bottom: 27px;
+    display: flex;
 }
 
 .history-page .button {

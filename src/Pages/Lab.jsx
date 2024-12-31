@@ -5,7 +5,9 @@ import icon_upload from '../assets/upload.png';
 function Lab() {
     const fileInputRef = useRef(null);
     const [uploadedFile, setUploadedFile] = useState(null);
-    const [error, setError] = useState('');
+
+    const [notificationSuccess, setNotificationSuccess] = useState(null);
+    const [notificationFailed, setNotificationFailed] = useState(null);
 
     // Trigger input file saat tombol atau gambar ditekan
     const handleLogoClick = () => {
@@ -34,11 +36,13 @@ function Lab() {
     const validateFile = (file) => {
         if (file && (file.type === "audio/mpeg" || file.type === "audio/wav")) {
             setUploadedFile(file);
-            setError('');
+            setNotificationSuccess("Uploaded successfully!");
+            setTimeout(() => setNotificationSuccess(null), 2500); // Sembunyikan notifikasi setelah 2.5 detik
             console.log("File uploaded:", file.name);
         } else {
             setUploadedFile(null);
-            setError('Invalid file format. Only .mp3 and .wav are supported.');
+            setNotificationFailed("Invalid file format. Only .mp3 and .wav are supported.");
+            setTimeout(() => setNotificationFailed(null), 2500);
         }
     };
 
@@ -51,7 +55,6 @@ function Lab() {
                 className="posts container-fluid" 
                 onDragOver={handleDragOver} 
                 onDrop={handleDrop}
-                style={{ cursor: 'pointer' }}
             >
                 {/* Input File Tersembunyi */}
                 <input
@@ -80,9 +83,16 @@ function Lab() {
                     <p className="uploaded-file-name">Uploaded: {uploadedFile.name}</p>
                 )}
 
-                {/* Pesan Error */}
-                {error && (
-                    <p className="error-message">{error}</p>
+                {notificationSuccess && (
+                    <div className="notificationSuccess">
+                        {notificationSuccess}
+                    </div>
+                )}
+
+                {notificationFailed && (
+                    <div className="notificationFailed">
+                        {notificationFailed}
+                    </div>
                 )}
             </div>
 

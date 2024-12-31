@@ -47,11 +47,11 @@ function Community(){
             const response = await axios.post("http://localhost:8080/data/posts", { content, });
             setContent(""); // Reset input form
             setIsCreatePostOpen(false); // Tutup modal
-            setNotificationSuccess("Post berhasil dibuat!"); // Tampilkan notifikasi
+            setNotificationSuccess("Successfully created!"); // Tampilkan notifikasi
             setTimeout(() => setNotificationSuccess(null), 2500); // Sembunyikan notifikasi setelah 2.5 detik
         } catch (error) {
             console.error("Error creating post:", error);
-            setNotificationFailed("Gagal membuat post. Silakan coba lagi.");
+            setNotificationFailed("Failed to create a post. Please try again.");
             setTimeout(() => setNotificationFailed(null), 2500);
         }
     };
@@ -65,11 +65,11 @@ function Community(){
                 postId: replyingToPostId,
             });
             setReplyContent(""); // Reset input form
-            setNotificationSuccess("Reply berhasil dibuat!"); // Tampilkan notifikasi
+            setNotificationSuccess("Successfully replied!"); // Tampilkan notifikasi
             setTimeout(() => setNotificationSuccess(null), 2500); // Sembunyikan notifikasi setelah 2.5 detik
         } catch (error) {
             console.error("Error creating reply:", error);
-            setNotificationFailed("Gagal membuat reply. Silakan coba lagi."); // Tampilkan pesan error
+            setNotificationFailed("Failed to create a reply. Please try again."); // Tampilkan pesan error
             setTimeout(() => setNotificationFailed(null), 2500); // Sembunyikan notifikasi setelah 2.5 detik
         }
     };

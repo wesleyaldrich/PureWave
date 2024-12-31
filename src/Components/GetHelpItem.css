@@ -76,17 +76,6 @@
   white-space: pre-wrap;
 }
 
-.get-help-page .button {
-  display: flex;
-  border-radius: 40px;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.5vw;
-  height: 100%;
-  color: var(--history-menu);
-  background-color: var(--sidebar-gradient);
-}
-
 .iconHistory {
   background-color: transparent;
   color: var(--sub-title);
@@ -99,9 +88,4 @@
   align-items: center;
   margin-right: 10px; 
   font-size: 25px; 
-}
-
-.button:hover {
-  background-color: var(--hover-plus-enhance);
-  cursor: pointer;
 }
