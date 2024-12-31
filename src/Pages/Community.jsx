@@ -12,17 +12,18 @@ import iconSend from "../assets/icon-send.png"
 
 function Community(){
     const [posts, setPosts] = useState([]);
-    const [replys, setReply] = useState([]);
+    const [reply, setReply] = useState(null);
     const [replyLists, setReplyList] = useState([]);
     const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
     const [content, setContent] = useState("");
     const [isReplyOpen, setIsReplyOpen] = useState(false);
     const [replyContent, setReplyContent] = useState("");
-    const [replyingToPostId, setReplyingToPostId] = useState(null);  // Menyimpan ID postingan yang dibalas
     const [notificationSuccess, setNotificationSuccess] = useState(null);
     const [notificationFailed, setNotificationFailed] = useState(null);
     const [file, setFile] = useState(null); // State untuk file yang diunggah
     const fileInputRef = useRef(null); // Referensi untuk elemen input file
+
+    const API_BASE_URL = 'http://localhost:8080'
 
     // Fungsi untuk menangani file upload
     const handleFileChange = (event) => {
@@ -44,7 +45,9 @@ function Community(){
         e.preventDefault();
 
         try {
-            const response = await axios.post("http://localhost:8080/data/posts", { content, });
+            const response = await axios.post(`${API_BASE_URL}/data/posts`, {
+                content
+            });
             setContent(""); // Reset input form
             setIsCreatePostOpen(false); // Tutup modal
             setNotificationSuccess("Successfully created!"); // Tampilkan notifikasi
@@ -60,9 +63,8 @@ function Community(){
         e.preventDefault();
 
         try {
-            const response = await axios.post("http://localhost:8080/data/replies", {
-                content: replyContent,
-                postId: replyingToPostId,
+            const response = await axios.post(`${API_BASE_URL}/data/posts/${reply._id.$oid}`, {
+                content: replyContent
             });
             setReplyContent(""); // Reset input form
             setNotificationSuccess("Successfully replied!"); // Tampilkan notifikasi
@@ -73,8 +75,6 @@ function Community(){
             setTimeout(() => setNotificationFailed(null), 2500); // Sembunyikan notifikasi setelah 2.5 detik
         }
     };
-
-    const API_BASE_URL = 'http://localhost:8080'
 
     /*
         Sample data test for UI development.
@@ -147,7 +147,7 @@ function Community(){
         };
     
         setPosts(sampleData) // For static demonstration purposes only
-            setReply(sampleReply)
+        setReply(sampleReply)
         setReplyList(sampleData)
         // fetchPosts();
     }, []);
@@ -177,7 +177,7 @@ function Community(){
                                     content={post.content} 
                                     onReply={() => {
                                         setIsReplyOpen(true);
-                                        setReplyingToPostId(post._id.$oid);  // Set ID postingan yang dibalas
+                                        setReply(post);
                                     }}
                                     />
                             )
@@ -249,22 +249,15 @@ function Community(){
                 </div>
 
                 <div className="RepliedReply">
-                    {replys.length > 0 ? (
-                            replys.map(
-                                (reply) => (
-                                    <Reply
-                                        picture={reply.picture}
-                                        author={reply.name}
-                                        content={reply.content} 
-                                        onReply={() => {
-                                            setIsReplyOpen(true);
-                                            setReplyingToPostId(reply._id.$oid);  // Set ID postingan yang dibalas
-                                        }}
-                                        />
-                                )
-                            )
-                        ) : (<p>No posts available</p>)
-                    }  
+                    <Reply
+                        picture={reply.picture}
+                        author={reply.name}
+                        content={reply.content} 
+                        onReply={() => {
+                            setIsReplyOpen(true);
+                            setReplyingToPostId(reply._id.$oid);  // Set ID postingan yang dibalas
+                        }}
+                        />
                 </div>
 
                 <div className="ListReply">
