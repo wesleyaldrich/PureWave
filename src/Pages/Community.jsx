@@ -14,6 +14,7 @@ function Community(){
     const [posts, setPosts] = useState([]);
     const [reply, setReply] = useState(null);
     const [replyLists, setReplyList] = useState([]);
+
     const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
     const [content, setContent] = useState("");
     const [isReplyOpen, setIsReplyOpen] = useState(false);
@@ -41,6 +42,45 @@ function Community(){
         setFile(null); // Reset file ke null
     };
 
+    const fetchPosts = async () => {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/data/posts`);
+            setPosts(response.data);
+        } catch (error) {
+            console.error('Error fetching posts:', error);
+      }
+    };
+
+    const fetchReplies = async () => {
+        if (!reply || !reply.id) {
+            console.log(reply + "|" + reply.id);
+            console.error('Reply is null or undefined');
+            return;
+        }
+        try {
+            const response = await axios.get(`${API_BASE_URL}/data/posts/${reply.id}`);
+            setReplyList(response.data);
+        } catch (error) {
+            console.error('Error fetching replies:', error);
+        }
+    };
+
+    const handleReplyOpen = (post) => {
+        console.log(post);
+        setReply(post);
+        setIsReplyOpen(true);
+    };
+
+    useEffect(() => {
+        fetchPosts();
+    }, []);
+
+    useEffect(() => {
+        if (isReplyOpen && reply) {
+            fetchReplies();
+        }
+    }, [reply, isReplyOpen]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -57,13 +97,15 @@ function Community(){
             setNotificationFailed("Failed to create a post. Please try again.");
             setTimeout(() => setNotificationFailed(null), 2500);
         }
+
+        fetchPosts();
     };
     
     const handleReplySubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await axios.post(`${API_BASE_URL}/data/posts/${reply._id.$oid}`, {
+            const response = await axios.post(`${API_BASE_URL}/data/posts/${reply.id}`, {
                 content: replyContent
             });
             setReplyContent(""); // Reset input form
@@ -74,83 +116,29 @@ function Community(){
             setNotificationFailed("Failed to create a reply. Please try again."); // Tampilkan pesan error
             setTimeout(() => setNotificationFailed(null), 2500); // Sembunyikan notifikasi setelah 2.5 detik
         }
+
+        fetchReplies();
     };
 
-    /*
-        Sample data test for UI development.
-    */
-    let sampleData = [
-        {
-            "_id": {
-            "$oid": "674feac1f9d00407ace3a7b8"
-            },
-            "userId": "wesleylim08@gmail.com",
-            "name": "Wesley",
-            "picture": "https://lh3.googleusercontent.com/a/ACg8ocJKgQG1OgrKcoR29TaaHrIZ2tlxMC6sffIES4kZI71BAivd2btv=s96-c",
-            "content": "Trial 1",
-            "_class": "com.purewave.model.Post"
-        },
-        {
-            "_id": {
-            "$oid": "674febe45c455866a168cc95"
-            },
-            "userId": "wesleylim08@gmail.com",
-            "name": "Wesley",
-            "picture": "https://lh3.googleusercontent.com/a/ACg8ocJKgQG1OgrKcoR29TaaHrIZ2tlxMC6sffIES4kZI71BAivd2btv=s96-c",
-            "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet aliquam ad consequuntur provident labore, quo ex? Nobis excepturi dolor ad adipisci reprehenderit quis expedita explicabo quod, perspiciatis voluptas ab mollitia vero voluptates. Perferendis magni ab officia ad optio quam fugiat dolore ullam esse officiis consectetur quidem omnis recusandae, odit deleniti.",
-            "_class": "com.purewave.model.Post"
-        },
-        {
-            "_id": {
-            "$oid": "674fec055c455866a168cc96"
-            },
-            "userId": "wesleylim08@gmail.com",
-            "name": "Wesley",
-            "picture": "https://lh3.googleusercontent.com/a/ACg8ocJKgQG1OgrKcoR29TaaHrIZ2tlxMC6sffIES4kZI71BAivd2btv=s96-c",
-            "content": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur sit similique nostrum quo eligendi qui ad asperiores provident iure autem vitae alias culpa magnam nobis repudiandae numquam nihil deserunt, excepturi accusantium eum officiis modi, sequi consectetur error. Nisi veritatis impedit porro ipsum iusto magnam cumque ipsa laboriosam deserunt reprehenderit magni reiciendis voluptas earum fugit adipisci nesciunt distinctio, dolor repudiandae. Voluptatibus, quis expedita esse eius suscipit, ipsa numquam odit deleniti nam, earum ea incidunt commodi veritatis cupiditate architecto doloribus quisquam eos autem eveniet dolores ut perspiciatis tempore odio natus. Nobis atque deserunt, laboriosam veniam, quo amet at quos nesciunt accusamus adipisci suscipit illum rem voluptatem eligendi mollitia impedit voluptate molestias. Eum, aperiam tempore? Dignissimos animi voluptatibus harum natus voluptate doloremque, obcaecati adipisci sed repellat cupiditate qui beatae officiis quibusdam sit veritatis error deleniti quisquam esse? Tenetur, culpa molestiae exercitationem accusantium laudantium doloribus accusamus sit vitae in voluptates amet cupiditate ducimus assumenda id unde tempora aperiam excepturi omnis ea. Omnis quisquam tenetur, illo voluptatum obcaecati quis debitis cum quasi, beatae quibusdam quos, eos distinctio libero totam ducimus assumenda dolorum? Quis perferendis culpa, explicabo maxime ipsam eligendi tempora, nobis ratione, voluptatibus incidunt aliquid? Ab tempora veniam quidem, quisquam necessitatibus at laudantium ipsum vero culpa minima quos, vel earum saepe quod id? Recusandae eligendi, delectus tempora ad perspiciatis ratione accusamus in maiores veniam libero dolorem consectetur ut excepturi aspernatur rerum soluta sequi obcaecati inventore aliquid quaerat fugiat, consequatur nam. Libero nobis tempore debitis, ducimus quasi, quaerat cumque suscipit deserunt quae facere, distinctio eligendi quia.",
-            "_class": "com.purewave.model.Post"
-        },
-        {
-            "_id": {
-            "$oid": "674fec515c455866a168cc97"
-            },
-            "userId": "wesleylim08@gmail.com",
-            "name": "Wesley",
-            "picture": "https://lh3.googleusercontent.com/a/ACg8ocJKgQG1OgrKcoR29TaaHrIZ2tlxMC6sffIES4kZI71BAivd2btv=s96-c",
-            "content": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur sit similique nostrum quo eligendi qui ad asperiores provident iure autem vitae alias culpa magnam nobis repudiandae numquam nihil deserunt, excepturi accusantium eum officiis modi, sequi consectetur error. Nisi veritatis impedit porro ipsum iusto magnam cumque ipsa laboriosam deserunt reprehenderit magni reiciendis voluptas earum fugit adipisci nesciunt distinctio, dolor repudiandae. Voluptatibus, quis expedita esse eius suscipit, ipsa numquam odit deleniti nam, earum ea incidunt commodi veritatis cupiditate architecto doloribus quisquam eos autem eveniet dolores ut perspiciatis tempore odio natus. Nobis atque deserunt, laboriosam veniam, quo amet at quos nesciunt accusamus adipisci suscipit illum rem voluptatem eligendi mollitia impedit voluptate molestias. Eum, aperiam tempore? Dignissimos animi voluptatibus harum natus voluptate doloremque, obcaecati adipisci sed repellat cupiditate qui beatae officiis quibusdam sit veritatis error deleniti quisquam esse? Tenetur, culpa molestiae exercitationem accusantium laudantium doloribus accusamus sit vitae in voluptates amet cupiditate ducimus assumenda id unde tempora aperiam excepturi omnis ea. Omnis quisquam tenetur, illo voluptatum obcaecati quis debitis cum quasi, beatae quibusdam quos, eos distinctio libero totam ducimus assumenda dolorum? Quis perferendis culpa, explicabo maxime ipsam eligendi tempora, nobis ratione, voluptatibus incidunt aliquid? Ab tempora veniam quidem, quisquam necessitatibus at laudantium ipsum vero culpa minima quos, vel earum saepe quod id? Recusandae eligendi, delectus tempora ad perspiciatis ratione accusamus in maiores veniam libero dolorem consectetur ut excepturi aspernatur rerum soluta sequi obcaecati inventore aliquid quaerat fugiat, consequatur nam. Libero nobis tempore debitis, ducimus quasi, quaerat cumque suscipit deserunt quae facere, distinctio eligendi quia.",
-            "_class": "com.purewave.model.Post"
-        }
-    ]
-
-    let sampleReply = [
-        {
-            "_id": {
-            "$oid": "674febe45c455866a168cc95"
-            },
-            "userId": "wesleylim08@gmail.com",
-            "name": "Wesley",
-            "picture": "https://lh3.googleusercontent.com/a/ACg8ocJKgQG1OgrKcoR29TaaHrIZ2tlxMC6sffIES4kZI71BAivd2btv=s96-c",
-            "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet aliquam ad consequuntur provident labore, quo ex? Nobis excepturi dolor ad adipisci reprehenderit quis expedita explicabo quod, perspiciatis voluptas ab mollitia vero voluptates. Perferendis magni ab officia ad optio quam fugiat dolore ullam esse officiis consectetur quidem omnis recusandae, odit deleniti.",
-            "_class": "com.purewave.model.Post"
-        }
-    ]
-
-
-    useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const response = await axios.get(`${API_BASE_URL}/data/posts`);
-                setPosts(response.data);
-            } catch (error) {
-                console.error('Error fetching posts:', error);
+    const deletePost = async (post) => {
+        try {
+          const response = await axios.delete(`${API_BASE_URL}/data/posts/${post.id}`);
+          alert("Post deleted successfully!");
+          fetchPosts();
+          fetchReplies();
+        } catch (error) {
+          console.error("Error deleting post:", error);
+      
+          // Show a user-friendly error message
+          if (error.response) {
+            alert(`Failed to delete post: ${error.response.data.message || "Unknown error"}`);
+          } else if (error.request) {
+            alert("No response from the server. Please try again.");
+          } else {
+            alert("Error occurred: " + error.message);
           }
-        };
-    
-        setPosts(sampleData) // For static demonstration purposes only
-        setReply(sampleReply)
-        setReplyList(sampleData)
-        // fetchPosts();
-    }, []);
+        }
+      };
 
     return (<>
         <div className="community-page container-fluid flex-col">
@@ -164,7 +152,6 @@ function Community(){
                     <a>CREATE POST</a> 
                 </div>
             </div>
-
             
             <div className="posts container-fluid">
                 <div className="wrapper">
@@ -175,10 +162,8 @@ function Community(){
                                     picture={post.picture}
                                     author={post.name}
                                     content={post.content} 
-                                    onReply={() => {
-                                        setIsReplyOpen(true);
-                                        setReply(post);
-                                    }}
+                                    onReply={() => handleReplyOpen(post)}
+                                    onDelete={() => deletePost(post)}
                                     />
                             )
                         )
@@ -212,11 +197,11 @@ function Community(){
                             <img src={iconAttachment} alt="attachment icon" className="icon-form" />
                             {/* Hidden Input */}
                             <input
-                                    type="file"
-                                    ref={fileInputRef}
-                                    style={{ display: 'none' }}
-                                    onChange={handleFileChange} // Handle file selection
-                                    key={file ? 'file-uploaded' : 'file-reset'} // Memaksa render ulang ketika file dibatalkan
+                                type="file"
+                                ref={fileInputRef}
+                                style={{ display: 'none' }}
+                                onChange={handleFileChange} // Handle file selection
+                                key={file ? 'file-uploaded' : 'file-reset'} // Memaksa render ulang ketika file dibatalkan
                             />
                         </div>
 
@@ -253,11 +238,7 @@ function Community(){
                         picture={reply.picture}
                         author={reply.name}
                         content={reply.content} 
-                        onReply={() => {
-                            setIsReplyOpen(true);
-                            setReplyingToPostId(reply._id.$oid);  // Set ID postingan yang dibalas
-                        }}
-                        />
+                    />
                 </div>
 
                 <div className="ListReply">
@@ -268,10 +249,8 @@ function Community(){
                                     picture={replylist.picture}
                                     author={replylist.name}
                                     content={replylist.content} 
-                                    onReply={() => {
-                                        setIsReplyOpen(true);
-                                        setReplyingToPostId(post._id.$oid);  // Set ID postingan yang dibalas
-                                    }}
+                                    onReply={() => handleReplyOpen(replylist)}
+                                    onDelete={() => deletePost(replylist)}
                                 />
                             )
                         )
@@ -291,23 +270,19 @@ function Community(){
 
                     <form onSubmit={handleReplySubmit}>
                         <div className="formAtt d-flex justify-content-between">
-                        <div className="attachment" onClick={handleAttachmentClick}>
-                            <img src={iconAttachment} alt="attachment icon" className="icon-form" />
-                            {/* Hidden Input */}
-                            <input
-                                    type="file"
-                                    ref={fileInputRef}
-                                    style={{ display: 'none' }}
-                                    onChange={handleFileChange} // Handle file selection
-                                    key={file ? 'file-uploaded' : 'file-reset'} // Memaksa render ulang ketika file dibatalkan
-                            />
-                        </div>
-
-                            <div className="PostyangDireply">
-
+                            <div className="attachment" onClick={handleAttachmentClick}>
+                                <img src={iconAttachment} alt="attachment icon" className="icon-form" />
+                                {/* Hidden Input */}
+                                <input
+                                        type="file"
+                                        ref={fileInputRef}
+                                        style={{ display: 'none' }}
+                                        onChange={handleFileChange} // Handle file selection
+                                        key={file ? 'file-uploaded' : 'file-reset'} // Memaksa render ulang ketika file dibatalkan
+                                />
                             </div>
+
                             <hr />
-                            <div className="ListRepydariPostyangDireply"></div>
 
                             <textarea
                                 id="content"

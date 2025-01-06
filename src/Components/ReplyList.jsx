@@ -5,7 +5,7 @@ import icon_delete from "../assets/icon-delete-2.png"
 import icon_edit from "../assets/icon-edit.png"
 
 
-function ReplyList({ picture, author, content, onReply }) {
+function ReplyList({ picture, author, content, onReply, onDelete }) {
     const [isButtonVisible, setIsButtonVisible] = useState(false);
     
     // Fungsi untuk toggle visibilitas tombol
@@ -44,7 +44,7 @@ function ReplyList({ picture, author, content, onReply }) {
                             <p className="gurajada">Edit</p>
                         </div>
 
-                        <div className="deletePost flex-row">
+                        <div className="deletePost flex-row" onClick={onDelete}>
                             <img src= {icon_delete} alt="icon delete" className="iconDropDown"/>
                             <p className="gurajada">Delete</p>
                         </div>
