@@ -24,6 +24,9 @@ function Community(){
     const [file, setFile] = useState(null); // State untuk file yang diunggah
     const fileInputRef = useRef(null); // Referensi untuk elemen input file
 
+    const [isEditing, setIsEditing] = useState(false);
+    const [targetedPost, setTargetedPost] = useState(null);
+
     const API_BASE_URL = 'http://localhost:8080'
 
     // Fungsi untuk menangani file upload
@@ -84,18 +87,38 @@ function Community(){
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
-            const response = await axios.post(`${API_BASE_URL}/data/posts`, {
-                content
-            });
-            setContent(""); // Reset input form
-            setIsCreatePostOpen(false); // Tutup modal
-            setNotificationSuccess("Successfully created!"); // Tampilkan notifikasi
-            setTimeout(() => setNotificationSuccess(null), 2500); // Sembunyikan notifikasi setelah 2.5 detik
-        } catch (error) {
-            console.error("Error creating post:", error);
-            setNotificationFailed("Failed to create a post. Please try again.");
-            setTimeout(() => setNotificationFailed(null), 2500);
+        if (isEditing){
+            try {
+                const response = await axios.put(`${API_BASE_URL}/data/posts/${targetedPost.id}`, {
+                    content
+                });
+                setContent(""); // Reset input form
+                setIsCreatePostOpen(false); // Tutup modal
+                setNotificationSuccess("Successfully edited!"); // Tampilkan notifikasi
+                setTimeout(() => setNotificationSuccess(null), 2500); // Sembunyikan notifikasi setelah 2.5 detik
+            } catch (error) {
+                console.error("Error creating post:", error);
+                setNotificationFailed("Failed to edit the post. Please try again.");
+                setTimeout(() => setNotificationFailed(null), 2500);
+            }
+            
+            setIsEditing(false);
+            setTargetedPost(null);
+        }
+        else {
+            try {
+                const response = await axios.post(`${API_BASE_URL}/data/posts`, {
+                    content
+                });
+                setContent(""); // Reset input form
+                setIsCreatePostOpen(false); // Tutup modal
+                setNotificationSuccess("Successfully created!"); // Tampilkan notifikasi
+                setTimeout(() => setNotificationSuccess(null), 2500); // Sembunyikan notifikasi setelah 2.5 detik
+            } catch (error) {
+                console.error("Error creating post:", error);
+                setNotificationFailed("Failed to create a post. Please try again.");
+                setTimeout(() => setNotificationFailed(null), 2500);
+            }
         }
 
         fetchPosts();
@@ -122,23 +145,37 @@ function Community(){
 
     const deletePost = async (post) => {
         try {
-          const response = await axios.delete(`${API_BASE_URL}/data/posts/${post.id}`);
-          alert("Post deleted successfully!");
-          fetchPosts();
-          fetchReplies();
+            const response = await axios.delete(`${API_BASE_URL}/data/posts/${post.id}`);
+            fetchPosts();
+            fetchReplies();
         } catch (error) {
-          console.error("Error deleting post:", error);
-      
-          // Show a user-friendly error message
-          if (error.response) {
-            alert(`Failed to delete post: ${error.response.data.message || "Unknown error"}`);
-          } else if (error.request) {
-            alert("No response from the server. Please try again.");
-          } else {
-            alert("Error occurred: " + error.message);
-          }
+            console.error("Error deleting post:", error);
+        
+            // Show a user-friendly error message
+            if (error.response) {
+                alert(`Failed to delete post: ${error.response.data.message || "Unknown error"}`);
+            } else if (error.request) {
+                alert("No response from the server. Please try again.");
+            } else {
+                alert("Error occurred: " + error.message);
+            }
         }
-      };
+    };
+
+    const editPost = (post) => {
+        setIsEditing(true);
+        setIsCreatePostOpen(true)
+        setContent(post.content)
+        setTargetedPost(post)
+        // setFile(post.attachment);
+    }
+
+    const closeForm = () => {
+        setIsCreatePostOpen(false)
+        setIsEditing(false);
+        setContent("")
+        setTargetedPost(null)
+    }
 
     return (<>
         <div className="community-page container-fluid flex-col">
@@ -164,6 +201,7 @@ function Community(){
                                     content={post.content} 
                                     onReply={() => handleReplyOpen(post)}
                                     onDelete={() => deletePost(post)}
+                                    onEdit={() => editPost(post)}
                                     />
                             )
                         )
@@ -177,7 +215,7 @@ function Community(){
 
         {isCreatePostOpen && (
             <div className="create-post flex-col">
-                <div className="close" onClick={() => setIsCreatePostOpen(false)}>
+                <div className="close" onClick={() => closeForm()}>
                     <img src={cancelIcon} alt="cancel icon" />
                 </div>
 
@@ -193,17 +231,17 @@ function Community(){
 
                     <form onSubmit={handleSubmit}>
                         <div className="formAtt d-flex justify-content-between">
-                        <div className="attachment" onClick={handleAttachmentClick}>
-                            <img src={iconAttachment} alt="attachment icon" className="icon-form" />
-                            {/* Hidden Input */}
-                            <input
-                                type="file"
-                                ref={fileInputRef}
-                                style={{ display: 'none' }}
-                                onChange={handleFileChange} // Handle file selection
-                                key={file ? 'file-uploaded' : 'file-reset'} // Memaksa render ulang ketika file dibatalkan
-                            />
-                        </div>
+                            <div className="attachment" onClick={handleAttachmentClick}>
+                                <img src={iconAttachment} alt="attachment icon" className="icon-form" />
+                                {/* Hidden Input */}
+                                <input
+                                    type="file"
+                                    ref={fileInputRef}
+                                    style={{ display: 'none' }}
+                                    onChange={handleFileChange} // Handle file selection
+                                    key={file ? 'file-uploaded' : 'file-reset'} // Memaksa render ulang ketika file dibatalkan
+                                />
+                            </div>
 
                             <textarea
                                 id="content"
@@ -216,11 +254,11 @@ function Community(){
                             <br />
                             <br />
 
-                                <div className="send">
-                                    <button type="submit" className="icon-form-btn">
-                                        <img src={iconSend} alt="send icon" className="icon-form" />
-                                    </button>
-                                </div>
+                            <div className="send">
+                                <button type="submit" className="icon-form-btn">
+                                    <img src={iconSend} alt="send icon" className="icon-form" />
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -251,6 +289,7 @@ function Community(){
                                     content={replylist.content} 
                                     onReply={() => handleReplyOpen(replylist)}
                                     onDelete={() => deletePost(replylist)}
+                                    onEdit={() => editPost(replylist)}
                                 />
                             )
                         )
