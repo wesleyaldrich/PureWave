@@ -5,7 +5,7 @@ import icon_delete from "../assets/icon-delete-2.png"
 import icon_edit from "../assets/icon-edit.png"
 
 
-function Post({ picture, author, content, onReply, onDelete }) {
+function Post({ picture, author, content, onReply, onDelete, onEdit }) {
     const [isButtonVisible, setIsButtonVisible] = useState(false);
     
     // Fungsi untuk toggle visibilitas tombol
@@ -40,7 +40,7 @@ function Post({ picture, author, content, onReply, onDelete }) {
                 {/* Tombol kecil yang muncul di bawah setelah titik tiga diklik */}
                 {isButtonVisible && (
                     <div className="option gurajada flex-row">
-                        <div className="edit flex-row">
+                        <div className="edit flex-row" onClick={onEdit}>
                             <img src= {icon_edit} alt="icon edit" className="iconDropDown"/>
                             <p className="gurajada">Edit</p>
                         </div>
