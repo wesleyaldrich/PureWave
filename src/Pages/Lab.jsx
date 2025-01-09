@@ -1,10 +1,11 @@
 import './lab.css';
-import React, { useRef, useState } from 'react';
+import axios from 'axios';
+import { useRef, useState } from 'react';
 import icon_upload from '../assets/upload.png';
 
 function Lab() {
     const fileInputRef = useRef(null);
-    const [uploadedFile, setUploadedFile] = useState(null);
+    const [uploadedFileName, setUploadedFileName] = useState(null);
 
     const [notificationSuccess, setNotificationSuccess] = useState(null);
     const [notificationFailed, setNotificationFailed] = useState(null);
@@ -32,15 +33,51 @@ function Lab() {
         validateFile(file);
     };
 
+    const submitAudio = async (file) => {
+        try {
+            const formData = new FormData();
+            formData.append('audio', file); // 'audio' matches the key expected by the backend
+    
+            const response = await axios.post('http://localhost:5000/audio', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+                responseType: 'blob', // Important: To handle binary data
+            });
+
+            // Create a URL for the audio blob
+            const audioBlob = new Blob([response.data], { type: 'audio/wav'});
+            const audioUrl = URL.createObjectURL(audioBlob);
+    
+            console.log('Response:', response.data);
+
+            // Assign the audio URL to the player
+            const audioPlayer = document.getElementById('audio-player');
+            audioPlayer.src = audioUrl;
+            audioPlayer.style.display = 'block'; // Make the player visible if hidden
+        } catch (error) {
+            if (error.response) {
+                console.error('Response data:', error.response.data);
+                console.error('Response status:', error.response.status);
+            } else if (error.request) {
+                console.error('Request:', error.request);
+            } else {
+                console.error('Error:', error.message);
+            }
+        }
+    };
+
     // Validasi file
     const validateFile = (file) => {
         if (file && (file.type === "audio/mpeg" || file.type === "audio/wav")) {
-            setUploadedFile(file);
+            setUploadedFileName(file.name);
             setNotificationSuccess("Uploaded successfully!");
             setTimeout(() => setNotificationSuccess(null), 2500); // Sembunyikan notifikasi setelah 2.5 detik
-            console.log("File uploaded:", file.name);
+            console.log("File uploaded:", uploadedFileName);
+
+            submitAudio(file);
         } else {
-            setUploadedFile(null);
+            setUploadedFileName('');
             setNotificationFailed("Invalid file format. Only .mp3 and .wav are supported.");
             setTimeout(() => setNotificationFailed(null), 2500);
         }
@@ -49,6 +86,10 @@ function Lab() {
     return (
         <div className="lab-page container-fluid flex-col">
             <h1 className="title firacode">LABORATORY</h1>
+
+            <audio id="audio-player" controls style={{display: 'none'}}>
+                Your browser does not support the audio element.
+            </audio>
 
             {/* Area Upload */}
             <div 
@@ -79,8 +120,8 @@ function Lab() {
                 </button>
 
                 {/* Pesan File yang Diunggah */}
-                {uploadedFile && (
-                    <p className="uploaded-file-name">Uploaded: {uploadedFile.name}</p>
+                {uploadedFileName && (
+                    <p className="uploaded-file-name">Uploaded: {uploadedFileName}</p>
                 )}
 
                 {notificationSuccess && (
