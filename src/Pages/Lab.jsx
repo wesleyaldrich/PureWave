@@ -1,14 +1,15 @@
 import './lab.css';
 import axios from 'axios';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import icon_upload from '../assets/upload.png';
 
 function Lab() {
     const fileInputRef = useRef(null);
     const [uploadedFileName, setUploadedFileName] = useState(null);
-
     const [notificationSuccess, setNotificationSuccess] = useState(null);
     const [notificationFailed, setNotificationFailed] = useState(null);
+    const [dryAudio, setDryAudio] = useState(null);
+    const [wetAudio, setWetAudio] = useState(null);
 
     // Trigger input file saat tombol atau gambar ditekan
     const handleLogoClick = () => {
@@ -36,25 +37,27 @@ function Lab() {
     const submitAudio = async (file) => {
         try {
             const formData = new FormData();
-            formData.append('audio', file); // 'audio' matches the key expected by the backend
+            formData.append('audio', file); // 'audio' is the key for backend
     
-            const response = await axios.post('http://localhost:5000/audio', formData, {
+            // Upload the audio file
+            let response = await axios.post('http://localhost:8080/audio', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
-                responseType: 'blob', // Important: To handle binary data
+                responseType: 'json',
             });
 
-            // Create a URL for the audio blob
-            const audioBlob = new Blob([response.data], { type: 'audio/wav'});
-            const audioUrl = URL.createObjectURL(audioBlob);
-    
-            console.log('Response:', response.data);
+            // Extract the name formats
+            const filenames = response.data.split(',');
+            const dryAudioFilename = filenames[0];
+            const wetAudioFilename = filenames[1];
 
-            // Assign the audio URL to the player
-            const audioPlayer = document.getElementById('audio-player');
-            audioPlayer.src = audioUrl;
-            audioPlayer.style.display = 'block'; // Make the player visible if hidden
+            // Set audio URLs
+            const dryAudioUrl = `http://localhost:8080/audio/files/dry/${dryAudioFilename}`;
+            const wetAudioUrl = `http://localhost:8080/audio/files/wet/${wetAudioFilename}`;
+
+            setDryAudio(dryAudioUrl);
+            setWetAudio(wetAudioUrl);
         } catch (error) {
             if (error.response) {
                 console.error('Response data:', error.response.data);
@@ -66,6 +69,19 @@ function Lab() {
             }
         }
     };
+
+    useEffect(() => {
+        if (dryAudio) {
+            console.log("Dry audio URL:", dryAudio);
+            console.log("Wet audio URL:", wetAudio);
+            const audioPlayerDry = document.getElementById('audio-player-dry');
+            audioPlayerDry.src = dryAudio;
+            audioPlayerDry.style.display = 'block';
+            const audioPlayerWet = document.getElementById('audio-player-wet');
+            audioPlayerWet.src = wetAudio;
+            audioPlayerWet.style.display = 'block';
+        }
+    }, [dryAudio]); 
 
     // Validasi file
     const validateFile = (file) => {
@@ -87,7 +103,11 @@ function Lab() {
         <div className="lab-page container-fluid flex-col">
             <h1 className="title firacode">LABORATORY</h1>
 
-            <audio id="audio-player" controls style={{display: 'none'}}>
+            {/* TEMPORARY AUDIO PLAYER FOR DEMONSTRATION. SAFE TO DELETE AFTER IMPLEMENTED. */}
+            <audio id="audio-player-dry" controls style={{display: 'none'}}>
+                Your browser does not support the audio element.
+            </audio>
+            <audio id="audio-player-wet" controls style={{display: 'none'}}>
                 Your browser does not support the audio element.
             </audio>
 
