@@ -68,6 +68,8 @@
     cursor: pointer;
     gap: 5px;
     margin-right: 8px;
+    aspect-ratio: 1 / 1;
+    padding: 4px;
 }
 
 .dot {

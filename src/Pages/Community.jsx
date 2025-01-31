@@ -10,6 +10,9 @@ import cancelIcon from "../assets/icon-cancel.png"
 import iconAttachment from "../assets/icon-attachment.png"
 import iconSend from "../assets/icon-send.png"
 
+// Static demo
+import dummy_pic from "../assets/icon-profile.png"
+
 function Community(){
     const [posts, setPosts] = useState([]);
     const [reply, setReply] = useState(null);
@@ -26,6 +29,7 @@ function Community(){
 
     const [isEditing, setIsEditing] = useState(false);
     const [targetedPost, setTargetedPost] = useState(null);
+    const [isButtonVisible, setIsButtonVisible] = useState(false);
 
     const API_BASE_URL = 'http://localhost:8080'
 
@@ -75,6 +79,7 @@ function Community(){
     };
 
     useEffect(() => {
+        setIsButtonVisible(false);
         fetchPosts();
     }, []);
 
@@ -143,6 +148,10 @@ function Community(){
         fetchReplies();
     };
 
+    const toggleButtonVisibility = () => {
+        setIsButtonVisible(prevState => !prevState);
+    };
+
     const deletePost = async (post) => {
         try {
             const response = await axios.delete(`${API_BASE_URL}/data/posts/${post.id}`);
@@ -160,14 +169,18 @@ function Community(){
                 alert("Error occurred: " + error.message);
             }
         }
+
+        setIsButtonVisible(false);
     };
 
     const editPost = (post) => {
+        setIsButtonVisible(false);
         setIsEditing(true);
         setIsCreatePostOpen(true)
         setContent(post.content)
         setTargetedPost(post)
         // setFile(post.attachment);
+
     }
 
     const closeForm = () => {
@@ -193,6 +206,17 @@ function Community(){
             
             <div className="posts container-fluid">
                 <div className="wrapper">
+                    {/* THIS IS A DUMMY POST FOR STATIC DEMO. DELETE SOON! */}
+                    <Post
+                        picture={dummy_pic}
+                        author={"Dummy Guy"}
+                        content={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."} 
+                        onReply={() => handleReplyOpen()}
+                        onDelete={() => deletePost()}
+                        onEdit={() => editPost()}
+                        isButtonVisible={isButtonVisible}
+                        toggleButtonVisibility={toggleButtonVisibility}
+                    />
                     {posts.length > 0 ? (
                         posts.map(
                             (post) => (
@@ -203,6 +227,8 @@ function Community(){
                                     onReply={() => handleReplyOpen(post)}
                                     onDelete={() => deletePost(post)}
                                     onEdit={() => editPost(post)}
+                                    isButtonVisible={isButtonVisible}
+                                    toggleButtonVisibility={toggleButtonVisibility}
                                     />
                             )
                         )

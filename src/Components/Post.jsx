@@ -5,13 +5,7 @@ import icon_delete from "../assets/icon-delete-2.png"
 import icon_edit from "../assets/icon-edit.png"
 
 
-function Post({ picture, author, content, onReply, onDelete, onEdit }) {
-    const [isButtonVisible, setIsButtonVisible] = useState(false);
-    
-    // Fungsi untuk toggle visibilitas tombol
-    const toggleButtonVisibility = () => {
-        setIsButtonVisible(prevState => !prevState);
-    };
+function Post({ picture, author, content, onReply, onDelete, onEdit, isButtonVisible, toggleButtonVisibility }) {
 
     return (
         <div className="post flex-row">
@@ -31,7 +25,7 @@ function Post({ picture, author, content, onReply, onDelete, onEdit }) {
 
             <div className="dropdown">
                 {/* Tombol titik tiga horizontal */}
-                <div className="dot-menu flex-row" onClick={toggleButtonVisibility}>
+                <div className="dot-menu center-content flex-row" onClick={toggleButtonVisibility}>
                     <span className="dot"></span>
                     <span className="dot"></span>
                     <span className="dot"></span>
