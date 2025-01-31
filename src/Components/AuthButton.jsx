@@ -9,10 +9,12 @@ function AuthButton() {
     };
 
     const handleLogout = () => {
-        localStorage.removeItem("authToken");
-        setIsAuthenticated(false);  // Use state setter
-
-        window.location.href = "http://localhost:8080/logout";
+        fetch("http://localhost:8080/logout", { method: "POST", credentials: "include" })
+            .then(() => {
+                localStorage.removeItem("authToken");
+                setIsAuthenticated(false); // Update state
+            })
+            .catch(error => console.error("Logout failed:", error));
     };
 
     function getAuthTokenFromCookies() {
@@ -27,14 +29,20 @@ function AuthButton() {
     }
 
     useEffect(() => {
-        const token = getAuthTokenFromCookies();
-        if (token) {
-            localStorage.setItem("authToken", token);
-            setIsAuthenticated(true);
-        } else {
-            setIsAuthenticated(false);
-        }
-    }, []); // Run once on component mount
+        fetch("http://localhost:8080/auth/token", { credentials: "include" }) 
+            .then(response => response.json())
+            .then(data => {
+                console.log("Token fetched:", data.token); // Debugging
+                if (data.token) {
+                    localStorage.setItem("authToken", data.token);
+                    setIsAuthenticated(true);
+                } else {
+                    setIsAuthenticated(false);
+                }
+            })
+            .catch(error => console.error("Error fetching token:", error));
+    }, []);
+    
 
     return (
         <div className="auth-button gurajada center-content">
