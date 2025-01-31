@@ -179,6 +179,7 @@ function Community(){
 
     return (<>
         <div className="community-page container-fluid flex-col">
+            
             <h1 className="title firacode">COMMUNITY</h1>
             <div className="buttons flex-row justify-content-between gurajada ">
                 <NavLink to="/lab" className="button col-4" end>

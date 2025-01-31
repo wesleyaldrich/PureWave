@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css'
 import Sidebar from './Components/Sidebar'
+import AuthButton from './Components/AuthButton';
 import Community from './Pages/Community'
 import Lab from './Pages/Lab'
 import History from './Pages/History';
@@ -11,6 +12,7 @@ function App() {
         <Router>
             <div className="app-container flex-row">
                 <Sidebar />
+                <AuthButton />
                 <div className="content-container">
                     <Routes>
                         <Route path="/" element={<Community />} />

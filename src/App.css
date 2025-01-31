@@ -6,3 +6,25 @@
     padding: 25px 65px;
     flex: 1;
 }
+
+.auth-button {
+    width: 250px;
+    height: 50px;
+    background-color: #133E87;
+    font-size: 1.8vw;
+    border-radius: 50px;
+    position: fixed;
+    top: 6vh;
+    right: 77px;
+}
+
+.auth-button:hover {
+    background-color: #0d2857;
+    cursor: pointer;
+}
+
+.auth-button a {
+    width: 100%;
+    height: 100%;
+    color: #F9FAF5;
+}
