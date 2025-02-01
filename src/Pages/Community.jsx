@@ -111,7 +111,8 @@ function Community(){
         else {
             try {
                 const response = await axios.post(`${API_BASE_URL}/data/posts`, {
-                    content
+                    content: content,
+                    attachment: file
                 });
                 setContent(""); // Reset input form
                 setIsCreatePostOpen(false); // Tutup modal

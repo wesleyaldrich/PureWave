@@ -6,13 +6,18 @@ import Community from './Pages/Community'
 import Lab from './Pages/Lab'
 import History from './Pages/History';
 import GetHelp from './Pages/GetHelp';
+import Profile from './Components/Profile';
+import { useState } from "react";
 
 function App() {
     return (<>
         <Router>
             <div className="app-container flex-row">
                 <Sidebar />
-                <AuthButton />
+                <div className="profile-auth flex-row center-content">
+                    <AuthButton />
+                    <Profile />
+                </div>
                 <div className="content-container">
                     <Routes>
                         <Route path="/" element={<Community />} />

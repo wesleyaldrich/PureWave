@@ -1,0 +1,10 @@
+.profile {
+    height: 70px;
+    aspect-ratio: 1/1;
+}
+
+.profile-img {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}

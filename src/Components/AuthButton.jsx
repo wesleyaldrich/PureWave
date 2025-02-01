@@ -12,21 +12,10 @@ function AuthButton() {
         fetch("http://localhost:8080/logout", { method: "POST", credentials: "include" })
             .then(() => {
                 localStorage.removeItem("authToken");
-                setIsAuthenticated(false); // Update state
+                setIsAuthenticated(false);
             })
             .catch(error => console.error("Logout failed:", error));
     };
-
-    function getAuthTokenFromCookies() {
-        const cookies = document.cookie.split("; ");
-        for (let cookie of cookies) {
-            const [name, value] = cookie.split("=");
-            if (name === "authToken") {
-                return value;
-            }
-        }
-        return null;
-    }
 
     useEffect(() => {
         fetch("http://localhost:8080/auth/token", { credentials: "include" }) 

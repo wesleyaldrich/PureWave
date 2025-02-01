@@ -7,15 +7,19 @@
     flex: 1;
 }
 
+.profile-auth {
+    position: fixed;
+    top: 6vh;
+    right: 77px;
+    gap: 1vw;
+}
+
 .auth-button {
     width: 250px;
     height: 50px;
     background-color: #133E87;
     font-size: 1.8vw;
     border-radius: 50px;
-    position: fixed;
-    top: 6vh;
-    right: 77px;
 }
 
 .auth-button:hover {
