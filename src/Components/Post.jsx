@@ -5,7 +5,22 @@ import icon_delete from "../assets/icon-delete-2.png"
 import icon_edit from "../assets/icon-edit.png"
 
 
-function Post({ picture, author, content, onReply, onDelete, onEdit, isButtonVisible, toggleButtonVisibility }) {
+function Post({ picture, author, content, onReply, onDelete, onEdit}) {
+    const [isButtonVisible, setIsButtonVisible] = useState(false);
+
+    const toggleButtonVisibility = () => {
+        setIsButtonVisible(!isButtonVisible);
+    }
+
+    const onEditClick = () => {
+        setIsButtonVisible(false);
+        onEdit();
+    }
+
+    const onDeleteClick = () => {
+        setIsButtonVisible(false);
+        onDelete();
+    }
 
     return (
         <div className="post flex-row">
@@ -34,12 +49,12 @@ function Post({ picture, author, content, onReply, onDelete, onEdit, isButtonVis
                 {/* Tombol kecil yang muncul di bawah setelah titik tiga diklik */}
                 {isButtonVisible && (
                     <div className="option gurajada flex-row">
-                        <div className="edit flex-row" onClick={onEdit}>
+                        <div className="edit flex-row" onClick={onEditClick}>
                             <img src= {icon_edit} alt="icon edit" className="iconDropDown"/>
                             <p className="gurajada">Edit</p>
                         </div>
 
-                        <div className="deletePost flex-row" onClick={onDelete}>
+                        <div className="deletePost flex-row" onClick={onDeleteClick}>
                             <img src= {icon_delete} alt="icon delete" className="iconDropDown" />
                             <p className="gurajada">Delete</p>
                         </div>

@@ -29,7 +29,6 @@ function Community(){
 
     const [isEditing, setIsEditing] = useState(false);
     const [targetedPost, setTargetedPost] = useState(null);
-    const [isButtonVisible, setIsButtonVisible] = useState(false);
 
     const API_BASE_URL = 'http://localhost:8080'
 
@@ -79,7 +78,6 @@ function Community(){
     };
 
     useEffect(() => {
-        setIsButtonVisible(false);
         fetchPosts();
     }, []);
 
@@ -148,10 +146,6 @@ function Community(){
         fetchReplies();
     };
 
-    const toggleButtonVisibility = () => {
-        setIsButtonVisible(prevState => !prevState);
-    };
-
     const deletePost = async (post) => {
         try {
             const response = await axios.delete(`${API_BASE_URL}/data/posts/${post.id}`);
@@ -169,12 +163,9 @@ function Community(){
                 alert("Error occurred: " + error.message);
             }
         }
-
-        setIsButtonVisible(false);
     };
 
     const editPost = (post) => {
-        setIsButtonVisible(false);
         setIsEditing(true);
         setIsCreatePostOpen(true)
         setContent(post.content)
@@ -214,8 +205,6 @@ function Community(){
                         onReply={() => handleReplyOpen()}
                         onDelete={() => deletePost()}
                         onEdit={() => editPost()}
-                        isButtonVisible={isButtonVisible}
-                        toggleButtonVisibility={toggleButtonVisibility}
                     />
                     {posts.length > 0 ? (
                         posts.map(
@@ -227,8 +216,6 @@ function Community(){
                                     onReply={() => handleReplyOpen(post)}
                                     onDelete={() => deletePost(post)}
                                     onEdit={() => editPost(post)}
-                                    isButtonVisible={isButtonVisible}
-                                    toggleButtonVisibility={toggleButtonVisibility}
                                     />
                             )
                         )
