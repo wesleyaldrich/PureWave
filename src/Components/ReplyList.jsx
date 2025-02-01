@@ -5,13 +5,11 @@ import icon_delete from "../assets/icon-delete-2.png"
 import icon_edit from "../assets/icon-edit.png"
 
 
-function ReplyList({ picture, author, content, onReply, onDelete, onEdit }) {
+function ReplyList({ picture, author, content, replyCount, onReply, onDelete, onEdit }) {
     const [isButtonVisible, setIsButtonVisible] = useState(false);
-    
-    // Fungsi untuk toggle visibilitas tombol
-    const toggleButtonVisibility = () => {
-        setIsButtonVisible(prevState => !prevState);
-    };
+    if (!replyCount) replyCount = 0;
+
+    const toggleButtonVisibility = () => setIsButtonVisible(!isButtonVisible);
 
     return (
         <div className="replyList flex-row">
@@ -24,19 +22,17 @@ function ReplyList({ picture, author, content, onReply, onDelete, onEdit }) {
 
                 <div className="reply flex-row" onClick={onReply}>
                     <img src={icon_reply} alt="icon reply" />
-                    <p className="gurajada">Reply</p>
+                    <p className="gurajada">Reply ({replyCount})</p>
                 </div>
             </div>
             
             <div className="dropdown">
-                {/* Tombol titik tiga horizontal */}
-                <div className="dot-menu flex-row" onClick={toggleButtonVisibility}>
+                <div className="dot-menu center-content flex-row" onClick={toggleButtonVisibility}>
                     <span className="dot"></span>
                     <span className="dot"></span>
                     <span className="dot"></span>
                 </div>
 
-                {/* Tombol kecil yang muncul di bawah setelah titik tiga diklik */}
                 {isButtonVisible && (
                     <div className="option gurajada flex-row">
                         <div className="edit flex-row" onClick={onEdit}>

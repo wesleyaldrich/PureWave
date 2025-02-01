@@ -125,6 +125,7 @@ function Community(){
         }
 
         fetchPosts();
+        fetchReplies();
     };
     
     const handleReplySubmit = async (e) => {
@@ -143,6 +144,7 @@ function Community(){
             setTimeout(() => setNotificationFailed(null), 2500); // Sembunyikan notifikasi setelah 2.5 detik
         }
 
+        fetchPosts();
         fetchReplies();
     };
 
@@ -213,6 +215,7 @@ function Community(){
                                     picture={post.picture}
                                     author={post.name}
                                     content={post.content} 
+                                    replyCount={post.replyCount}
                                     onReply={() => handleReplyOpen(post)}
                                     onDelete={() => deletePost(post)}
                                     onEdit={() => editPost(post)}
@@ -301,6 +304,7 @@ function Community(){
                                     picture={replylist.picture}
                                     author={replylist.name}
                                     content={replylist.content} 
+                                    replyCount={replylist.replyCount}
                                     onReply={() => handleReplyOpen(replylist)}
                                     onDelete={() => deletePost(replylist)}
                                     onEdit={() => editPost(replylist)}

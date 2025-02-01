@@ -1,26 +1,14 @@
 import "./Post.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import icon_reply from "../assets/icon-reply.png";
-import icon_delete from "../assets/icon-delete-2.png"
-import icon_edit from "../assets/icon-edit.png"
+import icon_delete from "../assets/icon-delete-2.png";
+import icon_edit from "../assets/icon-edit.png";
 
-
-function Post({ picture, author, content, onReply, onDelete, onEdit}) {
+function Post({ picture, author, content, replyCount, onReply, onDelete, onEdit }) {
     const [isButtonVisible, setIsButtonVisible] = useState(false);
+    if (!replyCount) replyCount = 0;
 
-    const toggleButtonVisibility = () => {
-        setIsButtonVisible(!isButtonVisible);
-    }
-
-    const onEditClick = () => {
-        setIsButtonVisible(false);
-        onEdit();
-    }
-
-    const onDeleteClick = () => {
-        setIsButtonVisible(false);
-        onDelete();
-    }
+    const toggleButtonVisibility = () => setIsButtonVisible(!isButtonVisible);
 
     return (
         <div className="post flex-row">
@@ -33,36 +21,32 @@ function Post({ picture, author, content, onReply, onDelete, onEdit}) {
 
                 <div className="reply flex-row" onClick={onReply}>
                     <img src={icon_reply} alt="icon reply" />
-                    <p className="gurajada">Reply</p>
+                    <p className="gurajada">Reply ({replyCount})</p>
                 </div>
                 <hr />
             </div>
 
             <div className="dropdown">
-                {/* Tombol titik tiga horizontal */}
                 <div className="dot-menu center-content flex-row" onClick={toggleButtonVisibility}>
                     <span className="dot"></span>
                     <span className="dot"></span>
                     <span className="dot"></span>
                 </div>
 
-                {/* Tombol kecil yang muncul di bawah setelah titik tiga diklik */}
                 {isButtonVisible && (
                     <div className="option gurajada flex-row">
-                        <div className="edit flex-row" onClick={onEditClick}>
-                            <img src= {icon_edit} alt="icon edit" className="iconDropDown"/>
+                        <div className="edit flex-row" onClick={onEdit}>
+                            <img src={icon_edit} alt="icon edit" className="iconDropDown" />
                             <p className="gurajada">Edit</p>
                         </div>
 
-                        <div className="deletePost flex-row" onClick={onDeleteClick}>
-                            <img src= {icon_delete} alt="icon delete" className="iconDropDown" />
+                        <div className="deletePost flex-row" onClick={onDelete}>
+                            <img src={icon_delete} alt="icon delete" className="iconDropDown" />
                             <p className="gurajada">Delete</p>
                         </div>
                     </div>
-
                 )}
-            </div>      
-
+            </div>
         </div>
     );
 }

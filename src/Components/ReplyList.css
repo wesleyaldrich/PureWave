@@ -36,7 +36,6 @@
     color: var(--edit-text);
     gap: 0.5vw;
     cursor: pointer;
-    width: 4.3vw;
 }
 
 .reply:hover{
