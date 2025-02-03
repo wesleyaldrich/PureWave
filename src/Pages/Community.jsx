@@ -110,9 +110,12 @@ function Community(){
         }
         else {
             try {
-                const response = await axios.post(`${API_BASE_URL}/data/posts`, {
-                    content: content,
-                    attachment: file
+                const formData = new FormData();
+                formData.append("content", content);
+                formData.append("attachment", file);
+
+                const response = await axios.post(`${API_BASE_URL}/data/posts`, formData, {
+                    headers: { "Content-Type": "multipart/form-data" },
                 });
                 setContent(""); // Reset input form
                 setIsCreatePostOpen(false); // Tutup modal

@@ -56,7 +56,7 @@ function Profile() {
         <div className="profile flex-row">
             <img 
                 src={profileImageUrl} 
-                className="profile-img" 
+                className="profile-img-auth" 
                 alt="Profile" 
                 onError={(e) => e.target.src = icon_profile} // Fallback to default icon if image not found
             />
