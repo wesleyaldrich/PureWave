@@ -19,7 +19,7 @@ function Profile() {
                     if (data.token) {
                         setAuthToken(data.token);
                     } else {
-                        console.log("Auth token missing. Logging out...");
+                        // console.log("Auth token missing. Logging out...");
                         onLogout();
                     }
                 })
@@ -27,7 +27,7 @@ function Profile() {
         };
 
         checkAuth();
-        const interval = setInterval(checkAuth, 2000);
+        const interval = setInterval(checkAuth, 1000);
 
         return () => clearInterval(interval); // Cleanup on unmount
     }, []);
