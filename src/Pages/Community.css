@@ -251,6 +251,63 @@ button {
     filter: brightness(0) saturate(100%) invert(61%) sepia(63%) saturate(623%) hue-rotate(187deg) brightness(102%) contrast(89%);
 }
 
+.warning-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--background);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    width: 350px;
+    height: 150px;
+    text-align: center;
+    opacity: 95%;
+    z-index: 1000;
+}
+
+.warning-popup p {
+    margin-top: 4px;
+    margin-bottom: 30px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.popup-buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.yes-btn, .no-btn {
+    padding: 8px 62px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    border: none;
+}
+
+.no-btn {
+    background-color: var(--history-menu);
+    color:var(--border-plus-enhance);
+    font-weight: 500;
+}
+
+.no-btn:hover {
+    background-color: var(--hover-history-menu);
+    color: white;
+}
+
+.yes-btn {
+    background-color: var(--border-plus-enhance);
+    color: white;
+    
+}
+
+.yes-btn:hover {
+    background-color: var(--hover-history-menu);
+}
+
 @keyframes fadeInOut {
     0%, 100% {
         opacity: 0;
@@ -260,4 +317,8 @@ button {
         opacity: 1;
         transform: translateX(-50%) translateY(0); /* Stabil di tengah */
     }
+}
+
+#community{
+    cursor: default;
 }
