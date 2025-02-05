@@ -17,8 +17,8 @@ function Sidebar() {
 
     return (
         <div className={`sidebar ${isExpanded ? "expanded gurajada" : "gurajada"}`}>
-            <div className="ribbonArea" onClick={toggleSidebar}>
-                <div className="ribbon">
+            <div className="ribbonArea">
+                <div className="ribbon" onClick={toggleSidebar}>
                     <img className="arrow" src={doubleArrow} alt="Arrow Icon" />
                 </div>
             </div>
