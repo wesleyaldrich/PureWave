@@ -52,6 +52,7 @@ function Community(){
         try {
             const response = await axios.get(`${API_BASE_URL}/data/posts`);
             setPosts(response.data);
+            console.log("Uploaded posts:", response.data);
         } catch (error) {
             console.error('Error fetching posts:', error);
       }
@@ -92,9 +93,14 @@ function Community(){
 
         if (isEditing){
             try {
-                const response = await axios.put(`${API_BASE_URL}/data/posts/${targetedPost.id}`, {
-                    content
+                const formData = new FormData();
+                formData.append("content", content);
+                formData.append("attachment", file);
+
+                const response = await axios.put(`${API_BASE_URL}/data/posts/${targetedPost.id}`, formData, {
+                    headers: { "Content-Type": "multipart/form-data" },
                 });
+
                 setContent(""); // Reset input form
                 setIsCreatePostOpen(false); // Tutup modal
                 setNotificationSuccess("Successfully edited!"); // Tampilkan notifikasi
@@ -128,6 +134,7 @@ function Community(){
             }
         }
 
+        setFile(null); // Reset file
         fetchPosts();
         fetchReplies();
     };
@@ -136,9 +143,15 @@ function Community(){
         e.preventDefault();
 
         try {
-            const response = await axios.post(`${API_BASE_URL}/data/posts/${reply.id}`, {
-                content: replyContent
+            const formData = new FormData();
+            formData.append("content", replyContent);
+            formData.append("attachment", file);
+            formData.append("attachedTo", reply.id);
+
+            const response = await axios.post(`${API_BASE_URL}/data/posts/${reply.id}`, formData, {
+                headers: { "Content-Type": "multipart/form-data" },
             });
+
             setReplyContent(""); // Reset input form
             setNotificationSuccess("Successfully replied!"); // Tampilkan notifikasi
             setTimeout(() => setNotificationSuccess(null), 2500); // Sembunyikan notifikasi setelah 2.5 detik
@@ -148,6 +161,7 @@ function Community(){
             setTimeout(() => setNotificationFailed(null), 2500); // Sembunyikan notifikasi setelah 2.5 detik
         }
 
+        setFile(null); // Reset file
         fetchPosts();
         fetchReplies();
     };
@@ -176,8 +190,6 @@ function Community(){
         setIsCreatePostOpen(true)
         setContent(post.content)
         setTargetedPost(post)
-        // setFile(post.attachment);
-
     }
 
     const closeForm = () => {
@@ -208,6 +220,7 @@ function Community(){
                         picture={dummy_pic}
                         author={"Dummy Guy"}
                         content={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."} 
+                        attachment={"example"}
                         onReply={() => handleReplyOpen()}
                         onDelete={() => deletePost()}
                         onEdit={() => editPost()}
@@ -219,6 +232,7 @@ function Community(){
                                     picture={post.picture}
                                     author={post.name}
                                     content={post.content} 
+                                    attachment={post.attachment}
                                     replyCount={post.replyCount}
                                     onReply={() => handleReplyOpen(post)}
                                     onDelete={() => deletePost(post)}
@@ -308,6 +322,7 @@ function Community(){
                                     picture={replylist.picture}
                                     author={replylist.name}
                                     content={replylist.content} 
+                                    attachment={replylist.attachment}
                                     replyCount={replylist.replyCount}
                                     onReply={() => handleReplyOpen(replylist)}
                                     onDelete={() => deletePost(replylist)}
