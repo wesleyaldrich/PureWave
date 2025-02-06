@@ -50,7 +50,7 @@ function Community() {
     // Fungsi untuk menangani file upload
     const handleFileChange = (event) => {
         const uploadedFile = event.target.files[0];
-        setFile(uploadedFile); // Simpan file ke state
+        setFile(uploadedFile);
         console.log("Uploaded file:", uploadedFile);
     };
 
@@ -67,7 +67,7 @@ function Community() {
         try {
             const response = await axios.get(`${API_BASE_URL}/data/posts`);
             setPosts(response.data);
-            console.log("Uploaded posts:", response.data);
+            console.log("Uploaded posts: ", response.data);
         } catch (error) {
             console.error('Error fetching posts:', error);
         }
@@ -75,7 +75,6 @@ function Community() {
 
     const fetchReplies = async () => {
         if (!reply || !reply.id) {
-            console.log(reply + "|" + reply.id);
             console.error('Reply is null or undefined');
             return;
         }
@@ -88,7 +87,7 @@ function Community() {
     };
 
     const handleReplyOpen = (post) => {
-        console.log(post);
+        console.log("Replying to: " + post);
         setReply(post);
         setIsReplyOpen(true);
     };
@@ -109,8 +108,10 @@ function Community() {
         if (isEditing) {
             try {
                 const formData = new FormData();
-                formData.append("post", targetedPost);
+                formData.append("content", targetedPost.content);
                 formData.append("attachment", file);
+
+                console.log("Editing: " + targetedPost);
 
                 const response = await axios.put(`${API_BASE_URL}/data/posts/${targetedPost.id}`, formData, {
                     headers: { "Content-Type": "multipart/form-data" },
@@ -217,6 +218,7 @@ function Community() {
         setIsEditing(true);
         setIsCreatePostOpen(true);
         setContent(post.content);
+        setFile(post.attachment);
         setTargetedPost(post);
     };
 

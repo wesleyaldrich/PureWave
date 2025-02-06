@@ -20,12 +20,9 @@ function ReplyList({ picture, author, content, attachment, replyCount, onReply, 
                 return;
             }
     
-            console.log("Attachment:", attachment);
-    
             if (attachment) {
                 attachmentBoxRef.current.style.display = "flex";
                 attachmentTitleRef.current.innerHTML = attachment;
-                console.log("Attachment is now visible.");
             } else {
                 attachmentBoxRef.current.style.display = "none";
             }
