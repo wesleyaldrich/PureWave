@@ -71,16 +71,11 @@ div::-webkit-scrollbar {
     margin-right: 18px;
 }
 
-#community:hover{
-    background-color: var(--button);
-}
-
 .community-page .copyright{
     color: var(--sub-title);
     margin-top: 20px;
     margin-bottom: 0;
 }
-
 
 .create-post{
     position: fixed;
@@ -317,8 +312,4 @@ button {
         opacity: 1;
         transform: translateX(-50%) translateY(0); /* Stabil di tengah */
     }
-}
-
-#community{
-    cursor: default;
 }

@@ -151,15 +151,15 @@
 .icon.active {
     background-color: var(--button);
     border-radius: 15%;
+    cursor: default;
 }
 
-#lab:hover, #history:hover, #community:hover  {
+.icon.active:hover{
+    background-color: var(--button);
+}
+
+.icon:hover{
     background-color: var(--hover);
-    border-radius: 15%;
-}
-
-.sidebar.expanded #lab:hover, .sidebar.expanded #history:hover, .sidebar.expanded #community:hover {
-    border-radius: 0;
 }
 
 .help {
