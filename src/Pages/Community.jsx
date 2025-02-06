@@ -30,37 +30,36 @@ function Community() {
     const [posts, setPosts] = useState([]);
     const [reply, setReply] = useState(null);
     const [replyLists, setReplyList] = useState([]);
-
     const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
     const [content, setContent] = useState("");
     const [isReplyOpen, setIsReplyOpen] = useState(false);
     const [replyContent, setReplyContent] = useState("");
     const [notificationSuccess, setNotificationSuccess] = useState(null);
     const [notificationFailed, setNotificationFailed] = useState(null);
-    const [file, setFile] = useState(null); // State untuk file yang diunggah
-    const fileInputRef = useRef(null); // Referensi untuk elemen input file
-
+    const [file, setFile] = useState(null);
+    const [fileName, setFileName] = useState(null);
+    const fileInputRef = useRef(null);
     const [isEditing, setIsEditing] = useState(false);
     const [targetedPost, setTargetedPost] = useState(null);
-    const [isWarningPopupOpen, setIsWarningPopupOpen] = useState(false); // State untuk pop-up
-    const [postToDelete, setPostToDelete] = useState(null); // Post yang akan dihapus
+    const [isWarningPopupOpen, setIsWarningPopupOpen] = useState(false);
+    const [postToDelete, setPostToDelete] = useState(null);
 
     const API_BASE_URL = 'http://localhost:8080';
 
-    // Fungsi untuk menangani file upload
     const handleFileChange = (event) => {
         const uploadedFile = event.target.files[0];
+        
         setFile(uploadedFile);
-        console.log("Uploaded file:", uploadedFile);
+    
+        setFileName("/attachments/" + uploadedFile.name);
     };
 
-    // Fungsi untuk membuka dialog file upload
     const handleAttachmentClick = () => {
-        fileInputRef.current.click(); // Trigger klik pada input file
+        fileInputRef.current.click();
     };
 
     const handleCancelUploadFile = () => {
-        setFile(null); // Reset file ke null
+        setFile(null);
     };
 
     const fetchPosts = async () => {
@@ -75,7 +74,6 @@ function Community() {
 
     const fetchReplies = async () => {
         if (!reply || !reply.id) {
-            console.error('Reply is null or undefined');
             return;
         }
         try {
@@ -111,16 +109,14 @@ function Community() {
                 formData.append("content", content);
                 formData.append("attachment", file);
 
-                console.log("Editing: " + targetedPost);
-
                 const response = await axios.put(`${API_BASE_URL}/data/posts/${targetedPost.id}`, formData, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
 
-                setContent(""); // Reset input form
-                setIsCreatePostOpen(false); // Tutup modal
-                setNotificationSuccess("Successfully edited!"); // Tampilkan notifikasi
-                setTimeout(() => setNotificationSuccess(null), 2500); // Sembunyikan notifikasi setelah 2.5 detik
+                setContent("");
+                setIsCreatePostOpen(false);
+                setNotificationSuccess("Successfully edited!");
+                setTimeout(() => setNotificationSuccess(null), 2500);
             } catch (error) {
                 console.error("Error creating post:", error);
                 setNotificationFailed("Failed to edit the post. Please try again.");
@@ -138,10 +134,10 @@ function Community() {
                 const response = await axios.post(`${API_BASE_URL}/data/posts`, formData, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
-                setContent(""); // Reset input form
-                setIsCreatePostOpen(false); // Tutup modal
-                setNotificationSuccess("Successfully created!"); // Tampilkan notifikasi
-                setTimeout(() => setNotificationSuccess(null), 2500); // Sembunyikan notifikasi setelah 2.5 detik
+                setContent("");
+                setIsCreatePostOpen(false);
+                setNotificationSuccess("Successfully created!");
+                setTimeout(() => setNotificationSuccess(null), 2500);
             } catch (error) {
                 console.error("Error creating post:", error);
                 setNotificationFailed("Failed to create a post. Please try again.");
@@ -167,23 +163,23 @@ function Community() {
                 headers: { "Content-Type": "multipart/form-data" },
             });
 
-            setReplyContent(""); // Reset input form
-            setNotificationSuccess("Successfully replied!"); // Tampilkan notifikasi
-            setTimeout(() => setNotificationSuccess(null), 2500); // Sembunyikan notifikasi setelah 2.5 detik
+            setReplyContent("");
+            setNotificationSuccess("Successfully replied!");
+            setTimeout(() => setNotificationSuccess(null), 2500);
         } catch (error) {
             console.error("Error creating reply:", error);
-            setNotificationFailed("Failed to create a reply. Please try again."); // Tampilkan pesan error
-            setTimeout(() => setNotificationFailed(null), 2500); // Sembunyikan notifikasi setelah 2.5 detik
+            setNotificationFailed("Failed to create a reply. Please try again.");
+            setTimeout(() => setNotificationFailed(null), 2500);
         }
 
-        setFile(null); // Reset file
+        setFile(null);
         fetchPosts();
         fetchReplies();
     };
 
     const confirmDeletePost = (post) => {
         setPostToDelete(post);
-        setIsWarningPopupOpen(true); // Tampilkan pop-up konfirmasi
+        setIsWarningPopupOpen(true);
     };
 
     const deletePost = async () => {
@@ -230,6 +226,28 @@ function Community() {
         setTargetedPost(null);
     };
 
+    useEffect(() => {
+        if (!isCreatePostOpen && !isReplyOpen) {
+            setFile(null);
+            setFileName(null);
+            setContent("");
+            setReplyContent("");
+            setIsEditing(false);
+            setTargetedPost(null);
+            setPostToDelete(null);
+        }
+    }, [isCreatePostOpen, isReplyOpen]);
+
+    useEffect(() => {
+        if (targetedPost && targetedPost.attachment) {
+            setFileName(targetedPost.attachment);
+        }
+    }, [targetedPost]);
+
+    useEffect(() => {
+        console.log("Updated file state: ", file);
+    }, [file]);
+
     return (
         <>
             <div className="community-page container-fluid flex-col">
@@ -260,7 +278,7 @@ function Community() {
                             posts.map(
                                 (post) => (
                                     <Post
-                                        key={post.id} // Add a unique key for each post
+                                        key={post.id}
                                         picture={post.picture}
                                         author={post.name}
                                         content={post.content}
@@ -289,7 +307,7 @@ function Community() {
                     <div className="posting cambria">
                         {file &&
                             <div className="information d-flex justify-content-between">
-                                <p className='uploadedFile cambria'>File uploaded: {file.name}</p>
+                                <p className='uploadedFile cambria'>File uploaded: {fileName}</p>
                                 <div className="cancelUploadFile" onClick={handleCancelUploadFile}>
                                     <img src={cancelIcon} alt="cancel icon" />
                                 </div>
@@ -300,13 +318,12 @@ function Community() {
                             <div className="formAtt d-flex justify-content-between">
                                 <div className="attachment" onClick={handleAttachmentClick}>
                                     <img src={iconAttachment} alt="attachment icon" className="icon-form" />
-                                    {/* Hidden Input */}
                                     <input
                                         type="file"
                                         ref={fileInputRef}
                                         style={{ display: 'none' }}
-                                        onChange={handleFileChange} // Handle file selection
-                                        key={file ? 'file-uploaded' : 'file-reset'} // Memaksa render ulang ketika file dibatalkan
+                                        onChange={handleFileChange}
+                                        key={file ? 'file-uploaded' : 'file-reset'}
                                     />
                                 </div>
 
@@ -351,7 +368,7 @@ function Community() {
                             replyLists.map(
                                 (replylist) => (
                                     <ReplyList
-                                        key={replylist.id} // Add a unique key for each reply
+                                        key={replylist.id}
                                         picture={replylist.picture}
                                         author={replylist.name}
                                         content={replylist.content}
@@ -370,7 +387,7 @@ function Community() {
                     <div className="replyArea cambria">
                         {file &&
                             <div className="information d-flex justify-content-between">
-                                <p className='uploadedFile cambria'>File uploaded: {file.name}</p>
+                                <p className='uploadedFile cambria'>File uploaded: {fileName}</p>
                                 <div className="cancelUploadFile" onClick={handleCancelUploadFile}>
                                     <img src={cancelIcon} alt="cancel icon" />
                                 </div>
@@ -381,13 +398,13 @@ function Community() {
                             <div className="formAtt d-flex justify-content-between">
                                 <div className="attachment" onClick={handleAttachmentClick}>
                                     <img src={iconAttachment} alt="attachment icon" className="icon-form" />
-                                    {/* Hidden Input */}
+
                                     <input
                                         type="file"
                                         ref={fileInputRef}
                                         style={{ display: 'none' }}
-                                        onChange={handleFileChange} // Handle file selection
-                                        key={file ? 'file-uploaded' : 'file-reset'} // Memaksa render ulang ketika file dibatalkan
+                                        onChange={handleFileChange}
+                                        key={file ? 'file-uploaded' : 'file-reset'}
                                     />
                                 </div>
 
