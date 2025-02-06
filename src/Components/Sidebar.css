@@ -31,7 +31,7 @@
     right: -0.5vw;
 }
 
-.ribbon{
+.ribbonArea .ribbon{
     width: 3.25vw;
     height: 2.75vw;
     display: flex;
@@ -40,6 +40,7 @@
     border-radius: 50px 0 0 50px;
     background-color: var(--history-menu);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
 }
 
 .ribbon:hover{
