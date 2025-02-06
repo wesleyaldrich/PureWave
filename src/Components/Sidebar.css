@@ -189,6 +189,12 @@
     margin-bottom: 5px;
 }
 
+.help-button {
+    height: 100%;
+    aspect-ratio: 1/1;
+    padding: 0.5vw;
+}
+
 .help img{
     width: 3.75vw;
 }

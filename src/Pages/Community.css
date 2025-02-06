@@ -80,7 +80,7 @@ div::-webkit-scrollbar {
 .create-post{
     position: fixed;
     top: 9.5vw;
-    left: 16vw;
+    right: 6vw;
     padding: 35px 40px;
     background-color: rgba(8, 17, 50, 0.9); 
     box-shadow: 0px 0px 20px rgba(45, 94, 177, 1);
@@ -88,6 +88,11 @@ div::-webkit-scrollbar {
     height: 70.8%;
     border-radius: 20px;
     z-index: 1000; 
+    transition: width 0.5s ease;
+}
+
+.create-post.sidebar-expanded {
+    width: 70.5%;
 }
 
 .close{
@@ -174,7 +179,7 @@ button {
 .create-reply{
     position: fixed;
     top: 9.5vw;
-    left: 16vw;
+    right: 6vw;
     padding: 35px 40px;
     background-color: rgba(8, 17, 50, 0.9); 
     box-shadow: 0px 0px 20px rgba(45, 94, 177, 1);
@@ -182,6 +187,11 @@ button {
     height: 70.8%;
     border-radius: 20px;
     z-index: 1000; 
+    transition: width 0.5s ease;
+}
+
+.create-reply.sidebar-expanded {
+    width: 70.5%;
 }
 
 .RepliedReply{

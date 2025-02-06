@@ -8,8 +8,8 @@ import icon_lab from '../assets/icon-lab.png';
 import icon_history from '../assets/icon-history.png';
 import icon_help from '../assets/icon-help.png';
 
-function Sidebar() {
-    const [isExpanded, setIsExpanded] = useState(false);
+function Sidebar({ isExpanded, setIsExpanded }) {
+    // const [isExpanded, setIsExpanded] = useState(false);
 
     const toggleSidebar = () => {
         setIsExpanded(!isExpanded);
@@ -43,8 +43,8 @@ function Sidebar() {
                             <p>HISTORY</p>
                         </NavLink>
                     </div>
-                    <div className="help">
-                        <NavLink to="/gethelp" className="help center-content">
+                    <div className="help center-content">
+                        <NavLink to="/gethelp" className="help-button center-content">
                             <img src={icon_help} alt="Icon Help" />
                         </NavLink>
                     </div>

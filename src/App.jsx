@@ -10,17 +10,19 @@ import Profile from './Components/Profile';
 import { useState } from "react";
 
 function App() {
+    const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
+
     return (<>
         <Router>
             <div className="app-container flex-row">
-                <Sidebar />
+                <Sidebar isExpanded={isSidebarExpanded} setIsExpanded={setIsSidebarExpanded}/>
                 <div className="profile-auth flex-row center-content">
                     <AuthButton />
                     <Profile />
                 </div>
                 <div className="content-container">
                     <Routes>
-                        <Route path="/" element={<Community />} />
+                        <Route path="/" element={<Community isSidebarExpanded={isSidebarExpanded} />} />
                         <Route path="/lab" element={<Lab />} />
                         <Route path="/history" element={<History />} />
                         <Route path="/gethelp" element={<GetHelp />} />
