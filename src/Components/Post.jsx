@@ -1,14 +1,34 @@
 import "./Post.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import icon_reply from "../assets/icon-reply.png";
 import icon_delete from "../assets/icon-delete-2.png";
 import icon_edit from "../assets/icon-edit.png";
 
-function Post({ picture, author, content, replyCount, onReply, onDelete, onEdit }) {
+function Post({ picture, author, content, attachment, replyCount, onReply, onDelete, onEdit }) {
     const [isButtonVisible, setIsButtonVisible] = useState(false);
     if (!replyCount) replyCount = 0;
 
+    const attachmentBoxRef = useRef(null);
+    const attachmentTitleRef = useRef(null);
+
     const toggleButtonVisibility = () => setIsButtonVisible(!isButtonVisible);
+
+    useEffect(() => {
+        if (!attachmentBoxRef.current || !attachmentTitleRef.current) {
+            console.warn("Elements not found in the DOM");
+            return;
+        }
+
+        console.log("Attachment:", attachment);
+
+        if (attachment) {
+            attachmentBoxRef.current.style.display = "flex";
+            attachmentTitleRef.current.innerHTML = attachment;
+            console.log("Attachment is now visible.");
+        } else {
+            attachmentBoxRef.current.style.display = "none";
+        }
+    }, [attachment]);  
 
     return (
         <div className="post flex-row">
@@ -18,6 +38,12 @@ function Post({ picture, author, content, replyCount, onReply, onDelete, onEdit 
             <div className="data flex-col">
                 <h2>{author}</h2>
                 <p>{content}</p>
+
+                <div ref={attachmentBoxRef} className="attachment-box center-content gurajada" style={{ display: "none" }}>
+                    <a href={attachment} target="_blank">
+                        <p ref={attachmentTitleRef}>Bug in attachment, this shouldn't be visible.</p>
+                    </a>
+                </div>
 
                 <div className="reply flex-row" onClick={onReply}>
                     <img src={icon_reply} alt="icon reply" />
