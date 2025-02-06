@@ -19,7 +19,6 @@ function Profile() {
                     if (data.token) {
                         setAuthToken(data.token);
                     } else {
-                        // console.log("Auth token missing. Logging out...");
                         onLogout();
                     }
                 })

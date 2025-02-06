@@ -19,12 +19,9 @@ function Post({ picture, author, content, attachment, replyCount, onReply, onDel
             return;
         }
 
-        console.log("Attachment:", attachment);
-
         if (attachment) {
             attachmentBoxRef.current.style.display = "flex";
             attachmentTitleRef.current.innerHTML = attachment;
-            console.log("Attachment is now visible.");
         } else {
             attachmentBoxRef.current.style.display = "none";
         }
@@ -61,12 +58,18 @@ function Post({ picture, author, content, attachment, replyCount, onReply, onDel
 
                 {isButtonVisible && (
                     <div className="option gurajada flex-row">
-                        <div className="edit flex-row" onClick={onEdit}>
+                        <div className="edit flex-row" onClick={() => {
+                            toggleButtonVisibility();
+                            onEdit();
+                        }}>
                             <img src={icon_edit} alt="icon edit" className="iconDropDown" />
                             <p className="gurajada">Edit</p>
                         </div>
 
-                        <div className="deletePost flex-row" onClick={onDelete}>
+                        <div className="deletePost flex-row" onClick={() => {
+                            toggleButtonVisibility();
+                            onDelete();
+                        }}>
                             <img src={icon_delete} alt="icon delete" className="iconDropDown" />
                             <p className="gurajada">Delete</p>
                         </div>
