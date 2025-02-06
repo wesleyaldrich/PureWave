@@ -109,7 +109,7 @@ function Community() {
         if (isEditing) {
             try {
                 const formData = new FormData();
-                formData.append("content", content);
+                formData.append("post", targetedPost);
                 formData.append("attachment", file);
 
                 const response = await axios.put(`${API_BASE_URL}/data/posts/${targetedPost.id}`, formData, {
