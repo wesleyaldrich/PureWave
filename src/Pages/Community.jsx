@@ -193,12 +193,9 @@ function Community() {
             const response = await axios.delete(`${API_BASE_URL}/data/posts/${postToDelete.id}`);
             fetchPosts();
             fetchReplies();
-            setIsWarningPopupOpen(false); // Tutup pop-up setelah berhasil
-            setPostToDelete(null); // Reset post yang akan dihapus
         } catch (error) {
             console.error("Error deleting post:", error);
 
-            // Show a user-friendly error message
             if (error.response) {
                 alert(`Failed to delete post: ${error.response.data.message || "Unknown error"}`);
             } else if (error.request) {
@@ -207,11 +204,14 @@ function Community() {
                 alert("Error occurred: " + error.message);
             }
         }
+
+        setIsWarningPopupOpen(false);
+        setPostToDelete(null);
     };
 
     const cancelDelete = () => {
-        setIsWarningPopupOpen(false); // Tutup pop-up tanpa menghapus
-        setPostToDelete(null); // Reset post yang akan dihapus
+        setIsWarningPopupOpen(false);
+        setPostToDelete(null);
     };
 
     const editPost = (post) => {
@@ -431,13 +431,11 @@ function Community() {
                 <WarningPopup
                     message="Are you sure you want to delete this post?"
                     onConfirm={() => {
-                        // Simulasi penghapusan, tutup pop-up
-                        setIsWarningPopupOpen(false);
-                    }} // Menutup pop-up
+                        deletePost();
+                    }}
                     onCancel={() => {
-                        // Tutup pop-up tanpa melakukan tindakan
-                        setIsWarningPopupOpen(false);
-                    }} // Menutup pop-up
+                        cancelDelete();
+                    }}
                 />
             )}
         </>
