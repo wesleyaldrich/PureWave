@@ -108,7 +108,7 @@ function Community() {
         if (isEditing) {
             try {
                 const formData = new FormData();
-                formData.append("content", targetedPost.content);
+                formData.append("content", content);
                 formData.append("attachment", file);
 
                 console.log("Editing: " + targetedPost);
@@ -215,11 +215,12 @@ function Community() {
     };
 
     const editPost = (post) => {
+        setIsReplyOpen(false);
         setIsEditing(true);
-        setIsCreatePostOpen(true);
         setContent(post.content);
         setFile(post.attachment);
         setTargetedPost(post);
+        setIsCreatePostOpen(true);
     };
 
     const closeForm = () => {
