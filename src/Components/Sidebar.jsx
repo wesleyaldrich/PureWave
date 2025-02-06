@@ -28,22 +28,27 @@ function Sidebar() {
                     <img src={logo} alt="PureWave Logo" />
                     <p>PUREWAVE</p>
                 </div>
-
-                <NavLink to="/" id="community" className="icon center-content" activeClassName="active" end>
-                    <img src={icon_community} alt="Icon Community" />
-                    <p>COMMUNITY</p>
-                </NavLink>
-                <NavLink to="/lab" id="lab" className="icon center-content" activeClassName="active">
-                    <img src={icon_lab} alt="Icon Laboratory" />
-                    <p>LABORATORY</p>
-                </NavLink>
-                <NavLink to="/history" id="history" className="icon center-content" activeClassName="active">
-                    <img src={icon_history} alt="Icon History" />
-                    <p>HISTORY</p>
-                </NavLink>
-                <NavLink to="/gethelp" className="help center-content">
-                    <img src={icon_help} alt="Icon Help" />
-                </NavLink>
+                <div className="menu">
+                    <div className="mainMenu center-content">
+                        <NavLink to="/" id="community" className="icon center-content" activeClassName="active" end>
+                            <img src={icon_community} alt="Icon Community" />
+                            <p>COMMUNITY</p>
+                        </NavLink>
+                        <NavLink to="/lab" id="lab" className="icon center-content" activeClassName="active">
+                            <img src={icon_lab} alt="Icon Laboratory" />
+                            <p>LABORATORY</p>
+                        </NavLink>
+                        <NavLink to="/history" id="history" className="icon center-content" activeClassName="active">
+                            <img src={icon_history} alt="Icon History" />
+                            <p>HISTORY</p>
+                        </NavLink>
+                    </div>
+                    <div className="help">
+                        <NavLink to="/gethelp" className="help center-content">
+                            <img src={icon_help} alt="Icon Help" />
+                        </NavLink>
+                    </div>
+                </div>
             </div>
         </div>
     );
