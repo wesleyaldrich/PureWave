@@ -43,6 +43,8 @@ function Community() {
     const [targetedPost, setTargetedPost] = useState(null);
     const [isWarningPopupOpen, setIsWarningPopupOpen] = useState(false);
     const [postToDelete, setPostToDelete] = useState(null);
+    const postTextAreaRef = useRef(null);
+    const replyTextAreaRef = useRef(null);
 
     const API_BASE_URL = 'http://localhost:8080';
 
@@ -248,6 +250,18 @@ function Community() {
         console.log("Updated file state: ", file);
     }, [file]);
 
+    useEffect(() => {
+        if (isCreatePostOpen && postTextAreaRef.current) {
+            postTextAreaRef.current.focus();
+        }
+    }, [isCreatePostOpen]);
+
+    useEffect(() => {
+        if (isReplyOpen && replyTextAreaRef.current) {
+            replyTextAreaRef.current.focus();
+        }
+    }, [isReplyOpen]);
+    
     return (
         <>
             <div className="community-page container-fluid flex-col">
@@ -334,6 +348,7 @@ function Community() {
                                     className="input"
                                     onChange={(e) => setContent(e.target.value)}
                                     placeholder="Buat Postingan Baru Disini"
+                                    ref={postTextAreaRef}
                                 />
                                 <br />
                                 <br />
@@ -417,6 +432,7 @@ function Community() {
                                     className="input"
                                     onChange={(e) => setReplyContent(e.target.value)}
                                     placeholder="Buat Reply Baru Disini"
+                                    ref={replyTextAreaRef}
                                 />
                                 <br />
                                 <br />
