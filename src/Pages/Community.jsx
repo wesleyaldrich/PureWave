@@ -241,6 +241,24 @@ function Community() {
     }, [isCreatePostOpen, isReplyOpen]);
 
     useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (event.ctrlKey && event.key === "Enter") {
+                event.preventDefault();
+
+                if (isCreatePostOpen){
+                    document.getElementById("submit-btn-post").click();
+                }
+                else if (isReplyOpen){
+                    document.getElementById("submit-btn-reply").click();
+                }
+            }
+        };
+
+        document.addEventListener("keydown", handleKeyDown);
+        return () => document.removeEventListener("keydown", handleKeyDown);
+    }, [isCreatePostOpen, isReplyOpen]);
+
+    useEffect(() => {
         if (targetedPost && targetedPost.attachment) {
             setFileName(targetedPost.attachment);
         }
@@ -354,7 +372,7 @@ function Community() {
                                 <br />
 
                                 <div className="send">
-                                    <button type="submit" className="icon-form-btn">
+                                    <button id="submit-btn-post" type="submit" className="icon-form-btn">
                                         <img src={iconSend} alt="send icon" className="icon-form" />
                                     </button>
                                 </div>
@@ -438,7 +456,7 @@ function Community() {
                                 <br />
 
                                 <div className="send">
-                                    <button type="submit" className="icon-form-btn">
+                                    <button id="submit-btn-reply" type="submit" className="icon-form-btn">
                                         <img src={iconSend} alt="send icon" className="icon-form" />
                                     </button>
                                 </div>
