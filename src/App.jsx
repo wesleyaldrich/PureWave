@@ -25,7 +25,6 @@ function App() {
                         <Route path="/lab" element={<Lab />} />
                         <Route path="/history" element={<History />} />
                         <Route path="/gethelp" element={<GetHelp />} />
-                        <Route path="/enhance" element={<Enhance />} />
                     </Routes>
                 </div>
             </div>
