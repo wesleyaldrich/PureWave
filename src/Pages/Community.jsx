@@ -26,7 +26,7 @@ const WarningPopup = ({ message, onConfirm, onCancel }) => {
     );
 };
 
-function Community() {
+function Community({ isSidebarExpanded }) {
     const [posts, setPosts] = useState([]);
     const [reply, setReply] = useState(null);
     const [replyLists, setReplyList] = useState([]);
@@ -331,7 +331,7 @@ function Community() {
             </div>
 
             {isCreatePostOpen && (
-                <div className="create-post flex-col">
+                <div className={`create-post flex-col ${isSidebarExpanded ? 'sidebar-expanded' : ''}`}>
                     <div className="close" onClick={() => closeForm()}>
                         <img src={cancelIcon} alt="cancel icon" />
                     </div>
@@ -383,7 +383,7 @@ function Community() {
             )}
 
             {isReplyOpen && (
-                <div className="create-reply flex-col">
+                <div className={`create-reply flex-col ${isSidebarExpanded ? 'sidebar-expanded' : ''}`}>
                     <div className="close" onClick={() => setIsReplyOpen(false)}>
                         <img src={cancelIcon} alt="cancel icon" />
                     </div>
