@@ -6,6 +6,6 @@
 - Daniela Vallerine Gunawan as **Frontend Developer and Tester**
 - Naufal Dimas Azizan as **AI Microservices Developer**
 - Olivio Leoartha as **Frontend Developer and Designer**
-- Wesley Aldrich as **Backend Developer and Code Master**
+- Wesley Aldrich as **Backend Developer and Codebase Master**
 
 ### coming soon...
