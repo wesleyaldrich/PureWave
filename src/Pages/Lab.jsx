@@ -2,8 +2,15 @@ import './lab.css';
 import axios from 'axios';
 import { useRef, useState, useEffect } from 'react';
 import icon_upload from '../assets/upload.png';
+import EnhanceItem from '../Components/EnhanceItem'
+import BeforeEnhance from '../Components/BeforeEnhance'
+import addEnhance from "../assets/icon-addEnhance.png";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay, faPause, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 function Lab() {
+    var flag = 0;
+    var flag_upload = 0;
     const fileInputRef = useRef(null);
     const [uploadedFileName, setUploadedFileName] = useState(null);
     const [notificationSuccess, setNotificationSuccess] = useState(null);
@@ -70,24 +77,12 @@ function Lab() {
         }
     };
 
-    useEffect(() => {
-        if (dryAudio) {
-            console.log("Dry audio URL:", dryAudio);
-            console.log("Wet audio URL:", wetAudio);
-            const audioPlayerDry = document.getElementById('audio-player-dry');
-            audioPlayerDry.src = dryAudio;
-            audioPlayerDry.style.display = 'block';
-            const audioPlayerWet = document.getElementById('audio-player-wet');
-            audioPlayerWet.src = wetAudio;
-            audioPlayerWet.style.display = 'block';
-        }
-    }, [dryAudio]); 
-
     // Validasi file
     const validateFile = (file) => {
         if (file && (file.type === "audio/mpeg" || file.type === "audio/wav")) {
             setUploadedFileName(file.name);
             setNotificationSuccess("Uploaded successfully!");
+            flag_upload = 1;
             setTimeout(() => setNotificationSuccess(null), 2500); // Sembunyikan notifikasi setelah 2.5 detik
             console.log("File uploaded:", uploadedFileName);
 
@@ -98,68 +93,108 @@ function Lab() {
             setTimeout(() => setNotificationFailed(null), 2500);
         }
     };
+    
+    const [showBeforeEnhance, setShowBeforeEnhance] = useState(false);
+    const [showAfterEnhance, setShowAfterEnhance] = useState(false);
 
-    return (
-        <div className="lab-page container-fluid flex-col">
-            <h1 className="title firacode">LABORATORY</h1>
+    const handleEnhanceClick = () => {
+        flag = 1;
+        console.log(flag)
+        setShowBeforeEnhance(false); 
+        setShowAfterEnhance(true); 
+    };
 
-            {/* TEMPORARY AUDIO PLAYER FOR DEMONSTRATION. SAFE TO DELETE AFTER IMPLEMENTED. */}
-            <audio id="audio-player-dry" controls style={{display: 'none'}}>
-                Your browser does not support the audio element.
-            </audio>
-            <audio id="audio-player-wet" controls style={{display: 'none'}}>
-                Your browser does not support the audio element.
-            </audio>
+    useEffect(() => {
+        if (notificationSuccess){
+            setShowBeforeEnhance(true);
+            console.log("wadidaw");
+        }
+     }, [notificationSuccess])
 
-            {/* Area Upload */}
-            <div 
-                className="posts container-fluid" 
-                onDragOver={handleDragOver} 
-                onDrop={handleDrop}
-            >
-                {/* Input File Tersembunyi */}
-                <input
-                    type="file"
-                    accept=".mp3, .wav"
-                    ref={fileInputRef}
-                    onChange={handleFileChange}
-                    style={{ display: 'none' }}
-                />
+    
+    if (!dryAudio){
+        flag_upload = 0;
+        return (
+            <div className="lab-page container-fluid flex-col">
+                <h1 className="title firacode">LABORATORY</h1>
+                {/* Area Upload */}
+                <div 
+                    className="posts container-fluid" 
+                    onDragOver={handleDragOver} 
+                    onDrop={handleDrop}
+                >
+                    
+                    {/* Input File Tersembunyi */}
+                    <input
+                        type="file"
+                        accept=".mp3, .wav"
+                        ref={fileInputRef}
+                        onChange={handleFileChange}
+                        style={{ display: 'none' }}
+                    />
+    
+                    {/* Gambar sebagai tombol upload */}
+                    <div className="upload-logo icon" onClick={handleLogoClick}>
+                        <img src={icon_upload} alt="Upload Icon" />
+                    </div>
+    
+                    <span className="upload-text tulisan">Choose a file or drag it here</span>
+                    <span className="upload-format tulisan">Supported formats: .mp3, .wav</span>
+    
+                    {/* Tombol Upload */}
+                    <button className="upload-button" onClick={handleLogoClick}>
+                        Upload Audio
+                    </button>
+                    
+    
+                    {/* Pesan File yang Diunggah */}
+                    {uploadedFileName && (
+                        <p className="uploaded-file-name">Uploaded: {uploadedFileName}</p>
+                    )}
 
-                {/* Gambar sebagai tombol upload */}
-                <div className="upload-logo icon" onClick={handleLogoClick}>
-                    <img src={icon_upload} alt="Upload Icon" />
+                    { notificationSuccess && (
+                        <div className="notificationSuccess" >
+                            {notificationSuccess}
+                        </div>
+                    )}
+    
+                    {notificationFailed && (
+                        <div className="notificationFailed">
+                            {notificationFailed}
+                        </div>
+                    )}
                 </div>
-
-                <span className="upload-text tulisan">Choose a file or drag it here</span>
-                <span className="upload-format tulisan">Supported formats: .mp3, .wav</span>
-
-                {/* Tombol Upload */}
-                <button className="upload-button" onClick={handleLogoClick}>
-                    Upload Audio
-                </button>
-
-                {/* Pesan File yang Diunggah */}
-                {uploadedFileName && (
-                    <p className="uploaded-file-name">Uploaded: {uploadedFileName}</p>
-                )}
-
-                {notificationSuccess && (
-                    <div className="notificationSuccess">
-                        {notificationSuccess}
-                    </div>
-                )}
-
-                {notificationFailed && (
-                    <div className="notificationFailed">
-                        {notificationFailed}
-                    </div>
-                )}
+    
+                <p className='copyright center-content cambria'>copyrights©2024 Reserved by PureWave</p>
             </div>
-
-            <p className='copyright center-content cambria'>copyrights©2024 Reserved by PureWave</p>
-        </div>
-    );
+        );
+    }
+    else if(showBeforeEnhance) {
+        return(
+            <BeforeEnhance
+                dryAudio={dryAudio}
+                onClickFileChange={() => handleFileChange(e)}
+                onHandleLogoClick={() => handleLogoClick()}
+                onClickhandleEnhanceClick={() => handleEnhanceClick()}
+                uploadedFileName={uploadedFileName}
+            />
+        )
+    }else if(showAfterEnhance){
+        return (
+            <div className="lab-page container-fluid flex-col">
+                {/* NOPAL */}   
+                <EnhanceItem
+                dryAudio={dryAudio}
+                wetAudio={wetAudio}
+                onClickFileChange={() => handleFileChange(e)}
+                uploadedFileName={uploadedFileName}
+                />
+                <div>
+                    <p className='copyright center-content cambria'>copyrights©2024 Reserved by PureWave</p>
+                </div>
+            </div>
+        );
+    }
 }
 
 export default Lab;
