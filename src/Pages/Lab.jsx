@@ -18,6 +18,17 @@ function Lab() {
     const [dryAudio, setDryAudio] = useState(null);
     const [wetAudio, setWetAudio] = useState(null);
 
+    const customAlert = (isGood, message) => {
+        if (isGood) {
+            setNotificationSuccess(message);
+            setTimeout(() => setNotificationSuccess(null), 2500);
+        }
+        else {
+            setNotificationFailed(message);
+            setTimeout(() => setNotificationFailed(null), 2500);
+        }
+    };
+
     // Trigger input file saat tombol atau gambar ditekan
     const handleLogoClick = () => {
         fileInputRef.current.click();
@@ -66,13 +77,14 @@ function Lab() {
             setDryAudio(dryAudioUrl);
             setWetAudio(wetAudioUrl);
         } catch (error) {
+            console.error("Error uploading audio:", error);
+
             if (error.response) {
-                console.error('Response data:', error.response.data);
-                console.error('Response status:', error.response.status);
+                customAlert(false, `Failed: ${error.response.data.message || "Unhandled error"}`);
             } else if (error.request) {
-                console.error('Request:', error.request);
+                customAlert(false, "No response from the server. Please log in and try again.");
             } else {
-                console.error('Error:', error.message);
+                customAlert(false, "Unexpected JavaScript error: " + error.message);
             }
         }
     };
@@ -84,7 +96,7 @@ function Lab() {
             setNotificationSuccess("Uploaded successfully!");
             flag_upload = 1;
             setTimeout(() => setNotificationSuccess(null), 2500); // Sembunyikan notifikasi setelah 2.5 detik
-            console.log("File uploaded:", uploadedFileName);
+            console.log("File uploaded:", file.name);
 
             submitAudio(file);
         } else {
