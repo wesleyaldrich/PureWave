@@ -6,6 +6,7 @@ import Community from './Pages/Community'
 import Lab from './Pages/Lab'
 import History from './Pages/History';
 import GetHelp from './Pages/GetHelp';
+import Enhance from './Pages/enhance';
 import Profile from './Components/Profile';
 import { useState } from "react";
 
@@ -24,6 +25,7 @@ function App() {
                         <Route path="/lab" element={<Lab />} />
                         <Route path="/history" element={<History />} />
                         <Route path="/gethelp" element={<GetHelp />} />
+                        <Route path="/enhance" element={<Enhance />} />
                     </Routes>
                 </div>
             </div>

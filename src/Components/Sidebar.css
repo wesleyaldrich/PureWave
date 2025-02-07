@@ -53,10 +53,10 @@
     border-radius: 15%;
 }
 
-#lab:hover, #history:hover, #community:hover  {
+/* #lab:hover, #history:hover, #community:hover  {
     background-color: var(--hover);
     border-radius: 15%;
-}
+} */
 
 .help {
     width: 100%;
