@@ -135,7 +135,7 @@ function Community({ isSidebarExpanded }) {
                 if (error.response) {
                     customAlert(false, `Failed: ${error.response.data.message || "Unhandled error"}`);
                 } else if (error.request) {
-                    customAlert(false, "No response from the server. Server might be down.");
+                    customAlert(false, "No response from the server. Please log in and try again.");
                 } else {
                     customAlert(false, "Unexpected JavaScript error: " + error.message);
                 }
@@ -161,7 +161,7 @@ function Community({ isSidebarExpanded }) {
                 if (error.response) {
                     customAlert(false, `Failed: ${error.response.data.message || "Unhandled error"}`);
                 } else if (error.request) {
-                    customAlert(false, "No response from the server. Server might be down.");
+                    customAlert(false, "No response from the server. Please log in and try again.");
                 } else {
                     customAlert(false, "Unexpected JavaScript error: " + error.message);
                 }
@@ -194,7 +194,7 @@ function Community({ isSidebarExpanded }) {
             if (error.response) {
                 customAlert(false, `Failed: ${error.response.data.message || "Unhandled error"}`);
             } else if (error.request) {
-                customAlert(false, "No response from the server. Server might be down.");
+                customAlert(false, "No response from the server. Please log in and try again.");
             } else {
                 customAlert(false, "Unexpected JavaScript error: " + error.message);
             }
@@ -224,7 +224,7 @@ function Community({ isSidebarExpanded }) {
             if (error.response) {
                 customAlert(false, `Failed: ${error.response.data.message || "Unhandled error"}`);
             } else if (error.request) {
-                customAlert(false, "No response from the server. Server might be down.");
+                customAlert(false, "No response from the server. Please log in and try again.");
             } else {
                 customAlert(false, "Unexpected JavaScript error: " + error.message);
             }
