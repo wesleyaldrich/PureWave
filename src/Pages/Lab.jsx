@@ -174,6 +174,7 @@ function Lab() {
             <BeforeEnhance
                 dryAudio={dryAudio}
                 onClickFileChange={() => handleFileChange(e)}
+                onHandleLogoClick={() => handleLogoClick()}
                 onClickhandleEnhanceClick={() => handleEnhanceClick()}
                 uploadedFileName={uploadedFileName}
             />
@@ -186,7 +187,7 @@ function Lab() {
                 dryAudio={dryAudio}
                 wetAudio={wetAudio}
                 onClickFileChange={() => handleFileChange(e)}
-                
+                uploadedFileName={uploadedFileName}
                 />
                 <div>
                     <p className='copyright center-content cambria'>copyrights©2024 Reserved by PureWave</p>

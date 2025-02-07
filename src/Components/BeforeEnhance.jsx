@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPause, faTrash } from '@fortawesome/free-solid-svg-icons';
 import WaveSurfer from 'https://cdn.jsdelivr.net/npm/wavesurfer.js@7/dist/wavesurfer.esm.js'
 
-const BeforeEnhance = ({ dryAudio, onClickFileChange, onClickhandleEnhanceClick, uploadedFileName }) => {
+const BeforeEnhance = ({ dryAudio, onClickFileChange, onHandleLogoClick, onClickhandleEnhanceClick, uploadedFileName }) => {
+    const fileInputRef = useRef(null);
     const waveformRef = useRef(null);
     const wavesurferRef = useRef(null);
     const [isPlayingOriginal, setIsPlayingOriginal] = useState(false);
@@ -94,9 +95,16 @@ const BeforeEnhance = ({ dryAudio, onClickFileChange, onClickhandleEnhanceClick,
         <div className="before-enhance-page container-fluid flex-col">
             <h1 className="title firacode">LABORATORY</h1>
             <div className="buttons flex-row justify-content-between gurajada">
-                <div className="button col-4" onClick={onClickFileChange}>
+                <div className="button col-4"  onClick={onHandleLogoClick}>
+                <input
+                        type="file"
+                        accept=".mp3, .wav"
+                        ref={fileInputRef}
+                        onChange={onClickFileChange}
+                        style={{ display: 'none' }}
+                    />
                     <img src={addEnhance} alt="Icon Add Enhance" className="ebutton-icon" />
-                    <span>LOAD AUDIO</span>
+                    <span>ENHANCE YOUR AUDIO</span>
                 </div>
             </div>
             <div className='visualizer'>
@@ -118,7 +126,7 @@ const BeforeEnhance = ({ dryAudio, onClickFileChange, onClickhandleEnhanceClick,
                             </div>
                             <div className="upload-button-container flex-col">
                                 <button className="upload-button" onClick={onClickhandleEnhanceClick}>
-                                    Enhance
+                                    ENHANCE
                                 </button>
                             </div>  
                         </>
