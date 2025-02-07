@@ -3,6 +3,11 @@
     width: 10vw;
     height: 100%;
     justify-content: space-between;
+    transition: width 0.5s ease;
+}
+
+.sidebar.expanded {
+    width: 17.5vw; /* Lebar saat diperbesar */
 }
 
 .sidebar-content {
@@ -10,24 +15,101 @@
     align-items: center;
     justify-content: start;
     gap: 25px;
+    transition: gap 0.5s ease;
+}
+
+.sidebar.expanded .sidebar-content{
+    gap: 0;
+}
+
+.ribbonArea{
+    width: 100%;
+    position: relative;
+    margin: 0.5vw 0;
+    display: flex;
+    justify-content: end;
+    right: -0.5vw;
+}
+
+.ribbon{
+    width: 3.25vw;
+    height: 2.75vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px 0 0 50px;
+    background-color: var(--history-menu);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+}
+
+.ribbon:hover{
+    background-color: var(--hover-history-menu);
+    cursor: pointer;
+}
+
+.arrow{
+    height: 1.25vw;
+    transition: transform 0.5s ease;
+}
+
+.sidebar.expanded .arrow {
+    transform: rotate(180deg);
 }
 
 .logo {
-    padding: 61.2px 0px;
+    padding: 2.117vw 0px 4.2vw 0px;
     width: 100%;
-    gap: 0.4vw;
+    gap: 0.2vw;
     border-bottom: 2px solid var(--sub-title);
+    position: relative;
+    top: -1.25vw;
+    transition: padding 0.5s ease, gap 0.5s ease;
+}
+
+.sidebar.expanded .logo{
+    padding: 0px 0px 1.78vw 0px;
+    gap: 0.8vw;
 }
 
 .logo img {
     width: 5vw;
+    transition: width 0.5s ease;
+}
+
+.sidebar.expanded .logo img{
+    position: relative;
+    top: -0.2vw;
+    width: 10vw;
 }
 
 .icon {
+    position: relative;
+    top: -1.25vw;
+    display: flex;
+    flex-direction: column; /* Default: teks di bawah ikon */
+    align-items: center;
+    justify-content: center;
+    gap: 0;
     height: 5.5vw;
     width: 5.5vw;
     color: var(--sub-title);
     border-radius: 15%;
+    transition: justify-content 0.5s ease, width 0.5s ease, border-radius 0.5s ease, flex-direction 0.5s ease, gap 0.5s ease, padding-left 0.5s ease;
+    overflow: hidden; /* Mencegah teks keluar */
+}
+
+.sidebar.expanded .icon {
+    flex-direction: row; /* Pindah ke samping */
+    justify-content: start;
+    padding-left: 3vw;
+    width: 100%;
+    border-radius: 0;
+    gap: 1vw;
+}
+
+.sidebar.expanded .icon{
+    width: 100%;
+    border-radius: 0;
 }
 
 .icon img {
@@ -36,16 +118,34 @@
 
 .logo p {
     margin: 0;
-    font-size: 1.5vw;
+    font-size: 1.25vw;
     line-height: 1.4vw;
     color: var(--history-menu);
+    transition: font-size 0.5s ease;
+}
+
+.sidebar.expanded .logo p{
+    font-size: 2.5vw;
+    position: relative;
+    top: -0.2vw;
 }
 
 .icon p {
     margin: 0;
     font-size: 1vw;
-    margin-top: 0.75vw;
-    line-height: 0;
+    line-height: 1.2vw;
+    white-space: nowrap;
+    text-align: center;
+    opacity: 1; /* Awalnya terlihat */
+    width: auto;
+    transition: opacity 0.3s ease, transform 0.5s ease, text-align 0.5s ease, font-size 0.5s ease;
+}
+
+.sidebar.expanded .icon p {
+    font-size: 2vw;
+    transform: translateX(0);
+    opacity: 1;
+    transition-delay: 0.1s; /* Sedikit delay agar smooth */
 }
 
 .icon.active {
@@ -58,12 +158,16 @@
     border-radius: 15%;
 } */
 
+.sidebar.expanded #lab:hover, .sidebar.expanded #history:hover, .sidebar.expanded #community:hover {
+    border-radius: 0;
+}
+
 .help {
     width: 100%;
     margin-top: auto;
 }
 
 .help img{
-    margin-bottom: 25px;
+    margin-bottom: 5.5vw;
     width: 3.75vw;
 }

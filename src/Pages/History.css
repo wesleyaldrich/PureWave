@@ -17,6 +17,10 @@
     padding: 0;
 }
 
+#history{
+    cursor: default;
+}
+
 #history:hover{
     background-color: var(--button);
 }
