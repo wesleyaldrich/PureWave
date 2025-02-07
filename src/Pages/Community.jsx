@@ -48,6 +48,17 @@ function Community({ isSidebarExpanded }) {
 
     const API_BASE_URL = 'http://localhost:8080';
 
+    const customAlert = (isGood, message) => {
+        if (isGood) {
+            setNotificationSuccess(message);
+            setTimeout(() => setNotificationSuccess(null), 2500);
+        }
+        else {
+            setNotificationFailed(message);
+            setTimeout(() => setNotificationFailed(null), 2500);
+        }
+    };
+
     const handleFileChange = (event) => {
         const uploadedFile = event.target.files[0];
         
@@ -117,12 +128,17 @@ function Community({ isSidebarExpanded }) {
 
                 setContent("");
                 setIsCreatePostOpen(false);
-                setNotificationSuccess("Successfully edited!");
-                setTimeout(() => setNotificationSuccess(null), 2500);
+                customAlert(true, "Successfully edited!");
             } catch (error) {
-                console.error("Error creating post:", error);
-                setNotificationFailed("Failed to edit the post. Please try again.");
-                setTimeout(() => setNotificationFailed(null), 2500);
+                console.error("Error editing post:", error);
+
+                if (error.response) {
+                    customAlert(false, `Failed: ${error.response.data.message || "Unhandled error"}`);
+                } else if (error.request) {
+                    customAlert(false, "No response from the server. Server might be down.");
+                } else {
+                    customAlert(false, "Unexpected JavaScript error: " + error.message);
+                }
             }
 
             setIsEditing(false);
@@ -138,16 +154,21 @@ function Community({ isSidebarExpanded }) {
                 });
                 setContent("");
                 setIsCreatePostOpen(false);
-                setNotificationSuccess("Successfully created!");
-                setTimeout(() => setNotificationSuccess(null), 2500);
+                customAlert(true, "Successfully created!");
             } catch (error) {
                 console.error("Error creating post:", error);
-                setNotificationFailed("Failed to create a post. Please try again.");
-                setTimeout(() => setNotificationFailed(null), 2500);
+
+                if (error.response) {
+                    customAlert(false, `Failed: ${error.response.data.message || "Unhandled error"}`);
+                } else if (error.request) {
+                    customAlert(false, "No response from the server. Server might be down.");
+                } else {
+                    customAlert(false, "Unexpected JavaScript error: " + error.message);
+                }
             }
         }
 
-        setFile(null); // Reset file
+        setFile(null);
         fetchPosts();
         fetchReplies();
     };
@@ -166,12 +187,17 @@ function Community({ isSidebarExpanded }) {
             });
 
             setReplyContent("");
-            setNotificationSuccess("Successfully replied!");
-            setTimeout(() => setNotificationSuccess(null), 2500);
+            customAlert(true, "Successfully replied!");
         } catch (error) {
-            console.error("Error creating reply:", error);
-            setNotificationFailed("Failed to create a reply. Please try again.");
-            setTimeout(() => setNotificationFailed(null), 2500);
+            console.error("Error replying post:", error);
+
+            if (error.response) {
+                customAlert(false, `Failed: ${error.response.data.message || "Unhandled error"}`);
+            } else if (error.request) {
+                customAlert(false, "No response from the server. Server might be down.");
+            } else {
+                customAlert(false, "Unexpected JavaScript error: " + error.message);
+            }
         }
 
         setFile(null);
@@ -191,15 +217,16 @@ function Community({ isSidebarExpanded }) {
             const response = await axios.delete(`${API_BASE_URL}/data/posts/${postToDelete.id}`);
             fetchPosts();
             fetchReplies();
+            customAlert(true, "Successfully deleted!");
         } catch (error) {
             console.error("Error deleting post:", error);
 
             if (error.response) {
-                alert(`Failed to delete post: ${error.response.data.message || "Unknown error"}`);
+                customAlert(false, `Failed: ${error.response.data.message || "Unhandled error"}`);
             } else if (error.request) {
-                alert("No response from the server. Please try again.");
+                customAlert(false, "No response from the server. Server might be down.");
             } else {
-                alert("Error occurred: " + error.message);
+                customAlert(false, "Unexpected JavaScript error: " + error.message);
             }
         }
 
@@ -279,6 +306,14 @@ function Community({ isSidebarExpanded }) {
             replyTextAreaRef.current.focus();
         }
     }, [isReplyOpen]);
+
+    staticPost = {
+        picture: dummy_pic,
+        author: "Dummy Guy",
+        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        attachment: "/attachments/example",
+        replyCount: null
+    }
     
     return (
         <>
@@ -298,13 +333,14 @@ function Community({ isSidebarExpanded }) {
                     <div className="wrapper">
                         {/* THIS IS A DUMMY POST FOR STATIC DEMO. DELETE SOON! */}
                         <Post
-                            picture={dummy_pic}
-                            author={"Dummy Guy"}
-                            content={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
-                            attachment={"example"}
-                            onReply={() => handleReplyOpen()}
-                            onDelete={() => confirmDeletePost()}
-                            onEdit={() => editPost()}
+                            picture={staticPost.picture}
+                            author={staticPost.author}
+                            content={staticPost.content}
+                            attachment={staticPost.attachment}
+                            replyCount={staticPost.replyCount}
+                            onReply={() => handleReplyOpen(staticPost)}
+                            onDelete={() => confirmDeletePost(staticPost)}
+                            onEdit={() => editPost(staticPost)}
                         />
                         {posts.length > 0 ? (
                             posts.map(
