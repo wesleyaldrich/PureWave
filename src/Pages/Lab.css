@@ -55,14 +55,6 @@
     transition: background-color 0.3s ease;
 }
 
-#lab{
-    cursor:default;
-}
-
-#lab:hover{
-    background-color: var(--button);
-}
-
 /*mulai dari sini baru */
 
 .lab-page .ebutton-icon{
