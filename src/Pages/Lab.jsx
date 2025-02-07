@@ -18,17 +18,6 @@ function Lab() {
     const [dryAudio, setDryAudio] = useState(null);
     const [wetAudio, setWetAudio] = useState(null);
 
-    const customAlert = (isGood, message) => {
-        if (isGood) {
-            setNotificationSuccess(message);
-            setTimeout(() => setNotificationSuccess(null), 2500);
-        }
-        else {
-            setNotificationFailed(message);
-            setTimeout(() => setNotificationFailed(null), 2500);
-        }
-    };
-
     // Trigger input file saat tombol atau gambar ditekan
     const handleLogoClick = () => {
         fileInputRef.current.click();
@@ -55,7 +44,7 @@ function Lab() {
     const submitAudio = async (file) => {
         try {
             const formData = new FormData();
-            formData.append('audio', file);
+            formData.append('audio', file); // 'audio' is the key for backend
     
             // Upload the audio file
             let response = await axios.post('http://localhost:8080/audio', formData, {
@@ -77,14 +66,13 @@ function Lab() {
             setDryAudio(dryAudioUrl);
             setWetAudio(wetAudioUrl);
         } catch (error) {
-            console.error("Error uploading audio:", error);
-
             if (error.response) {
-                customAlert(false, `Failed: ${error.response.data.message || "Unhandled error"}`);
+                console.error('Response data:', error.response.data);
+                console.error('Response status:', error.response.status);
             } else if (error.request) {
-                customAlert(false, "No response from the server. Please log in and try again.");
+                console.error('Request:', error.request);
             } else {
-                customAlert(false, "Unexpected JavaScript error: " + error.message);
+                console.error('Error:', error.message);
             }
         }
     };
@@ -93,7 +81,9 @@ function Lab() {
     const validateFile = (file) => {
         if (file && (file.type === "audio/mpeg" || file.type === "audio/wav")) {
             setUploadedFileName(file.name);
+            setNotificationSuccess("Uploaded successfully!");
             flag_upload = 1;
+            setTimeout(() => setNotificationSuccess(null), 2500); // Sembunyikan notifikasi setelah 2.5 detik
             console.log("File uploaded:", uploadedFileName);
 
             submitAudio(file);
