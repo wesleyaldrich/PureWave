@@ -13,7 +13,6 @@ import iconSend from "../assets/icon-send.png";
 // Static demo
 import dummy_pic from "../assets/icon-profile.png";
 
-// Komponen Pop-up Peringatan
 const WarningPopup = ({ message, onConfirm, onCancel }) => {
     return (
         <div className="warning-popup">
@@ -45,6 +44,38 @@ function Community({ isSidebarExpanded }) {
     const [postToDelete, setPostToDelete] = useState(null);
     const postTextAreaRef = useRef(null);
     const replyTextAreaRef = useRef(null);
+    const formAttRef = useRef(null); 
+
+    const initialHeight = 34;
+
+    const adjustHeight = (textarea) => {
+        if (textarea.value.trim() === "") {
+            textarea.style.height = `${initialHeight}px`; 
+
+            formAttRef.current.style.borderRadius = "50px"; 
+        } else {
+            textarea.style.height = `${initialHeight}px`; 
+            textarea.style.height = `${textarea.scrollHeight}px`; 
+
+            formAttRef.current.style.borderRadius = "20px";
+        }
+    };
+    
+    const handlePostContentChange = (e) => {
+        const textarea = postTextAreaRef.current;
+        setContent(e.target.value);
+    
+        adjustHeight(textarea);
+    };
+    
+    const handleReplyContentChange = (e) => {
+        const textarea = replyTextAreaRef.current;
+        setReplyContent(e.target.value);
+    
+        adjustHeight(textarea);
+    };
+    
+
 
     const API_BASE_URL = 'http://localhost:8080';
 
@@ -383,7 +414,7 @@ function Community({ isSidebarExpanded }) {
                         }
 
                         <form onSubmit={handleSubmit}>
-                            <div className="formAtt d-flex justify-content-between">
+                            <div className="formAtt d-flex justify-content-between" ref={formAttRef}>
                                 <div className="attachment" onClick={handleAttachmentClick}>
                                     <img src={iconAttachment} alt="attachment icon" className="icon-form" />
                                     <input
@@ -400,9 +431,10 @@ function Community({ isSidebarExpanded }) {
                                     name="content"
                                     value={content}
                                     className="input"
-                                    onChange={(e) => setContent(e.target.value)}
-                                    placeholder="Buat Postingan Baru Disini"
+                                    onChange= {handlePostContentChange}
+                                    placeholder="Create New Post Here"
                                     ref={postTextAreaRef}
+                                    style={{ height: `${initialHeight}px` }}
                                 />
                                 <br />
                                 <br />
@@ -464,7 +496,7 @@ function Community({ isSidebarExpanded }) {
                         }
 
                         <form onSubmit={handleReplySubmit}>
-                            <div className="formAtt d-flex justify-content-between">
+                            <div className="formAtt d-flex justify-content-between" ref={formAttRef}>
                                 <div className="attachment" onClick={handleAttachmentClick}>
                                     <img src={iconAttachment} alt="attachment icon" className="icon-form" />
 
@@ -484,9 +516,10 @@ function Community({ isSidebarExpanded }) {
                                     name="content"
                                     value={replyContent}
                                     className="input"
-                                    onChange={(e) => setReplyContent(e.target.value)}
-                                    placeholder="Buat Reply Baru Disini"
+                                    onChange={handleReplyContentChange}
+                                    placeholder="Create New Reply Here"
                                     ref={replyTextAreaRef}
+                                    style={{ height: `${initialHeight}px` }}
                                 />
                                 <br />
                                 <br />
