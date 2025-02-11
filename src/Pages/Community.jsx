@@ -432,7 +432,7 @@ function Community({ isSidebarExpanded }) {
                                     value={content}
                                     className="input"
                                     onChange= {handlePostContentChange}
-                                    placeholder="Buat Postingan Baru Disini"
+                                    placeholder="Create New Post Here"
                                     ref={postTextAreaRef}
                                     style={{ height: `${initialHeight}px` }}
                                 />
@@ -517,7 +517,7 @@ function Community({ isSidebarExpanded }) {
                                     value={replyContent}
                                     className="input"
                                     onChange={handleReplyContentChange}
-                                    placeholder="Buat Reply Baru Disini"
+                                    placeholder="Create New Reply Here"
                                     ref={replyTextAreaRef}
                                     style={{ height: `${initialHeight}px` }}
                                 />
