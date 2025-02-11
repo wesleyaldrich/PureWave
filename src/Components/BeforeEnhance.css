@@ -137,8 +137,15 @@
     transition: background-color 0.3s ease;
 }
 
-.upload-button-container {
+.before-enhance-page .upload-button-container {
     align-items: end;
     width: 100%;
     margin-top: 1vh;
+}
+
+.before-enhance-page .copyright{
+    text-align: center;
+    color: var(--sub-title);
+    margin-top: 20px;
+    margin-bottom: 0;
 }

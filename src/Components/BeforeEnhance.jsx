@@ -3,17 +3,24 @@ import React, { useRef, useState, useEffect } from 'react';
 import addEnhance from "../assets/icon-addEnhance.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPause, faTrash } from '@fortawesome/free-solid-svg-icons';
-import WaveSurfer from 'https://cdn.jsdelivr.net/npm/wavesurfer.js@7/dist/wavesurfer.esm.js'
+import WaveSurfer from 'https://cdn.jsdelivr.net/npm/wavesurfer.js@7/dist/wavesurfer.esm.js';
+import axios from 'axios'; // Ensure axios is imported
+import EnhanceItem from './EnhanceItem'
 
-const BeforeEnhance = ({ dryAudio, onClickFileChange, onHandleLogoClick, onClickhandleEnhanceClick, uploadedFileName }) => {
+const BeforeEnhance = ({ param_dryAudio, param_wetAudio, uploadedFileName }) => {
     const fileInputRef = useRef(null);
     const waveformRef = useRef(null);
     const wavesurferRef = useRef(null);
     const [isPlayingOriginal, setIsPlayingOriginal] = useState(false);
-    const [hasAudio, setHasAudio] = useState(!!dryAudio); // Check if dryAudio is provided
-    const [fileName, setFileName] = useState(uploadedFileName || null); // Initialize with dryAudio name if provided
-    const [duration, setDuration] = useState(null); // State to hold audio duration
-    const [currentTime, setCurrentTime] = useState(0); // State to hold current playback time
+    const [hasAudio, setHasAudio] = useState(!!param_dryAudio);
+    const [fileName, setFileName] = useState(uploadedFileName);
+    const [duration, setDuration] = useState(null);
+    const [currentTime, setCurrentTime] = useState(0);
+    const [notification, setNotification] = useState(null);
+    const [showAfterEnhance, setShowAfterEnhance] = useState(false);
+
+    const [dryAudio, setDryAudio] = useState(param_dryAudio);
+    const [wetAudio, setWetAudio] = useState(param_wetAudio);
 
     useEffect(() => {
         wavesurferRef.current = WaveSurfer.create({
@@ -30,18 +37,18 @@ const BeforeEnhance = ({ dryAudio, onClickFileChange, onHandleLogoClick, onClick
             cursorWidth: 3
         });
 
-        // Event listener to get the duration when the audio is ready
         wavesurferRef.current.on('ready', () => {
             setDuration(wavesurferRef.current.getDuration());
         });
 
-        // Event listener to update current time during playback
         wavesurferRef.current.on('audioprocess', () => {
             setCurrentTime(wavesurferRef.current.getCurrentTime());
         });
 
         return () => {
-            wavesurferRef.current.destroy();
+            if (wavesurferRef.current) {
+                wavesurferRef.current.destroy();
+            }
         };
     }, []);
 
@@ -49,18 +56,77 @@ const BeforeEnhance = ({ dryAudio, onClickFileChange, onHandleLogoClick, onClick
         if (dryAudio) {
             wavesurferRef.current.load(dryAudio);
             setHasAudio(true);
-            setFileName(uploadedFileName); // Set the file name when audio is loaded
+            setFileName(fileName);
         } else {
             setHasAudio(false);
-            setFileName(''); // Clear the file name when no audio is provided
-            setDuration(null); // Clear duration when no audio
-            setCurrentTime(0); // Reset current time
+            setFileName('');
+            setDuration(null);
+            setCurrentTime(0);
         }
-    }, [dryAudio, uploadedFileName]); // Add uploadedFileName to the dependency array
+    }, [dryAudio, fileName]);
 
-    useEffect(() => {
-        setFileName(uploadedFileName); // Update fileName when uploadedFileName changes
-    }, [uploadedFileName]);
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const fileURL = URL.createObjectURL(file);
+            wavesurferRef.current.load(fileURL);
+            setHasAudio(true);
+            setFileName(file.name);
+            console.log(file.name);
+            setDuration(null);
+            setCurrentTime(0);
+            validateFile(file);
+        }
+    };
+
+    const submitAudio = async (file) => {
+        try {
+            const formData = new FormData();
+            formData.append('audio', file); // 'audio' is the key for backend
+
+            // Upload the audio file
+            const response = await axios.post('http://localhost:8080/audio', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+                responseType: 'json',
+            });
+
+            // Extract the name formats
+            const filenames = response.data.split(',');
+            const dryAudioFilename = filenames[0];
+            const wetAudioFilename = filenames[1];
+
+            // Set audio URLs
+            const dryAudioUrl = `http://localhost:8080/audio/files/dry/${dryAudioFilename}`;
+            const wetAudioUrl = `http://localhost:8080/audio/files/wet/${wetAudioFilename}`;
+
+            setDryAudio(dryAudioUrl);
+            setWetAudio(wetAudioUrl);
+            setNotification("Audio uploaded and processed successfully.");
+        } catch (error) {
+            console.error("Error uploading audio:", error);
+
+            if (error.response) {
+                setNotification(`Failed: ${error.response.data.message || "Unhandled error"}`);
+            } else if (error.request) {
+                setNotification("No response from the server. Please try again.");
+            } else {
+                setNotification("Unexpected JavaScript error: " + error.message);
+            }
+        } finally {
+            setTimeout(() => setNotification(null), 2500);
+        }
+    };
+
+    const validateFile = (file) => {
+        if (file && (file.type === "audio/mpeg" || file.type === "audio/wav")) {
+            submitAudio(file);
+        } else {
+            setNotification("Invalid file format. Only .mp3 and .wav are supported.");
+            setTimeout(() => setNotification(null), 2500);
+        }
+    };
 
     const playPauseOriginal = () => {
         if (wavesurferRef.current.isPlaying()) {
@@ -72,18 +138,16 @@ const BeforeEnhance = ({ dryAudio, onClickFileChange, onHandleLogoClick, onClick
         }
     };
 
-
     const removeAudio = () => {
-        wavesurferRef.current.empty(); // Clear the waveform
-        setHasAudio(false); // Update state to reflect no audio
-        setIsPlayingOriginal(false); // Ensure audio is not playing
-        setFileName(''); // Clear the file name
-        setDuration(null); // Clear duration
-        setCurrentTime(0); // Reset current time
-        onClickFileChange(null); // Optionally, clear the audio file in parent component
+        wavesurferRef.current.empty();
+        setHasAudio(false);
+        setIsPlayingOriginal(false);
+        setFileName('');
+        setDuration(null);
+        setCurrentTime(0);
+        fileInputRef.current.value = ''; // Reset file input
     };
 
-    // Function to format duration and current time from seconds to MM:SS
     const formatTime = (seconds) => {
         if (!seconds) return '00:00';
         const minutes = Math.floor(seconds / 60);
@@ -91,49 +155,71 @@ const BeforeEnhance = ({ dryAudio, onClickFileChange, onHandleLogoClick, onClick
         return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
     };
 
-    return (
-        <div className="before-enhance-page container-fluid flex-col">
-            <h1 className="title firacode">LABORATORY</h1>
-            <div className="buttons flex-row justify-content-between gurajada">
-                <div className="button col-4"  onClick={onHandleLogoClick}>
-                <input
-                        type="file"
-                        accept=".mp3, .wav"
-                        ref={fileInputRef}
-                        onChange={onClickFileChange}
-                        style={{ display: 'none' }}
-                    />
-                    <img src={addEnhance} alt="Icon Add Enhance" className="ebutton-icon" />
-                    <span>ENHANCE YOUR AUDIO</span>
-                </div>
+    const handleEnhanceClick = () => {
+        if (!wetAudio) {
+            setNotification("Enhance the audio first.");
+            setTimeout(() => setNotification(null), 2500);
+            return;
+        }
+        setShowAfterEnhance(true);
+    };
+
+    if (showAfterEnhance) {
+        return (
+            <div className="lab-page container-fluid flex-col">
+                <EnhanceItem
+                    dryAudio={dryAudio}
+                    wetAudio={wetAudio}
+                    onClickFileChange={() => handleFileChange()}
+                    uploadedFileName={fileName}
+                />
             </div>
-            <div className='visualizer'>
-                <div className='sub-visualizer-1'>
-                    <p className="uploaded-file-name">{fileName}</p>
+        );
+    } else {
+        return (
+            <div className="before-enhance-page container-fluid flex-col">
+                <h1 className="title firacode">LABORATORY</h1>
+                <div className="buttons flex-row justify-content-between gurajada">
+                    <div className="button col-4" onClick={() => fileInputRef.current.click()}>
+                        <input
+                            type="file"
+                            accept=".mp3, .wav"
+                            ref={fileInputRef}
+                            onChange={handleFileChange}
+                            style={{ display: 'none' }}
+                        />
+                        <img src={addEnhance} alt="Icon Add Enhance" className="ebutton-icon" />
+                        <span>ENHANCE YOUR AUDIO</span>
+                    </div>
                 </div>
+                <div className='visualizer'>
                     {hasAudio && (
                         <>
+                    <div className='sub-visualizer-1'>
+                        <p className="uploaded-file-name">{fileName}</p>
+                    </div>
                             <div className='sub-visualizer-2'>
-                            <button className='play_button' onClick={playPauseOriginal}>
-                                <FontAwesomeIcon className="icon_play" icon={isPlayingOriginal ? faPause : faPlay} />
-                            </button>
-                            <div className='wave' ref={waveformRef} />
-                            <span className="audio-current-time">{formatTime(currentTime)}</span> {/* Display current time */}
-                            <button className="remove-button" onClick={removeAudio}>
-                                <FontAwesomeIcon className="icon_remove" icon={faTrash} />
-                            </button>
-                            
+                                <button className='play_button' onClick={playPauseOriginal}>
+                                    <FontAwesomeIcon className="icon_play" icon={isPlayingOriginal ? faPause : faPlay} />
+                                </button>
+                                <div className='wave' ref={waveformRef} />
+                                <span className="audio-current-time">{formatTime(currentTime)}</span>
+                                <button className="remove-button" onClick={removeAudio}>
+                                    <FontAwesomeIcon className="icon_remove" icon={faTrash} />
+                                </button>
                             </div>
                             <div className="upload-button-container flex-col">
-                                <button className="upload-button" onClick={onClickhandleEnhanceClick}>
+                                <button className="upload-button" onClick={handleEnhanceClick}>
                                     ENHANCE
                                 </button>
-                            </div>  
+                            </div>
                         </>
                     )}
+                </div>
+                <p className='copyright center-content cambria'>copyrights©2024 Reserved by PureWave</p>
             </div>
-        </div>
-    );
-}
+        );
+    }
+};
 
 export default BeforeEnhance;
