@@ -2,7 +2,6 @@ import './lab.css';
 import axios from 'axios';
 import { useRef, useState, useEffect } from 'react';
 import icon_upload from '../assets/upload.png';
-import EnhanceItem from '../Components/EnhanceItem'
 import BeforeEnhance from '../Components/BeforeEnhance'
 import addEnhance from "../assets/icon-addEnhance.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -184,28 +183,12 @@ function Lab() {
     else if(showBeforeEnhance) {
         return(
             <BeforeEnhance
-                dryAudio={dryAudio}
-                onClickFileChange={() => handleFileChange(e)}
-                onHandleLogoClick={() => handleLogoClick()}
+                param_dryAudio={dryAudio}
+                param_wetAudio={wetAudio}
                 onClickhandleEnhanceClick={() => handleEnhanceClick()}
                 uploadedFileName={uploadedFileName}
             />
         )
-    }else if(showAfterEnhance){
-        return (
-            <div className="lab-page container-fluid flex-col">
-                {/* NOPAL */}   
-                <EnhanceItem
-                dryAudio={dryAudio}
-                wetAudio={wetAudio}
-                onClickFileChange={() => handleFileChange(e)}
-                uploadedFileName={uploadedFileName}
-                />
-                <div>
-                    <p className='copyright center-content cambria'>copyrights©2024 Reserved by PureWave</p>
-                </div>
-            </div>
-        );
     }
 }
 
