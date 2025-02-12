@@ -22,6 +22,20 @@ const BeforeEnhance = ({ param_dryAudio, param_wetAudio, uploadedFileName }) => 
     const [dryAudio, setDryAudio] = useState(param_dryAudio);
     const [wetAudio, setWetAudio] = useState(param_wetAudio);
 
+    const [notificationSuccess, setNotificationSuccess] = useState(null);
+    const [notificationFailed, setNotificationFailed] = useState(null);
+
+    const customAlert = (isGood, message) => {
+        if (isGood) {
+            setNotificationSuccess(message);
+            setTimeout(() => setNotificationSuccess(null), 2500);
+        }
+        else {
+            setNotificationFailed(message);
+            setTimeout(() => setNotificationFailed(null), 2500);
+        }
+    };
+
     useEffect(() => {
         wavesurferRef.current = WaveSurfer.create({
             container: waveformRef.current,
@@ -155,13 +169,38 @@ const BeforeEnhance = ({ param_dryAudio, param_wetAudio, uploadedFileName }) => 
         return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
     };
 
-    const handleEnhanceClick = () => {
+    const handleEnhanceClick = async () => {
         if (!wetAudio) {
             setNotification("Enhance the audio first.");
             setTimeout(() => setNotification(null), 2500);
             return;
         }
-        setShowAfterEnhance(true);
+
+        // POST PROJECT HERE
+        const newProject = {
+            title: "Untitled project",
+            dryAudio: dryAudio,
+            wetAudio: wetAudio
+        };
+
+        console.log("Frontend posted project: ", newProject);
+
+        try {
+            const response = await axios.post('http://localhost:8080/data/projects', newProject);
+            console.log("Project created successfully:", response.data);
+            customAlert(true, "Project created successfully!");
+            setShowAfterEnhance(true);
+        } catch (error) {
+            console.error("Error creating project:", error);
+
+            if (error.response) {
+                customAlert(false, `Failed: ${error.response.data.message || "Unhandled error"}`);
+            } else if (error.request) {
+                customAlert(false, "No response from the server. Please log in and try again.");
+            } else {
+                customAlert(false, "Unexpected JavaScript error: " + error.message);
+            }
+        }
     };
 
     if (showAfterEnhance) {
@@ -173,6 +212,18 @@ const BeforeEnhance = ({ param_dryAudio, param_wetAudio, uploadedFileName }) => 
                     onClickFileChange={() => handleFileChange()}
                     uploadedFileName={fileName}
                 />
+
+                { notificationSuccess && (
+                    <div className="notificationSuccess" >
+                        {notificationSuccess}
+                    </div>
+                )}
+
+                {notificationFailed && (
+                    <div className="notificationFailed">
+                        {notificationFailed}
+                    </div>
+                )}
             </div>
         );
     } else {
@@ -215,6 +266,19 @@ const BeforeEnhance = ({ param_dryAudio, param_wetAudio, uploadedFileName }) => 
                             </div>
                         </>
                     )}
+
+                    { notificationSuccess && (
+                        <div className="notificationSuccess" >
+                            {notificationSuccess}
+                        </div>
+                    )}
+    
+                    {notificationFailed && (
+                        <div className="notificationFailed">
+                            {notificationFailed}
+                        </div>
+                    )}
+
                 </div>
                 <p className='copyright center-content cambria'>copyrights©2024 Reserved by PureWave</p>
             </div>

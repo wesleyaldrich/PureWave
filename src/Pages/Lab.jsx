@@ -108,11 +108,37 @@ function Lab() {
     const [showBeforeEnhance, setShowBeforeEnhance] = useState(false);
     const [showAfterEnhance, setShowAfterEnhance] = useState(false);
 
-    const handleEnhanceClick = () => {
+    const handleEnhanceClick = async () => {
         flag = 1;
         console.log(flag)
+
+        // POST PROJECT HERE
+        const newProject = {
+            title: "Untitled project",
+            dryAudio: dryAudio,
+            wetAudio: wetAudio
+        };
+
+        console.log("Frontend posted project: ", newProject);
+
+        try {
+            const response = await axios.post('http://localhost:8080/data/projects', newProject);
+            console.log("Project created successfully:", response.data);
+            customAlert(true, "Project created successfully!");
+        } catch (error) {
+            console.error("Error creating project:", error);
+
+            if (error.response) {
+                customAlert(false, `Failed: ${error.response.data.message || "Unhandled error"}`);
+            } else if (error.request) {
+                customAlert(false, "No response from the server. Please log in and try again.");
+            } else {
+                customAlert(false, "Unexpected JavaScript error: " + error.message);
+            }
+        }
+
         setShowBeforeEnhance(false); 
-        setShowAfterEnhance(true); 
+        setShowAfterEnhance(true);
     };
 
     useEffect(() => {
@@ -169,7 +195,7 @@ function Lab() {
                         </div>
                     )}
     
-                    {notificationFailed && (
+                    { notificationFailed && (
                         <div className="notificationFailed">
                             {notificationFailed}
                         </div>
@@ -185,7 +211,6 @@ function Lab() {
             <BeforeEnhance
                 param_dryAudio={dryAudio}
                 param_wetAudio={wetAudio}
-                onClickhandleEnhanceClick={() => handleEnhanceClick()}
                 uploadedFileName={uploadedFileName}
             />
         )

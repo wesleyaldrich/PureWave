@@ -389,7 +389,7 @@ function Community({ isSidebarExpanded }) {
                                     />
                                 )
                             )
-                        ) : (<p>No posts available</p>)
+                        ) : (<p>No posts available.</p>)
                         }
                     </div>
                 </div>
