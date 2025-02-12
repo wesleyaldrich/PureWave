@@ -4,8 +4,7 @@ import addEnhance from "../assets/icon-addEnhance.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPause, faTrash } from '@fortawesome/free-solid-svg-icons';
 import WaveSurfer from 'https://cdn.jsdelivr.net/npm/wavesurfer.js@7/dist/wavesurfer.esm.js';
-import axios from 'axios'; // Ensure axios is imported
-import EnhanceItem from './EnhanceItem'
+import axios from 'axios';
 
 const BeforeEnhance = ({ param_dryAudio, param_wetAudio, uploadedFileName }) => {
     const fileInputRef = useRef(null);
@@ -14,14 +13,10 @@ const BeforeEnhance = ({ param_dryAudio, param_wetAudio, uploadedFileName }) => 
     const [isPlayingOriginal, setIsPlayingOriginal] = useState(false);
     const [hasAudio, setHasAudio] = useState(!!param_dryAudio);
     const [fileName, setFileName] = useState(uploadedFileName);
-    const [duration, setDuration] = useState(null);
     const [currentTime, setCurrentTime] = useState(0);
-    const [notification, setNotification] = useState(null);
     const [showAfterEnhance, setShowAfterEnhance] = useState(false);
-
     const [dryAudio, setDryAudio] = useState(param_dryAudio);
     const [wetAudio, setWetAudio] = useState(param_wetAudio);
-
     const [notificationSuccess, setNotificationSuccess] = useState(null);
     const [notificationFailed, setNotificationFailed] = useState(null);
 
@@ -159,7 +154,7 @@ const BeforeEnhance = ({ param_dryAudio, param_wetAudio, uploadedFileName }) => 
         setFileName('');
         setDuration(null);
         setCurrentTime(0);
-        fileInputRef.current.value = ''; // Reset file input
+        fileInputRef.current.value = '';
     };
 
     const formatTime = (seconds) => {
