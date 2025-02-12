@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPause, faTrash } from '@fortawesome/free-solid-svg-icons';
 import WaveSurfer from 'https://cdn.jsdelivr.net/npm/wavesurfer.js@7/dist/wavesurfer.esm.js';
 import axios from 'axios';
+import EnhanceItem from './EnhanceItem';
 
 const BeforeEnhance = ({ param_dryAudio, param_wetAudio, uploadedFileName }) => {
     const fileInputRef = useRef(null);
@@ -19,6 +20,7 @@ const BeforeEnhance = ({ param_dryAudio, param_wetAudio, uploadedFileName }) => 
     const [wetAudio, setWetAudio] = useState(param_wetAudio);
     const [notificationSuccess, setNotificationSuccess] = useState(null);
     const [notificationFailed, setNotificationFailed] = useState(null);
+    const [newCreatedProject, setNewCreatedProject] = useState(null);
 
     const customAlert = (isGood, message) => {
         if (isGood) {
@@ -73,6 +75,12 @@ const BeforeEnhance = ({ param_dryAudio, param_wetAudio, uploadedFileName }) => 
             setCurrentTime(0);
         }
     }, [dryAudio, fileName]);
+
+    useEffect(() => {
+        if (newCreatedProject) {
+            console.log("New project created: ", newCreatedProject);
+        }
+    }, [newCreatedProject]);
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -185,6 +193,7 @@ const BeforeEnhance = ({ param_dryAudio, param_wetAudio, uploadedFileName }) => 
             console.log("Project created successfully:", response.data);
             customAlert(true, "Project created successfully!");
             setShowAfterEnhance(true);
+            setNewCreatedProject(response.data);
         } catch (error) {
             console.error("Error creating project:", error);
 

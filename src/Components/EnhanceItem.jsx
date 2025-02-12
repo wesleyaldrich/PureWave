@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPause, faDownload } from '@fortawesome/free-solid-svg-icons';
 import BeforeEnhance from './BeforeEnhance'
 
-const EnhancedMenu = ({ dryAudio, wetAudio, uploadedFileName }) => {
+const EnhanceItem = ({ dryAudio, wetAudio, uploadedFileName }) => {
     const waveformRef = useRef(null);
     const waveformEnhancedRef = useRef(null);
     const wavesurferRef = useRef(null);
@@ -99,16 +99,16 @@ const EnhancedMenu = ({ dryAudio, wetAudio, uploadedFileName }) => {
         setShowBeforeEnhance(true); 
     };
 
-if(showBeforeEnhance){
-    return(
-        <BeforeEnhance
-                param_dryAudio={dryAudio}
-                param_wetAudio={wetAudio}
-                onClickhandleEnhanceClick={() => handleEnhanceClick()}
-                uploadedFileName={uploadedFileName}
-        />
-    )
-}else{
+    if(showBeforeEnhance){
+        return(
+            <BeforeEnhance
+                    param_dryAudio={dryAudio}
+                    param_wetAudio={wetAudio}
+                    onClickhandleEnhanceClick={() => handleEnhanceClick()}
+                    uploadedFileName={uploadedFileName}
+            />
+        )
+    }else{
         return (
             <div className="enhance-page container-fluid flex-col">
                 <h1 className="title firacode">LABORATORY</h1>
@@ -157,4 +157,4 @@ if(showBeforeEnhance){
     }
 }
 
-export default EnhancedMenu;
+export default EnhanceItem;
