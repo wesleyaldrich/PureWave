@@ -30,8 +30,6 @@ function App() {
                         <Route path="/history" element={<History />} />
                         <Route path="/gethelp" element={<GetHelp />} />
                         <Route path="/project/:accessId" element={<Project />} />
-                        <Route path="/lab/enhanced-menu" element={<EnhanceItem />} />
-                        <Route path="/lab/before-enhance" element={<BeforeEnhance />} />
                     </Routes>
                 </div>
             </div>
