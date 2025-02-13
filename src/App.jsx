@@ -10,6 +10,7 @@ import Profile from './Components/Profile';
 import { useState } from "react";
 import BeforeEnhance from './Components/BeforeEnhance'
 import EnhanceItem from './Components/EnhanceItem'
+import Project from './Pages/Project';
 
 function App() {
     const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
@@ -28,8 +29,7 @@ function App() {
                         <Route path="/lab" element={<Lab />} />
                         <Route path="/history" element={<History />} />
                         <Route path="/gethelp" element={<GetHelp />} />
-                        <Route path="/lab/enhanced-menu" element={<EnhanceItem />} />
-                        <Route path="/lab/before-enhance" element={<BeforeEnhance />} />
+                        <Route path="/project/:accessId" element={<Project />} />
                     </Routes>
                 </div>
             </div>

@@ -10,8 +10,7 @@ function History() {
 
 	const API_BASE_URL = 'http://localhost:8080'
 
-	// on mount, fetch all projects
-	useEffect(() => {
+	const fetchProjects = () => {
 		try {
 			axios.get(`${API_BASE_URL}/data/projects`)
 				.then((response) => {
@@ -20,17 +19,22 @@ function History() {
 				});
 		} catch (error) {
 			console.error("Error loading project:", error);
-
-            // if (error.response) {
-            //     customAlert(false, `Failed: ${error.response.data.message || "Unhandled error"}`);
-            // } else if (error.request) {
-            //     customAlert(false, "No response from the server. Please log in and try again.");
-            // } else {
-            //     customAlert(false, "Unexpected JavaScript error: " + error.message);
-            // }
 		}
+	}
 
+	// on mount, fetch all projects
+	useEffect(() => {
+		fetchProjects();
 	}, []);
+
+	const staticHistory = {
+		id: "dummyId",
+		title: "Dummy Project",
+		userId: "dummyUserId",
+		dryAudio: "dummyDryAudio",
+		wetAudio: "dummyWetAudio",
+		accessId: "dummyAccessId",
+	}
 
 	return (
 		<div className="history-page container-fluid">
@@ -43,15 +47,17 @@ function History() {
 		</div>
 
 		<div className="history-list container-fluid">
+
+			{/* FOR STATIC DEMO, DELETE SOON! */}
+			<HistoryItem project={staticHistory} />
+
 			{projects.length > 0 ? (
 				projects.map(
 					(project, index) => (
 						<HistoryItem
 							key={index}
-							name={project.title}
-							// date={project.date}
-							// size={project.size}
-							// duration={project.duration}
+							project={project}
+							fetchProjects={fetchProjects}
 						/>
 					)
 				)
