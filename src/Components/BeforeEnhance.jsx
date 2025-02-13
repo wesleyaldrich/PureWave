@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPause, faTrash } from '@fortawesome/free-solid-svg-icons';
 import WaveSurfer from 'https://cdn.jsdelivr.net/npm/wavesurfer.js@7/dist/wavesurfer.esm.js';
 import axios from 'axios';
-import EnhanceItem from './EnhanceItem';
+import { useNavigate } from 'react-router-dom';
 
 const BeforeEnhance = ({ param_dryAudio, param_wetAudio, uploadedFileName }) => {
     const fileInputRef = useRef(null);
@@ -21,6 +21,7 @@ const BeforeEnhance = ({ param_dryAudio, param_wetAudio, uploadedFileName }) => 
     const [notificationSuccess, setNotificationSuccess] = useState(null);
     const [notificationFailed, setNotificationFailed] = useState(null);
     const [newCreatedProject, setNewCreatedProject] = useState(null);
+    const navigate = useNavigate();
 
     const customAlert = (isGood, message) => {
         if (isGood) {
@@ -207,15 +208,53 @@ const BeforeEnhance = ({ param_dryAudio, param_wetAudio, uploadedFileName }) => 
         }
     };
 
-    if (showAfterEnhance) {
-        return (
-            <div className="lab-page container-fluid flex-col">
-                <EnhanceItem
-                    dryAudio={dryAudio}
-                    wetAudio={wetAudio}
-                    onClickFileChange={() => handleFileChange()}
-                    uploadedFileName={fileName}
-                />
+    useEffect(() => {
+        console.log("Trigger");
+        if (newCreatedProject){
+            console.log("Should redirect soon. With the new created project: ", newCreatedProject);
+            navigate(`/project/${newCreatedProject.accessId}`);
+        }
+    }, [newCreatedProject, navigate]);
+
+    return (
+        <div className="before-enhance-page container-fluid flex-col">
+            <h1 className="title firacode">LABORATORY</h1>
+            <div className="buttons flex-row justify-content-between gurajada">
+                <div className="button col-4" onClick={() => fileInputRef.current.click()}>
+                    <input
+                        type="file"
+                        accept=".mp3, .wav"
+                        ref={fileInputRef}
+                        onChange={handleFileChange}
+                        style={{ display: 'none' }}
+                    />
+                    <img src={addEnhance} alt="Icon Add Enhance" className="ebutton-icon" />
+                    <span>ENHANCE YOUR AUDIO</span>
+                </div>
+            </div>
+            <div className='visualizer'>
+                {hasAudio && (
+                    <>
+                <div className='sub-visualizer-1'>
+                    <p className="uploaded-file-name">{fileName}</p>
+                </div>
+                        <div className='sub-visualizer-2'>
+                            <button className='play_button' onClick={playPauseOriginal}>
+                                <FontAwesomeIcon className="icon_play" icon={isPlayingOriginal ? faPause : faPlay} />
+                            </button>
+                            <div className='wave' ref={waveformRef} />
+                            <span className="audio-current-time">{formatTime(currentTime)}</span>
+                            <button className="remove-button" onClick={removeAudio}>
+                                <FontAwesomeIcon className="icon_remove" icon={faTrash} />
+                            </button>
+                        </div>
+                        <div className="upload-button-container flex-col">
+                            <button className="upload-button" onClick={handleEnhanceClick}>
+                                ENHANCE
+                            </button>
+                        </div>
+                    </>
+                )}
 
                 { notificationSuccess && (
                     <div className="notificationSuccess" >
@@ -228,66 +267,11 @@ const BeforeEnhance = ({ param_dryAudio, param_wetAudio, uploadedFileName }) => 
                         {notificationFailed}
                     </div>
                 )}
-            </div>
-        );
-    } else {
-        return (
-            <div className="before-enhance-page container-fluid flex-col">
-                <h1 className="title firacode">LABORATORY</h1>
-                <div className="buttons flex-row justify-content-between gurajada">
-                    <div className="button col-4" onClick={() => fileInputRef.current.click()}>
-                        <input
-                            type="file"
-                            accept=".mp3, .wav"
-                            ref={fileInputRef}
-                            onChange={handleFileChange}
-                            style={{ display: 'none' }}
-                        />
-                        <img src={addEnhance} alt="Icon Add Enhance" className="ebutton-icon" />
-                        <span>ENHANCE YOUR AUDIO</span>
-                    </div>
-                </div>
-                <div className='visualizer'>
-                    {hasAudio && (
-                        <>
-                    <div className='sub-visualizer-1'>
-                        <p className="uploaded-file-name">{fileName}</p>
-                    </div>
-                            <div className='sub-visualizer-2'>
-                                <button className='play_button' onClick={playPauseOriginal}>
-                                    <FontAwesomeIcon className="icon_play" icon={isPlayingOriginal ? faPause : faPlay} />
-                                </button>
-                                <div className='wave' ref={waveformRef} />
-                                <span className="audio-current-time">{formatTime(currentTime)}</span>
-                                <button className="remove-button" onClick={removeAudio}>
-                                    <FontAwesomeIcon className="icon_remove" icon={faTrash} />
-                                </button>
-                            </div>
-                            <div className="upload-button-container flex-col">
-                                <button className="upload-button" onClick={handleEnhanceClick}>
-                                    ENHANCE
-                                </button>
-                            </div>
-                        </>
-                    )}
 
-                    { notificationSuccess && (
-                        <div className="notificationSuccess" >
-                            {notificationSuccess}
-                        </div>
-                    )}
-    
-                    {notificationFailed && (
-                        <div className="notificationFailed">
-                            {notificationFailed}
-                        </div>
-                    )}
-
-                </div>
-                <p className='copyright center-content cambria'>copyrights©2024 Reserved by PureWave</p>
             </div>
-        );
-    }
+            <p className='copyright center-content cambria'>copyrights©2024 Reserved by PureWave</p>
+        </div>
+    );
 };
 
 export default BeforeEnhance;

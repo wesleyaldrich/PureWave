@@ -15,8 +15,6 @@ const EnhanceItem = ({ dryAudio, wetAudio, uploadedFileName }) => {
     const [isPlayingEnhanced, setIsPlayingEnhanced] = useState(false);
     const [currentTime, setCurrentTime] = useState(0); // State to hold current playback time
     const [currentTimeEnhance, setCurrentTimeEnhance] = useState(0); // State to hold current playback time
-    
-
 
     useEffect(() => {
         wavesurferRef.current = WaveSurfer.create({
@@ -102,10 +100,10 @@ const EnhanceItem = ({ dryAudio, wetAudio, uploadedFileName }) => {
     if(showBeforeEnhance){
         return(
             <BeforeEnhance
-                    param_dryAudio={dryAudio}
-                    param_wetAudio={wetAudio}
-                    onClickhandleEnhanceClick={() => handleEnhanceClick()}
-                    uploadedFileName={uploadedFileName}
+                param_dryAudio={dryAudio}
+                param_wetAudio={wetAudio}
+                onClickhandleEnhanceClick={() => handleEnhanceClick()}
+                uploadedFileName={uploadedFileName}
             />
         )
     }else{
@@ -146,9 +144,9 @@ const EnhanceItem = ({ dryAudio, wetAudio, uploadedFileName }) => {
                         </a>
                     </div>
                     <div className="upload-button-container flex-col">
-                                <button className="upload-button">
-                                    SAVE
-                                </button>
+                        <button className="upload-button">
+                            SAVE
+                        </button>
                     </div>
                 </div>
                 <p className='copyright center-content cambria'>copyrights©2024 Reserved by PureWave</p>
