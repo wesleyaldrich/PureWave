@@ -100,8 +100,7 @@ function HistoryItem({ project, fetchProjects }) {
             <div className="item-right">
                 <div className="item-button-container flex-row">
                     <button className="item-button gurajada" onClick={renameButtonOnClick}>
-                        <img src={rename} alt="Rename" className="button-icon" />
-                        <p>Rename</p>
+                        <img src={rename} alt="Rename" className="button-icon" /> Rename
                     </button>
                     <button className="item-button gurajada" onClick={duplicateButtonOnClick}>
                         <img src={duplicate} alt="Duplicate" className="button-icon" /> Duplicate
