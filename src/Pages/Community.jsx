@@ -2,6 +2,7 @@ import './Community.css';
 import Post from '../Components/Post';
 import Reply from '../Components/Reply';
 import ReplyList from '../Components/ReplyList';
+import WarningPopup from '../Components/WarningPopup';
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { NavLink } from "react-router-dom";
@@ -12,18 +13,6 @@ import iconSend from "../assets/icon-send.png";
 
 // Static demo
 import dummy_pic from "../assets/icon-profile.png";
-
-const WarningPopup = ({ message, onConfirm, onCancel }) => {
-    return (
-        <div className="warning-popup">
-            <p>{message}</p>
-            <div className="popup-buttons">
-                <button className="no-btn" onClick={onCancel}>No</button>
-                <button className="yes-btn" onClick={onConfirm}>Yes</button>
-            </div>
-        </div>
-    );
-};
 
 function Community({ isSidebarExpanded }) {
     const [posts, setPosts] = useState([]);

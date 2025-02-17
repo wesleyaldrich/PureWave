@@ -7,10 +7,12 @@ import share from "../assets/icon-share.png";
 import deleteIcon from "../assets/icon-delete.png"; 
 import { useState } from "react";
 import axios from "axios";
+import WarningPopup from "./WarningPopup";
 
 function HistoryItem({ project, fetchProjects }) {
     const [notificationSuccess, setNotificationSuccess] = useState(null);
     const [notificationFailed, setNotificationFailed] = useState(null);
+    const [isWarningPopupOpen, setIsWarningPopupOpen] = useState(false);
 
     const customAlert = (isGood, message) => {
         if (isGood) {
@@ -66,6 +68,10 @@ function HistoryItem({ project, fetchProjects }) {
     const deleteButtonOnClick = () => {
         console.log("Delete button clicked");
 
+        setIsWarningPopupOpen(true);
+    }
+
+    const deleteHistory = () => {
         try {
             axios.delete(`http://localhost:8080/data/projects/${project.id}`)
                 .then(() => {
@@ -83,7 +89,13 @@ function HistoryItem({ project, fetchProjects }) {
                 customAlert(false, "Unexpected JavaScript error: " + error.message);
             }
         }
+
+        setIsWarningPopupOpen(false);
     }
+
+    const cancelDelete = () => {
+        setIsWarningPopupOpen(false);
+    };
 
     return (
         <div className="history-item">
@@ -124,6 +136,18 @@ function HistoryItem({ project, fetchProjects }) {
                 <div className="notificationFailed">
                     {notificationFailed}
                 </div>
+            )}
+
+            {isWarningPopupOpen && (
+                <WarningPopup
+                    message="Are you sure you want to delete this post?"
+                    onConfirm={() => {
+                        deleteHistory();
+                    }}
+                    onCancel={() => {
+                        cancelDelete();
+                    }}
+                />
             )}
         </div>
     );
