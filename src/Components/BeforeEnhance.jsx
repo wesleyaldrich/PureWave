@@ -12,7 +12,7 @@ const BeforeEnhance = ({ param_dryAudio, param_wetAudio, uploadedFileName }) => 
     const waveformRef = useRef(null);
     const wavesurferRef = useRef(null);
     const [isPlayingOriginal, setIsPlayingOriginal] = useState(false);
-    const [hasAudio, setHasAudio] = useState(!!param_dryAudio);
+    const [hasAudio, setHasAudio] = useState(true);
     const [fileName, setFileName] = useState(uploadedFileName);
     const [currentTime, setCurrentTime] = useState(0);
     const [showAfterEnhance, setShowAfterEnhance] = useState(false);
@@ -21,6 +21,7 @@ const BeforeEnhance = ({ param_dryAudio, param_wetAudio, uploadedFileName }) => 
     const [notificationSuccess, setNotificationSuccess] = useState(null);
     const [notificationFailed, setNotificationFailed] = useState(null);
     const [newCreatedProject, setNewCreatedProject] = useState(null);
+    const [duration, setDuration] = useState(null)
     const navigate = useNavigate();
 
     const customAlert = (isGood, message) => {
@@ -98,6 +99,7 @@ const BeforeEnhance = ({ param_dryAudio, param_wetAudio, uploadedFileName }) => 
     };
 
     const submitAudio = async (file) => {
+        console.log("Reset submitAudio after file change.");
         try {
             const formData = new FormData();
             formData.append('audio', file); // 'audio' is the key for backend
@@ -121,28 +123,28 @@ const BeforeEnhance = ({ param_dryAudio, param_wetAudio, uploadedFileName }) => 
 
             setDryAudio(dryAudioUrl);
             setWetAudio(wetAudioUrl);
-            setNotification("Audio uploaded and processed successfully.");
+            customAlert(true, "Audio uploaded and processed successfully.");
+
+            console.log("dryAudio after reset:", dryAudio);
+            console.log("wetAudio after reset:", wetAudio);
         } catch (error) {
             console.error("Error uploading audio:", error);
 
             if (error.response) {
-                setNotification(`Failed: ${error.response.data.message || "Unhandled error"}`);
+                customAlert(false, `Failed: ${error.response.data.message || "Unhandled error"}`);
             } else if (error.request) {
-                setNotification("No response from the server. Please try again.");
+                customAlert(false, "No response from the server. Please try again.");
             } else {
-                setNotification("Unexpected JavaScript error: " + error.message);
+                customAlert(false, "Unexpected JavaScript error: " + error.message);
             }
-        } finally {
-            setTimeout(() => setNotification(null), 2500);
-        }
+        } 
     };
 
     const validateFile = (file) => {
         if (file && (file.type === "audio/mpeg" || file.type === "audio/wav")) {
             submitAudio(file);
         } else {
-            setNotification("Invalid file format. Only .mp3 and .wav are supported.");
-            setTimeout(() => setNotification(null), 2500);
+            customAlert(false ,"Invalid file format. Only .mp3 and .wav are supported.");
         }
     };
 
@@ -156,15 +158,21 @@ const BeforeEnhance = ({ param_dryAudio, param_wetAudio, uploadedFileName }) => 
         }
     };
 
+    
     const removeAudio = () => {
-        wavesurferRef.current.empty();
         setHasAudio(false);
+        console.log("Before", hasAudio);
+    };
+
+    useEffect(() => {
+        console.log("Sini", hasAudio)
         setIsPlayingOriginal(false);
-        setFileName('');
+        // setFileName('');
         setDuration(null);
         setCurrentTime(0);
         fileInputRef.current.value = '';
-    };
+        wavesurferRef.current.empty();
+    }, [hasAudio]);
 
     const formatTime = (seconds) => {
         if (!seconds) return '00:00';
@@ -175,8 +183,7 @@ const BeforeEnhance = ({ param_dryAudio, param_wetAudio, uploadedFileName }) => 
 
     const handleEnhanceClick = async () => {
         if (!wetAudio) {
-            setNotification("Enhance the audio first.");
-            setTimeout(() => setNotification(null), 2500);
+            customAlert(false,"Enhance the audio first.");
             return;
         }
 
@@ -234,10 +241,10 @@ const BeforeEnhance = ({ param_dryAudio, param_wetAudio, uploadedFileName }) => 
             </div>
             <div className='visualizer'>
                 {hasAudio && (
-                    <>
-                <div className='sub-visualizer-1'>
-                    <p className="uploaded-file-name">{fileName}</p>
-                </div>
+                    <> 
+                        <div className='sub-visualizer-1'>
+                            <p className="uploaded-file-name">{fileName}</p>
+                        </div>
                         <div className='sub-visualizer-2'>
                             <button className='play_button' onClick={playPauseOriginal}>
                                 <FontAwesomeIcon className="icon_play" icon={isPlayingOriginal ? faPause : faPlay} />

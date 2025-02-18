@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
-function Project({ fileName }) {
+function Project() {
     const [notificationSuccess, setNotificationSuccess] = useState(false);
     const [notificationFailed, setNotificationFailed] = useState(false);
     let { accessId } = useParams();
     const [project, setProject] = useState({});
+    const [fileName, setFileName] = useState('');
 
     const fetchProject = async () => {
         try {
@@ -26,6 +27,16 @@ function Project({ fileName }) {
             console.log("Fetched project:", project);
         }
     }, [accessId]);
+
+    useEffect(() => {
+        if (project.dryAudio) {
+            var splitText = project.dryAudio.substring(project.dryAudio.indexOf('_') + 1)
+            console.log(splitText)
+            setFileName(splitText);
+        } else {
+            setFileName('');
+        }
+    }, [project.dryAudio, fileName]);
 
     return (
         <div className="lab-page container-fluid flex-col">
