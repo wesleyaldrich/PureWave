@@ -101,7 +101,7 @@
 .item-info {
     color: var(--button);
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     gap: 1px;
     justify-content: center;
     margin-bottom: 8px;
@@ -182,4 +182,43 @@
 .history-item:hover .item-size,
 .history-item:hover .item-info {
     color: var(--sub-title);
+}
+
+.hidden { 
+    display: none;
+    }
+
+button{
+    display: flex;
+    color:#ffffff;
+    border: none;
+    align-items: center;
+    background: none;
+    justify-content: center;
+    border-radius: 30px;
+    background-color: #15214b;
+    margin-bottom: 0;
+
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 35px;
+}
+
+input{
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-bottom: 2px solid aliceblue;
+    outline: none;
+    background: none;
+    margin-right: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 35px;
+    width: 20.35vw;
+    color: var(--history-menu);
+}
+
+#save-btn{
+    width: 7vw;
 }

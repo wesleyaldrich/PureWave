@@ -8,11 +8,13 @@ import deleteIcon from "../assets/icon-delete.png";
 import { useState } from "react";
 import axios from "axios";
 import WarningPopup from "./WarningPopup";
+import { useEffect } from "react";
 
 function HistoryItem({ project, fetchProjects }) {
     const [notificationSuccess, setNotificationSuccess] = useState(null);
     const [notificationFailed, setNotificationFailed] = useState(null);
     const [isWarningPopupOpen, setIsWarningPopupOpen] = useState(false);
+    const [isRenameTarget, setIsRenameTarget] = useState(false);
 
     const customAlert = (isGood, message) => {
         if (isGood) {
@@ -27,7 +29,19 @@ function HistoryItem({ project, fetchProjects }) {
 
     const renameButtonOnClick = () => {
         console.log("Rename button clicked");
+
+        setIsRenameTarget(true);
     }
+
+    useEffect(() => {
+        const container = document.getElementById('container');
+        if (isRenameTarget){
+            container.style.backgroundColor = '#133E87';
+        }
+        else {
+            container.style.backgroundColor = '';
+        }
+    }, [isRenameTarget])
 
     const duplicateButtonOnClick = async () => {
         console.log("Duplicate button clicked");
@@ -97,23 +111,62 @@ function HistoryItem({ project, fetchProjects }) {
         setIsWarningPopupOpen(false);
     };
 
+    useEffect(() => {
+        // Ambil elemen yang dibutuhkan
+        const projectName = document.getElementById("project-name");
+        const renameBtn = document.getElementById("rename-btn");
+
+        // Event ketika tombol "Rename" ditekan
+        renameBtn.addEventListener("click", function() {
+            // Buat elemen input
+            const input = document.createElement("input");
+            input.type = "text";
+            input.value = projectName.textContent; // Isi input dengan nama lama
+            input.id = "rename-input";
+
+            // Buat tombol "Save"
+            const saveBtn = document.createElement("button");
+            saveBtn.textContent = "Save";
+            saveBtn.id = "save-btn";
+            
+            // Hapus teks "Dummy Project" dan tambahkan input serta tombol Save
+            const container = projectName.parentElement;
+            container.replaceChild(input, projectName);
+            container.appendChild(saveBtn);
+
+            // Event ketika tombol "Save" ditekan
+            saveBtn.addEventListener("click", function() {
+                const newName = input.value.trim() || "Untitled Project";
+
+                projectName.textContent = newName;
+
+                container.replaceChild(projectName, input);
+                container.removeChild(saveBtn);
+
+                setIsRenameTarget(false);
+            });
+        });
+    }, [])
+
     return (
-        <div className="history-item">
+        <div id="container" className="history-item">
             <div className="item-left">
                 <img src={profile} alt="Profile" className="profile-img"/>
                 <div className="item-info">
-                    <p className="item-name">{project.title}</p>
+                    <p id="project-name" className="item-name">{project.title}</p>
                     {/* <p className="item-date">Date Modified {project.date}</p>
                     <p className="item-size">
-                        {project.size} | {project.duration}
+                        {project.size} | {project.duration} 
                     </p> */}
+
                 </div>
             </div>
             <div className="item-right">
                 <div className="item-button-container flex-row">
-                    <button className="item-button gurajada" onClick={renameButtonOnClick}>
+                    <button id="rename-btn" className="item-button gurajada" onClick={renameButtonOnClick}>
                         <img src={rename} alt="Rename" className="button-icon" /> Rename
                     </button>
+
                     <button className="item-button gurajada" onClick={duplicateButtonOnClick}>
                         <img src={duplicate} alt="Duplicate" className="button-icon" /> Duplicate
                     </button>
