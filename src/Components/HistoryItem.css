@@ -219,6 +219,6 @@ input{
     color: var(--history-menu);
 }
 
-#save-btn{
+.save-btn{
     width: 7vw;
 }

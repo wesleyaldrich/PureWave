@@ -27,14 +27,40 @@ function History() {
 		fetchProjects();
 	}, []);
 
-	const staticHistory = {
-		id: "dummyId",
-		title: "Dummy Project",
-		userId: "dummyUserId",
-		dryAudio: "dummyDryAudio",
-		wetAudio: "dummyWetAudio",
-		accessId: "dummyAccessId",
-	}
+	const staticHistories = [
+		{
+			id: "dummyId1",
+			title: "Dummy Project",
+			userId: "dummyUserId",
+			dryAudio: "dummyDryAudio",
+			wetAudio: "dummyWetAudio",
+			accessId: "dummyAccessId"
+		},
+		{
+			id: "dummyId2",
+			title: "Dummy Project",
+			userId: "dummyUserId",
+			dryAudio: "dummyDryAudio",
+			wetAudio: "dummyWetAudio",
+			accessId: "dummyAccessId"
+		},
+		{
+			id: "dummyId3",
+			title: "Dummy Project",
+			userId: "dummyUserId",
+			dryAudio: "dummyDryAudio",
+			wetAudio: "dummyWetAudio",
+			accessId: "dummyAccessId"
+		},
+		{
+			id: "dummyId4",
+			title: "Dummy Project",
+			userId: "dummyUserId",
+			dryAudio: "dummyDryAudio",
+			wetAudio: "dummyWetAudio",
+			accessId: "dummyAccessId"
+		},
+	]
 
 	return (
 		<div className="history-page container-fluid">
@@ -49,7 +75,9 @@ function History() {
 		<div className="history-list container-fluid">
 
 			{/* FOR STATIC DEMO, DELETE SOON! */}
-			<HistoryItem project={staticHistory} />
+			{staticHistories.map((staticHistory) => (
+				<HistoryItem project={staticHistory} />
+			))}
 
 			{projects.length > 0 ? (
 				projects.map(
