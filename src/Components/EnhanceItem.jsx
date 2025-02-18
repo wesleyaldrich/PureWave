@@ -11,6 +11,7 @@ const EnhanceItem = ({ dryAudio, wetAudio, uploadedFileName }) => {
     const waveformEnhancedRef = useRef(null);
     const wavesurferRef = useRef(null);
     const wavesurferEnhancedRef = useRef(null);
+    const [fileName, setFileName] = useState(uploadedFileName);
     const [isPlayingOriginal, setIsPlayingOriginal] = useState(false);
     const [isPlayingEnhanced, setIsPlayingEnhanced] = useState(false);
     const [currentTime, setCurrentTime] = useState(0); // State to hold current playback time
