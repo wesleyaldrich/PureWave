@@ -521,7 +521,8 @@ function Community({ isSidebarExpanded }) {
                             </div>
                         </form>
                     </div>
-                </div>
+                </div>     
+                
             )}
 
             {notificationSuccess && (
