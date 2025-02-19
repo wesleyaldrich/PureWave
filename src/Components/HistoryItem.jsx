@@ -10,7 +10,7 @@ import axios from "axios";
 import WarningPopup from "./WarningPopup";
 import { useEffect } from "react";
 
-function HistoryItem({ project, fetchProjects}) {
+function HistoryItem({ project, fetchProjects, isRenaming, setIsRenaming}) {
     const [notificationSuccess, setNotificationSuccess] = useState(null);
     const [notificationFailed, setNotificationFailed] = useState(null);
     const [isWarningPopupOpen, setIsWarningPopupOpen] = useState(false);
@@ -28,6 +28,12 @@ function HistoryItem({ project, fetchProjects}) {
     };
 
     const renameButtonOnClick = () => {
+        if (isRenaming) {
+            customAlert(false, "Another project is currently being renamed.");
+            return;
+        }
+
+        setIsRenaming(true);
         setIsRenameTarget(true);
     
         const projectName = document.getElementById(`project-name-${project.id}`);
@@ -80,6 +86,7 @@ function HistoryItem({ project, fetchProjects}) {
                 container.replaceChild(projectName, input);
                 container.removeChild(cancelBtn);
                 setIsRenameTarget(false);
+                setIsRenaming(false);
             }
         });
     
@@ -89,6 +96,7 @@ function HistoryItem({ project, fetchProjects}) {
             container.removeChild(cancelBtn);
             projectName.classList.remove("Selected");
             setIsRenameTarget(false);
+            setIsRenaming(false);
         });
     
         // Auto fokus pada input
@@ -221,7 +229,6 @@ function HistoryItem({ project, fetchProjects}) {
                     <p className="item-size">
                         {project.size} | {project.duration} 
                     </p> */}
-
                 </div>
             </div>
             <div className="item-right">
