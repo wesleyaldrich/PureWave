@@ -15,10 +15,8 @@ function GetHelp() {
           '2. Upload audio yang ingin di-enhance.',
           '3. Klik tombol “ENHANCE” (Opsional: jika Anda ingin menyesuaikan audio quality & audio file size, klik “Advanced Settings”).',
           '4. a. Jika ingin mengunduh audio (audio original maupun enhanced), silahkan klik icon “DOWNLOAD” di sebelah audio yang ingin diunduh.',
-          '    b. Jika ingin mengunduh enhanced audio dengan output extract tertentu, pilih option-nya pada bagian “EXTRACT OUTPUT OPTION”, kemudian klik', 
-          '        tombol “EXTRACT”.',
-          '    c. Jika tidak ingin mengunduh audionya, Anda dapat menyimpannya dengan klik tombol “SAVE”, kemudian audio tersebut dapat diakses kembali',
-          '        pada halaman “HISTORY”.'
+          '    b. Jika ingin mengunduh enhanced audio dengan output extract tertentu, pilih option-nya pada bagian “EXTRACT OUTPUT OPTION”, kemudian klik tombol “EXTRACT”.',
+          '    c. Jika tidak ingin mengunduh audionya, Anda dapat menyimpannya dengan klik tombol “SAVE”, kemudian audio tersebut dapat diakses kembali pada halaman “HISTORY”.'
         ]    
     },
     {
