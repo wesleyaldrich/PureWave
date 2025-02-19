@@ -219,6 +219,11 @@ input{
     color: var(--history-menu);
 }
 
-.save-btn{
+.cancel-btn{
     width: 7vw;
+}
+
+.cancel-btn:hover{
+    background-color: var(--edit-text);
+    cursor: pointer;
 }

@@ -45,47 +45,50 @@ function HistoryItem({ project, fetchProjects}) {
         input.id = `rename-input-${project.id}`;
         input.className = "rename-input";
     
-        // Buat tombol Save
-        const saveBtn = document.createElement("button");
-        saveBtn.textContent = "Save";
-        saveBtn.id = `save-btn-${project.id}`;
-        saveBtn.className = "save-btn";
+        // Buat tombol Cancel
+        const cancelBtn = document.createElement("button");
+        cancelBtn.textContent = "Cancel";
+        cancelBtn.id = `cancel-btn-${project.id}`;
+        cancelBtn.className = "cancel-btn";
     
         // Ganti teks dengan input
         const container = projectName.parentElement;
         container.replaceChild(input, projectName);
-        container.appendChild(saveBtn);
+        container.appendChild(cancelBtn);
     
-        // Event listener untuk menyimpan perubahan
-        saveBtn.addEventListener("click", async function () {
-            const newName = input.value.trim() || "Untitled Project";
-            projectName.textContent = newName;
-            projectName.classList.remove("Selected");
+        // Event listener untuk menyimpan perubahan saat tekan Enter
+        input.addEventListener("keydown", async function (e) {
+            if (e.key === "Enter") {
+                const newName = input.value.trim() || "Untitled Project";
+                projectName.textContent = newName;
+                projectName.classList.remove("Selected");
     
-            // Simpan ke database
-            try {
-                // await axios.put(`http://localhost:8080/data/projects/${project.id}`, {
-                //     title: newName
-                // });
+                // Simpan ke database
+                try {
+                    // await axios.put(`http://localhost:8080/data/projects/${project.id}`, {
+                    //     title: newName
+                    // });
     
-                customAlert(true, "Project renamed successfully!");
-                fetchProjects();
-            } catch (error) {
-                console.error("Error renaming project:", error);
-                customAlert(false, "Failed to rename project.");
+                    customAlert(true, "Project renamed successfully!");
+                    fetchProjects();
+                } catch (error) {
+                    console.error("Error renaming project:", error);
+                    customAlert(false, "Failed to rename project.");
+                }
+    
+                // Kembalikan teks asli
+                container.replaceChild(projectName, input);
+                container.removeChild(cancelBtn);
+                setIsRenameTarget(false);
             }
-    
-            // Kembalikan teks asli
-            container.replaceChild(projectName, input);
-            container.removeChild(saveBtn);
-            setIsRenameTarget(false);
         });
     
-        // Event untuk menyimpan saat tekan Enter
-        input.addEventListener("keydown", function (e) {
-            if (e.key === "Enter") {
-                saveBtn.click();
-            }
+        // Event listener untuk membatalkan perubahan
+        cancelBtn.addEventListener("click", function () {
+            container.replaceChild(projectName, input);
+            container.removeChild(cancelBtn);
+            projectName.classList.remove("Selected");
+            setIsRenameTarget(false);
         });
     
         // Auto fokus pada input
