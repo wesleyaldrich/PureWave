@@ -10,6 +10,7 @@ function Post({ picture, author, content, attachment, replyCount, onReply, onDel
 
     const attachmentBoxRef = useRef(null);
     const attachmentTitleRef = useRef(null);
+    const dropdownRef = useRef(null);
 
     const toggleButtonVisibility = () => setIsButtonVisible(!isButtonVisible);
 
@@ -27,10 +28,28 @@ function Post({ picture, author, content, attachment, replyCount, onReply, onDel
         }
     }, [attachment]);  
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                toggleButtonVisibility(); 
+            }
+        };
+
+        if (isButtonVisible) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [isButtonVisible]);
+
     const handleClick = (e) => {
-        e.preventDefault();
-        toggleButtonVisibility(); 
-      };
+        if(!isButtonVisible){
+            e.preventDefault();
+            toggleButtonVisibility(); 
+        }
+    };
 
     return (
         <div className="post flex-row">
@@ -56,7 +75,7 @@ function Post({ picture, author, content, attachment, replyCount, onReply, onDel
                 <hr />
             </div>
 
-            <div className="dropdown">
+            <div className="dropdown" ref={dropdownRef}>
                 <div className="dot-menu center-content flex-row" onClick={toggleButtonVisibility}>
                     <span className="dot"></span>
                     <span className="dot"></span>
