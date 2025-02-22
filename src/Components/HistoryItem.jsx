@@ -10,7 +10,7 @@ import axios from "axios";
 import WarningPopup from "./WarningPopup";
 import { useEffect } from "react";
 
-function HistoryItem({ project, fetchProjects, isRenaming, setIsRenaming}) {
+function HistoryItem({ project, fetchProjects, renamingId, setRenamingId}) {
     const [notificationSuccess, setNotificationSuccess] = useState(null);
     const [notificationFailed, setNotificationFailed] = useState(null);
     const [isWarningPopupOpen, setIsWarningPopupOpen] = useState(false);
@@ -28,12 +28,19 @@ function HistoryItem({ project, fetchProjects, isRenaming, setIsRenaming}) {
     };
 
     const renameButtonOnClick = () => {
-        if (isRenaming) {
+        if (renamingId === project.id && isRenameTarget) {
+            const cancelBtn = document.getElementById(`cancel-btn-${project.id}`);
+
+            cancelBtn.click();
+            return;
+        }
+
+        if (renamingId !== null && renamingId !== project.id) {
             customAlert(false, "Another project is currently being renamed.");
             return;
         }
 
-        setIsRenaming(true);
+        setRenamingId(project.id);
         setIsRenameTarget(true);
     
         const projectName = document.getElementById(`project-name-${project.id}`);
@@ -61,7 +68,7 @@ function HistoryItem({ project, fetchProjects, isRenaming, setIsRenaming}) {
         const container = projectName.parentElement;
         container.replaceChild(input, projectName);
         container.appendChild(cancelBtn);
-    
+
         // Event listener untuk menyimpan perubahan saat tekan Enter
         input.addEventListener("keydown", async function (e) {
             if (e.key === "Enter") {
@@ -86,7 +93,7 @@ function HistoryItem({ project, fetchProjects, isRenaming, setIsRenaming}) {
                 container.replaceChild(projectName, input);
                 container.removeChild(cancelBtn);
                 setIsRenameTarget(false);
-                setIsRenaming(false);
+                setRenamingId(null);
             }
         });
     
@@ -96,7 +103,7 @@ function HistoryItem({ project, fetchProjects, isRenaming, setIsRenaming}) {
             container.removeChild(cancelBtn);
             projectName.classList.remove("Selected");
             setIsRenameTarget(false);
-            setIsRenaming(false);
+            setRenamingId(null);
         });
     
         // Auto fokus pada input

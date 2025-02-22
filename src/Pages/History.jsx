@@ -7,7 +7,7 @@ import axios from 'axios';
 
 function History() {
 	const [projects, setProjects] = useState([]);
-	const [isRenaming, setIsRenaming] = useState(false); // State baru untuk melacak rename
+	const [renamingId, setRenamingId] = useState(null); 
 
 	const API_BASE_URL = 'http://localhost:8080'
 
@@ -80,8 +80,8 @@ function History() {
 				<HistoryItem 
 					key={staticHistory.id} 
 					project={staticHistory} 
-					isRenaming={isRenaming} 
-					setIsRenaming={setIsRenaming} 
+					renamingId={renamingId} 
+					setRenamingId={setRenamingId} 
 					fetchProjects={fetchProjects} 
 				/>
 			))}
@@ -92,8 +92,8 @@ function History() {
 						<HistoryItem
 							key={project.id} 
 							project={project} 
-							isRenaming={isRenaming} 
-							setIsRenaming={setIsRenaming} 
+							renamingId={renamingId} 
+							setRenamingId={setRenamingId} 
 							fetchProjects={fetchProjects} 
 						/>
 					)
