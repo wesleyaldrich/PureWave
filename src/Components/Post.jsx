@@ -91,7 +91,7 @@ function Post({ picture, author, content, attachment, replyCount, onReply, onDel
                             <img src={icon_edit} alt="icon edit" className="iconDropDown" />
                             <p className="gurajada">Edit</p>
                         </div>
-
+                        
                         <div className="deletePost flex-row" onClick={() => {
                             toggleButtonVisibility();
                             onDelete();
