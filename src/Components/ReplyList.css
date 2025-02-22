@@ -34,12 +34,17 @@
     padding-bottom: 0;
     margin-bottom: 0;
     color: var(--edit-text);
-    gap: 0.5vw;
-    cursor: pointer;
 }
 
-.reply:hover{
+.replyItem{
+    margin: 0;
+    padding: 0;
+    gap: 0.5vw;
+}
+
+.replyItem:hover{
     filter: brightness(0) saturate(100%) invert(92%) sepia(3%) saturate(1737%) hue-rotate(178deg) brightness(95%) contrast(93%);
+    cursor: pointer;
 }
 
 .reply img{
@@ -51,7 +56,7 @@
 .reply p{
     font-size: 1.5vw;
     line-height: 14.75px;
-}
+}   
 
 /* CSS untuk ikon titik tiga horizontal */
 .replyList .dot-menu {

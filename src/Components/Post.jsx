@@ -47,9 +47,11 @@ function Post({ picture, author, content, attachment, replyCount, onReply, onDel
                     </a>
                 </div>
 
-                <div className="reply flex-row" onClick={onReply}>
-                    <img src={icon_reply} alt="icon reply" />
-                    <p className="gurajada">Reply ({replyCount})</p>
+                <div className="reply flex-row">
+                    <div className="replyItem flex-row" onClick={onReply}>
+                        <img src={icon_reply} alt="icon reply"/>
+                        <p className="gurajada">Reply ({replyCount})</p>
+                    </div>
                 </div>
                 <hr />
             </div>
