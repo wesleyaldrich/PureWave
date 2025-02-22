@@ -27,6 +27,11 @@ function Post({ picture, author, content, attachment, replyCount, onReply, onDel
         }
     }, [attachment]);  
 
+    const handleClick = (e) => {
+        e.preventDefault();
+        toggleButtonVisibility(); 
+      };
+
     return (
         <div className="post flex-row">
             <div className="pic-container">
@@ -34,7 +39,7 @@ function Post({ picture, author, content, attachment, replyCount, onReply, onDel
             </div>
             <div className="data flex-col">
                 <h2>{author}</h2>
-                <p>{content}</p>
+                <p class="textContent" onContextMenu={handleClick}>{content}</p>
 
                 <div ref={attachmentBoxRef} className="attachment-box center-content gurajada" style={{ display: "none" }}>
                     <a href={attachment} target="_blank">
