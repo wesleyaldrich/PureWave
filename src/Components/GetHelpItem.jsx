@@ -1,28 +1,37 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import './GetHelpItem.css';
-import arrowup from "../assets/icon-arrowup.png";
-import arrowdown from "../assets/icon-arrowdown.png";
+import arrow from "../assets/icon-arrowup.png";
 
 function GetHelpItem({ question, answer, isOpen, onToggle }) {
+  const answerRef = useRef(null);
+
+  useEffect(() => {
+    if (isOpen && answerRef.current) {
+      answerRef.current.style.maxHeight = `${answerRef.current.scrollHeight}px`;
+    } else if (answerRef.current) {
+      answerRef.current.style.maxHeight = '0px';
+    }
+  }, [isOpen]);
+
   return (
     <div className={`faq-item ${isOpen ? 'expanded' : ''}`}>
       <div className="faq-question" onClick={onToggle}>
         <span>{question}</span>
         <img 
-          src={isOpen ? arrowup : arrowdown} 
+          src={arrow} 
           alt={isOpen ? 'Collapse' : 'Expand'} 
-          className="faq-icon" 
+          className={`faq-icon ${isOpen ? 'icon-rotate' : ''}`}
         />
       </div>
-      {isOpen && (
-        <div className="faq-answer">
-          {answer.map((item, index) => (
-            <p key={index}>{item}</p>
-          ))}
-        </div>
-      )}
+      
+      <div className={`faq-answer ${isOpen ? 'open' : ''}`} ref={answerRef}>
+        {answer.map((item, index) => (
+          <p key={index}>{item}</p>
+        ))}
+      </div>
     </div>
   );
 }
 
 export default GetHelpItem;
+  

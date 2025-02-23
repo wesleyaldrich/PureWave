@@ -10,6 +10,7 @@ function Post({ picture, author, content, attachment, replyCount, onReply, onDel
 
     const attachmentBoxRef = useRef(null);
     const attachmentTitleRef = useRef(null);
+    const dropdownRef = useRef(null);
 
     const toggleButtonVisibility = () => setIsButtonVisible(!isButtonVisible);
 
@@ -27,6 +28,29 @@ function Post({ picture, author, content, attachment, replyCount, onReply, onDel
         }
     }, [attachment]);  
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                toggleButtonVisibility(); 
+            }
+        };
+
+        if (isButtonVisible) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [isButtonVisible]);
+
+    const handleClick = (e) => {
+        if(!isButtonVisible){
+            e.preventDefault();
+            toggleButtonVisibility(); 
+        }
+    };
+
     return (
         <div className="post flex-row">
             <div className="pic-container">
@@ -34,7 +58,7 @@ function Post({ picture, author, content, attachment, replyCount, onReply, onDel
             </div>
             <div className="data flex-col">
                 <h2>{author}</h2>
-                <p>{content}</p>
+                <p class="textContent" onContextMenu={handleClick}>{content}</p>
 
                 <div ref={attachmentBoxRef} className="attachment-box center-content gurajada" style={{ display: "none" }}>
                     <a href={attachment} target="_blank">
@@ -42,14 +66,16 @@ function Post({ picture, author, content, attachment, replyCount, onReply, onDel
                     </a>
                 </div>
 
-                <div className="reply flex-row" onClick={onReply}>
-                    <img src={icon_reply} alt="icon reply" />
-                    <p className="gurajada">Reply ({replyCount})</p>
+                <div className="reply flex-row">
+                    <div className="replyItem flex-row" onClick={onReply}>
+                        <img src={icon_reply} alt="icon reply"/>
+                        <p className="gurajada">Reply ({replyCount})</p>
+                    </div>
                 </div>
                 <hr />
             </div>
 
-            <div className="dropdown">
+            <div className="dropdown" ref={dropdownRef}>
                 <div className="dot-menu center-content flex-row" onClick={toggleButtonVisibility}>
                     <span className="dot"></span>
                     <span className="dot"></span>
@@ -65,7 +91,7 @@ function Post({ picture, author, content, attachment, replyCount, onReply, onDel
                             <img src={icon_edit} alt="icon edit" className="iconDropDown" />
                             <p className="gurajada">Edit</p>
                         </div>
-
+                        
                         <div className="deletePost flex-row" onClick={() => {
                             toggleButtonVisibility();
                             onDelete();

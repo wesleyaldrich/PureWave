@@ -7,6 +7,7 @@ import axios from 'axios';
 
 function History() {
 	const [projects, setProjects] = useState([]);
+	const [renamingId, setRenamingId] = useState(null); 
 
 	const API_BASE_URL = 'http://localhost:8080'
 
@@ -27,14 +28,40 @@ function History() {
 		fetchProjects();
 	}, []);
 
-	const staticHistory = {
-		id: "dummyId",
-		title: "Dummy Project",
-		userId: "dummyUserId",
-		dryAudio: "dummyDryAudio",
-		wetAudio: "dummyWetAudio",
-		accessId: "dummyAccessId",
-	}
+	const staticHistories = [
+		{
+			id: "dummyId1",
+			title: "Dummy Project",
+			userId: "dummyUserId",
+			dryAudio: "dummyDryAudio",
+			wetAudio: "dummyWetAudio",
+			accessId: "dummyAccessId"
+		},
+		{
+			id: "dummyId2",
+			title: "Dummy Project",
+			userId: "dummyUserId",
+			dryAudio: "dummyDryAudio",
+			wetAudio: "dummyWetAudio",
+			accessId: "dummyAccessId"
+		},
+		{
+			id: "dummyId3",
+			title: "Dummy Project",
+			userId: "dummyUserId",
+			dryAudio: "dummyDryAudio",
+			wetAudio: "dummyWetAudio",
+			accessId: "dummyAccessId"
+		},
+		{
+			id: "dummyId4",
+			title: "Dummy Project",
+			userId: "dummyUserId",
+			dryAudio: "dummyDryAudio",
+			wetAudio: "dummyWetAudio",
+			accessId: "dummyAccessId"
+		},
+	]
 
 	return (
 		<div className="history-page container-fluid">
@@ -49,15 +76,25 @@ function History() {
 		<div className="history-list container-fluid">
 
 			{/* FOR STATIC DEMO, DELETE SOON! */}
-			<HistoryItem project={staticHistory} />
+			{staticHistories.map((staticHistory) => (
+				<HistoryItem 
+					key={staticHistory.id} 
+					project={staticHistory} 
+					renamingId={renamingId} 
+					setRenamingId={setRenamingId} 
+					fetchProjects={fetchProjects} 
+				/>
+			))}
 
 			{projects.length > 0 ? (
 				projects.map(
 					(project, index) => (
 						<HistoryItem
-							key={index}
-							project={project}
-							fetchProjects={fetchProjects}
+							key={project.id} 
+							project={project} 
+							renamingId={renamingId} 
+							setRenamingId={setRenamingId} 
+							fetchProjects={fetchProjects} 
 						/>
 					)
 				)

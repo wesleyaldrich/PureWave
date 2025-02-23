@@ -151,8 +151,8 @@
     line-height: 1.5vw;
 }
 
-.item-button:hover {
-    filter: brightness(0) saturate(100%) invert(67%) sepia(6%) saturate(1077%) hue-rotate(191deg) brightness(91%) contrast(86%);
+.item-button:hover{
+    filter: brightness(0) saturate(100%) invert(89%) sepia(97%) saturate(3248%) hue-rotate(176deg) brightness(107%) contrast(84%);
 }
 
 .button-icon {
@@ -171,7 +171,7 @@
 }
   
 .history-item:hover {
-    background-color: var(--button);
+    background-color: var(--hover-plus-enhance);
 }
 
 .history-item:hover .item-name {
@@ -186,9 +186,9 @@
 
 .hidden { 
     display: none;
-    }
+}
 
-button{
+.cancel-btn{
     display: flex;
     color:#ffffff;
     border: none;
@@ -198,10 +198,15 @@ button{
     border-radius: 30px;
     background-color: #15214b;
     margin-bottom: 0;
-
+    width: 7vw;
     font-size: 15px;
     font-weight: 500;
     line-height: 35px;
+}
+
+.cancel-btn:hover{
+    background-color: var(--edit-text);
+    cursor: pointer;
 }
 
 input{
@@ -217,8 +222,4 @@ input{
     line-height: 35px;
     width: 20.35vw;
     color: var(--history-menu);
-}
-
-#save-btn{
-    width: 7vw;
 }
