@@ -78,9 +78,9 @@ function HistoryItem({ project, fetchProjects, renamingId, setRenamingId}) {
     
                 // Simpan ke database
                 try {
-                    // await axios.put(`http://localhost:8080/data/projects/${project.id}`, {
-                    //     title: newName
-                    // });
+                    await axios.put(`http://localhost:8080/data/projects/${project.id}`, {
+                        title: newName
+                    });
     
                     customAlert(true, "Project renamed successfully!");
                     fetchProjects();
@@ -125,7 +125,7 @@ function HistoryItem({ project, fetchProjects, renamingId, setRenamingId}) {
         console.log("Duplicate button clicked");
 
         const newProject = {
-            title: "Untitled project",
+            title: project.title,
             userId: project.userId,
             dryAudio: project.dryAudio,
             wetAudio: project.wetAudio
