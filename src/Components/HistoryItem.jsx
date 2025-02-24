@@ -227,7 +227,7 @@ function HistoryItem({ project, fetchProjects, renamingId, setRenamingId}) {
     // }, [])
 
     return (
-        <div id={`container-${project.id}`} className="history-item">
+        <div id={`container-${project.id}`} className="history-item" onClick={() => window.location.href = `/project/${project.accessId}`} >
             <div className="item-left">
                 <img src={profile} alt="Profile" className="profile-img"/>
                 <div className="item-info">
