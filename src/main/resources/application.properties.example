@@ -1,0 +1,24 @@
+spring.application.name=PureWave
+
+# database
+spring.data.mongodb.uri=mongodb://localhost:27017/
+spring.data.mongodb.database=purewave
+
+# oauth2
+spring.security.oauth2.client.registration.google.client-id="your-oauth2-client-id"
+spring.security.oauth2.client.registration.google.client-secret="your-oauth2-client-secret"
+spring.security.oauth2.client.registration.google.scope=openid,profile,email
+spring.security.oauth2.client.registration.google.redirect-uri=http://localhost:8080/login/oauth2/code/google
+spring.security.oauth2.client.provider.google.authorization-uri=https://accounts.google.com/o/oauth2/auth
+spring.security.oauth2.client.provider.google.token-uri=https://oauth2.googleapis.com/token
+spring.security.oauth2.client.provider.google.user-info-uri=https://www.googleapis.com/oauth2/v3/userinfo
+
+# max size
+spring.servlet.multipart.max-file-size=256MB
+spring.servlet.multipart.max-request-size=256MB
+
+# additional configs
+server.error.whitelabel.enabled=false
+spring.resources.static-locations=classpath:/static/,classpath:/public/
+spring.mvc.throw-exception-if-no-handler-found=false
+spring.resources.add-mappings=false
