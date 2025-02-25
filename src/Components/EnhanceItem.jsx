@@ -145,9 +145,9 @@ const EnhanceItem = ({ dryAudio, wetAudio, uploadedFileName }) => {
                         </a>
                     </div>
                     <div className="upload-button-container flex-col">
-                        <button className="upload-button">
+                        <a href="/history" className="upload-button">
                             SAVE
-                        </button>
+                        </a>
                     </div>
                 </div>
                 <p className='copyright center-content cambria'>copyrights©2024 Reserved by PureWave</p>

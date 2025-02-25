@@ -91,6 +91,10 @@
     gap: 15px;
 }
 
+.item-left:hover {
+    cursor: pointer;
+}
+
 .item-image {
     border-radius: 50%;
     width: 50px;
