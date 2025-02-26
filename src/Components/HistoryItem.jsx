@@ -307,7 +307,7 @@ function HistoryItem({ project, renamingId, setRenamingId, deletingId, setDeleti
 
             {isWarningPopupOpen && (
                 <WarningPopup
-                    message="Are you sure you want to delete this post?"
+                    message="Are you sure want to delete this project?"
                     onConfirm={() => {
                         deleteHistory();
                     }}
