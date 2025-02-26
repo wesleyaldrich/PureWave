@@ -1,6 +1,7 @@
 .before-enhance-page {
     width: 100%;
     height: 100%;
+    padding: 0;
 }
 
 .before-enhance-page h1 {
