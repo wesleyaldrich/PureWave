@@ -272,7 +272,7 @@ button {
     height: 150px;
     text-align: center;
     opacity: 95%;
-    z-index: 1000;
+    z-index: 9999;
 }
 
 .warning-popup p {

@@ -161,7 +161,7 @@
     transition: background-color 0.3s ease, transform 0.2s ease;
     border-radius: 50px;
     font-size: 1.5vw;
-    z-index: 9999;
+    z-index: 9998;
 }
 
 .item-button p {
@@ -191,6 +191,9 @@
   
 .history-item:hover {
     background-color: var(--hover-plus-enhance);
+}
+
+.cursor{
     cursor: pointer;
 }
 

@@ -113,9 +113,11 @@ function HistoryItem({ project, fetchProjects, renamingId, setRenamingId}) {
 
     useEffect(() => {
         const container = document.getElementById(`container-${project.id}`);
+
         if (container) {
             if (isRenameTarget) {
                 container.style.backgroundColor = '#133E87';
+
             } else {
                 container.style.backgroundColor = '';
             }
@@ -228,7 +230,7 @@ function HistoryItem({ project, fetchProjects, renamingId, setRenamingId}) {
     // }, [])
 
     return (
-        <div id={`container-${project.id}`} className="history-item">
+        <div id={`container-${project.id}`} className={`history-item ${isRenameTarget? '' : 'cursor'}`}>
             <div className={`accessProject ${isRenameTarget ? 'deactive' : ''}`} onClick={() => window.location.href = `/project/${project.accessId}`}></div>
 
             <div className="item-left">
