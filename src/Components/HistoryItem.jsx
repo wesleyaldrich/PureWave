@@ -28,6 +28,7 @@ function HistoryItem({ project, fetchProjects, renamingId, setRenamingId}) {
     };
 
     const renameButtonOnClick = () => {
+        
         if (renamingId === project.id && isRenameTarget) {
             const cancelBtn = document.getElementById(`cancel-btn-${project.id}`);
 
@@ -227,8 +228,10 @@ function HistoryItem({ project, fetchProjects, renamingId, setRenamingId}) {
     // }, [])
 
     return (
-        <div id={`container-${project.id}`} className="history-item" >
-            <div className="item-left" onClick={() => window.location.href = `/project/${project.accessId}`}>
+        <div id={`container-${project.id}`} className="history-item">
+            <div className={`accessProject ${isRenameTarget ? 'deactive' : ''}`} onClick={() => window.location.href = `/project/${project.accessId}`}></div>
+
+            <div className="item-left">
                 <img src={profile} alt="Profile" className="profile-img"/>
                 <div className="item-info">
                     <p id={`project-name-${project.id}`} className="item-name">{project.title}</p>
