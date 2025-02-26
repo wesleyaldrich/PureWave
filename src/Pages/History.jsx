@@ -8,6 +8,7 @@ import axios from 'axios';
 function History() {
 	const [projects, setProjects] = useState([]);
 	const [renamingId, setRenamingId] = useState(null); 
+	const [deletingId, setDeletingId] = useState(null)
 
 	const API_BASE_URL = 'http://localhost:8080'
 
@@ -82,7 +83,10 @@ function History() {
 					project={staticHistory} 
 					renamingId={renamingId} 
 					setRenamingId={setRenamingId} 
+					deletingId = {deletingId}
+					setDeletingId = {setDeletingId}
 					fetchProjects={fetchProjects} 
+
 				/>
 			))}
 
@@ -94,6 +98,8 @@ function History() {
 							project={project} 
 							renamingId={renamingId} 
 							setRenamingId={setRenamingId} 
+							deletingId = {deletingId}
+							setDeletingId = {setDeletingId}
 							fetchProjects={fetchProjects} 
 						/>
 					)

@@ -264,14 +264,13 @@ button {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: var(--background);
+    background-color: var(--hover-add-enhance);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     width: 350px;
     height: 150px;
     text-align: center;
-    opacity: 95%;
     z-index: 9999;
 }
 
@@ -302,7 +301,7 @@ button {
 }
 
 .no-btn:hover {
-    background-color: var(--hover-history-menu);
+    background-color: var(--edit-text);
     color: white;
 }
 
@@ -313,7 +312,7 @@ button {
 }
 
 .yes-btn:hover {
-    background-color: var(--hover-history-menu);
+    background-color: var(--edit-text);
 }
 
 @keyframes fadeInOut {
