@@ -10,7 +10,7 @@ import axios from "axios";
 import WarningPopup from "./WarningPopup";
 import { useEffect } from "react";
 
-function HistoryItem({ project, fetchProjects, renamingId, setRenamingId}) {
+function HistoryItem({ project, renamingId, setRenamingId, deletingId, setDeletingId, fetchProjects}) {
     const [notificationSuccess, setNotificationSuccess] = useState(null);
     const [notificationFailed, setNotificationFailed] = useState(null);
     const [isWarningPopupOpen, setIsWarningPopupOpen] = useState(false);
@@ -40,6 +40,11 @@ function HistoryItem({ project, fetchProjects, renamingId, setRenamingId}) {
             return;
         }
 
+        if(deletingId !== null){
+            customAlert(false, "Another project is currently being deleted.");
+            return;
+        }
+
         setRenamingId(project.id);
         setIsRenameTarget(true);
     
@@ -47,9 +52,6 @@ function HistoryItem({ project, fetchProjects, renamingId, setRenamingId}) {
         const renameBtn = document.getElementById(`rename-btn-${project.id}`);
     
         if (!projectName || !renameBtn) return;
-    
-        // Tambahkan class "Selected" ke elemen <p>
-        projectName.classList.add("Selected");
     
         // Buat input
         const input = document.createElement("input");
@@ -74,7 +76,6 @@ function HistoryItem({ project, fetchProjects, renamingId, setRenamingId}) {
             if (e.key === "Enter") {
                 const newName = input.value.trim() || "Untitled Project";
                 projectName.textContent = newName;
-                projectName.classList.remove("Selected");
     
                 // Simpan ke database
                 try {
@@ -101,7 +102,6 @@ function HistoryItem({ project, fetchProjects, renamingId, setRenamingId}) {
         cancelBtn.addEventListener("click", function () {
             container.replaceChild(projectName, input);
             container.removeChild(cancelBtn);
-            projectName.classList.remove("Selected");
             setIsRenameTarget(false);
             setRenamingId(null);
         });
@@ -112,14 +112,31 @@ function HistoryItem({ project, fetchProjects, renamingId, setRenamingId}) {
 
     useEffect(() => {
         const container = document.getElementById(`container-${project.id}`);
+
         if (container) {
             if (isRenameTarget) {
                 container.style.backgroundColor = '#133E87';
             } else {
-                container.style.backgroundColor = '';
+                container.style.backgroundColor = ''; 
             }
         }
     }, [isRenameTarget]);
+
+    useEffect(() => {
+        const projectName = document.getElementById(`project-name-${project.id}`);
+        const container = document.getElementById(`container-${project.id}`);
+
+        if (container) {
+            if (isWarningPopupOpen) {
+                container.style.backgroundColor = '#133E87';
+                projectName.style.color = '#CBDCEB'
+
+            } else {
+                projectName.style.color = ''; 
+                container.style.backgroundColor = ''; 
+            }
+        }
+    }, [isWarningPopupOpen]);
 
     const duplicateButtonOnClick = async () => {
         console.log("Duplicate button clicked");
@@ -159,7 +176,23 @@ function HistoryItem({ project, fetchProjects, renamingId, setRenamingId}) {
 
     const deleteButtonOnClick = () => {
         console.log("Delete button clicked");
+        if(deletingId !== null && deletingId === project.id){
+            cancelDelete()
+            return;
+        }
+        
+        if(deletingId !== null){
+            customAlert(false, "Another project is currently being deleted.");
+            return;
+        }
 
+        if(renamingId !== null){
+            customAlert(false, "Another project is currently being renamed.");
+            return; 
+        }
+
+
+        setDeletingId(project.id);
         setIsWarningPopupOpen(true);
     }
 
@@ -182,10 +215,12 @@ function HistoryItem({ project, fetchProjects, renamingId, setRenamingId}) {
             }
         }
 
+        setDeletingId(null);
         setIsWarningPopupOpen(false);
     }
 
     const cancelDelete = () => {
+        setDeletingId(null);
         setIsWarningPopupOpen(false);
     };
 
@@ -227,8 +262,10 @@ function HistoryItem({ project, fetchProjects, renamingId, setRenamingId}) {
     // }, [])
 
     return (
-        <div id={`container-${project.id}`} className="history-item" >
-            <div className="item-left" onClick={() => window.location.href = `/project/${project.accessId}`}>
+        <div id={`container-${project.id}`} className={`history-item ${isWarningPopupOpen || isRenameTarget? '' : 'cursor'}`}>
+            <div className={`accessProject ${isWarningPopupOpen || isRenameTarget ? 'deactive' : ''}`} onClick={() => window.location.href = `/project/${project.accessId}`}></div>
+
+            <div className="item-left">
                 <img src={profile} alt="Profile" className="profile-img"/>
                 <div className="item-info">
                     <p id={`project-name-${project.id}`} className="item-name">{project.title}</p>
@@ -270,7 +307,7 @@ function HistoryItem({ project, fetchProjects, renamingId, setRenamingId}) {
 
             {isWarningPopupOpen && (
                 <WarningPopup
-                    message="Are you sure you want to delete this post?"
+                    message="Are you sure want to delete this selected?"
                     onConfirm={() => {
                         deleteHistory();
                     }}

@@ -264,15 +264,28 @@ button {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: var(--background);
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 20px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     width: 350px;
     height: 150px;
     text-align: center;
+    z-index: 9999;
+}
+
+.warning-popup .area-warning{
+    background-color: var(--background);
+    padding: 0;
+    margin: 0;
+    display: flex;
+    position: absolute; 
+    height: 100%; 
+    width: 100%; 
+    top: 0; 
+    left: 0; 
     opacity: 95%;
-    z-index: 1000;
+    z-index: 0; 
+    border-radius: 20px;
 }
 
 .warning-popup p {
@@ -280,11 +293,15 @@ button {
     margin-bottom: 30px;
     font-size: 16px;
     text-align: center;
+    position: relative;
+    z-index: 9999;
 }
 
 .popup-buttons {
     display: flex;
     justify-content: space-around;
+    position: relative;
+    z-index: 9999;
 }
 
 .yes-btn, .no-btn {
@@ -302,7 +319,7 @@ button {
 }
 
 .no-btn:hover {
-    background-color: var(--hover-history-menu);
+    background-color: var(--edit-text);
     color: white;
 }
 
@@ -313,7 +330,7 @@ button {
 }
 
 .yes-btn:hover {
-    background-color: var(--hover-history-menu);
+    background-color: var(--edit-text);
 }
 
 @keyframes fadeInOut {

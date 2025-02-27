@@ -114,7 +114,7 @@ const EnhanceItem = ({ dryAudio, wetAudio, uploadedFileName }) => {
                 <div className="buttons flex-row justify-content-between gurajada">
                 <div className="button col-4" onClick={backToBeforeEnhance}>
                         <img src={addEnhance} alt="Icon Add Enhance" className="ebutton-icon" />
-                        <span>BACK TO BEFORE ENHANCE</span>
+                        <span>BEFORE ENHANCE AUDIO</span>
                     </div>
                 </div>
                 <div className='visualizer'>

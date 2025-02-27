@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import './GetHelpItem.css';
-import arrow from "../assets/icon-arrowup.png";
+import arrow from "../assets/icon-arrowdown.png";
 
 function GetHelpItem({ question, answer, isOpen, onToggle }) {
   const answerRef = useRef(null);
