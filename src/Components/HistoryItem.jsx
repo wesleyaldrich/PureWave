@@ -166,13 +166,32 @@ function HistoryItem({ project, renamingId, setRenamingId, deletingId, setDeleti
         }
     }
 
+    const copyText = (text) => {
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text)
+                .then(() => customAlert(true, "URL copied to clipboard!"))
+                .catch(err => console.error("Failed to copy share URL: ", err));
+        } else {
+            // Fallback for non-secure contexts (HTTP)
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand("copy");
+                customAlert(true, "URL copied to clipboard!");
+            } catch (err) {
+                console.error("Fallback copy failed: ", err);
+                customAlert(false, "Copy failed.");
+            }
+            document.body.removeChild(textArea);
+        }
+    };
+    
     const shareButtonOnClick = () => {
         console.log("Share button clicked");
-
-        navigator.clipboard.writeText(`http://localhost:8080/project/${project.accessId}`)
-            .then(() => customAlert(true, "URL copied to clipboard!"))
-            .catch(err => console.error("Failed to copy share URL: ", err));
-    }
+        copyText(`http://localhost:8080/project/${project.accessId}`);
+    };
 
     const deleteButtonOnClick = () => {
         console.log("Delete button clicked");
